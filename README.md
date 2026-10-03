@@ -1,7 +1,7 @@
 # VitaGenerals
 
 A native PS Vita / PSTV source port of EA's released Zero Hour engine, in early
-development. The objective is the complete game: campaign and skirmish,
+development. The objective is the complete game: campaigns, challenges and skirmish,
 original gameplay and presentation, usable handheld/controller controls,
 save/load, audio/video, stable lifecycle behavior and multiplayer through
 compatible service providers. Inventory tools and prototype builds are
@@ -9,8 +9,8 @@ intermediate milestones toward that objective.
 
 Preserve the original engine and user-supplied retail data. Replace platform
 and unavailable middleware boundaries while retaining game rules, asset
-semantics and original subsystem ownership. Performance and memory decisions
-must follow measurements on the target hardware.
+semantics and original subsystem ownership. The target is 60 FPS; feasibility remains unproven. Performance and memory
+decisions must follow measurements on the target hardware.
 
 No playable game or hardware-tested build is available yet. The current build
 covers BIGF header parsing, a staged original WWLib checksum module,
