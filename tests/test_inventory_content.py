@@ -41,7 +41,7 @@ class InventoryTests(unittest.TestCase):
             self.assertEqual(len(rows),1)
             self.assertEqual(len(edges),1)
             self.assertEqual(edges[0]['line'],2)
-            self.assertEqual(edges[0]['status'] if 'status' in edges[0] else 'candidate','candidate')
+            self.assertEqual(edges[0]['evidence'],'lexical_literal_candidate')
             self.assertTrue(any(c['token']=='f' for c in candidates))
             self.assertTrue(any(c['token']=='size_t' for c in candidates))
 if __name__=='__main__':

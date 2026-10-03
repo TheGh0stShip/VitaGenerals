@@ -1,0 +1,21 @@
+name: Host checks
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  portable-boundaries:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure
+        run: cmake -S . -B build-host -DCMAKE_BUILD_TYPE=Debug
+      - name: Build
+        run: cmake --build build-host --parallel 2
+      - name: C boundary tests
+        run: ctest --test-dir build-host --output-on-failure
+      - name: Python inventory counterexamples
+        run: python3 -m unittest discover -s tests -p 'test_*.py'
+      - name: Whitespace check
+        run: git diff-tree --check HEAD -- . ':!LICENSE.md'
