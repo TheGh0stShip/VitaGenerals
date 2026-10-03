@@ -28,3 +28,25 @@ int vg_big_header_read(const unsigned char *p, size_t n,
     *out = h;
     return 1;
 }
+int vg_big_directory_validate(const unsigned char *p, size_t n,
+                              uint64_t file_size, vg_big_header *out) {
+    vg_big_header h;
+    size_t cursor = 16;
+    if (!out || !vg_big_header_read(p, n, file_size, &h)
+        || n < h.directory_end) return 0;
+    for (uint32_t i = 0; i < h.entry_count; ++i) {
+        uint32_t offset, size;
+        /* Subtraction avoids cursor + record-size overflow on ILP32. */
+        if (h.directory_end - cursor < 9) return 0;
+        offset = be32(p + cursor);
+        size = be32(p + cursor + 4);
+        cursor += 8;
+        while (cursor < h.directory_end && p[cursor] != 0) ++cursor;
+        if (cursor == h.directory_end) return 0;
+        ++cursor;
+        if (offset > h.archive_size || size > h.archive_size - offset
+            || (size != 0 && offset < h.directory_end)) return 0;
+    }
+    *out = h;
+    return 1;
+}

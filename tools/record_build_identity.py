@@ -20,12 +20,15 @@ def main():
         p.error('identity output must remain under ignored build-*/')
     sdk=Path(os.environ['VITASDK']);prefix=sdk/'bin/arm-vita-eabi-'
     def tool(name,*args): return subprocess.check_output([str(prefix)+name,*map(str,args)],text=True)
-    elf=build/'original_crc_probe';linkmap=build/'original_crc_probe.map'
-    attrs=tool('readelf','-h','-A',elf)
-    (build/'original_crc_probe.attributes.txt').write_text(attrs)
-    symbols=tool('nm','-C','--defined-only',elf)
-    (build/'original_crc_probe.symbols.txt').write_text(symbols)
-    maptext=linkmap.read_text()
+    probes=['original_crc_probe','big_header_test']
+    artifact_names=['compile_commands.json']
+    maptext=''
+    for probe in probes:
+        elf=build/probe
+        (build/(probe+'.attributes.txt')).write_text(tool('readelf','-h','-A',elf))
+        (build/(probe+'.symbols.txt')).write_text(tool('nm','-C','--defined-only',elf))
+        maptext += (build/(probe+'.map')).read_text()+'\n'
+        artifact_names += [probe,probe+'.map',probe+'.symbols.txt',probe+'.attributes.txt']
     libraries=[]
     for name in sorted(set(re.findall(r'^LOAD (.*\.a)$',maptext,re.M))):
         path=Path(name)
@@ -55,9 +58,8 @@ def main():
             'source_manifest_sha256':sha(root/'vendor/ea/manifest.json'),
             'staging_receipt_sha256':sha(build/'staged/receipt.json'),
             'artifacts':[{'name':name,'sha256':sha(build/name)} for name in
-                         ['original_crc_probe','original_crc_probe.map','original_crc_probe.symbols.txt',
-                          'original_crc_probe.attributes.txt','compile_commands.json']],
-            'compiled_sources':compiled,'linked_libraries':libraries,'package_manifest':{'status':'not_produced','reason':'linked checksum probe is not a game launcher or VPK'}}
+                         artifact_names],
+            'compiled_sources':compiled,'linked_libraries':libraries,'package_manifest':{'status':'not_produced','reason':'linked boundary probes are not a game launcher or VPK'}}
     (build/'artifact-identity.json').write_text(json.dumps(result,indent=2)+'\n')
     print(f"PASS: {len(result['artifacts'])} matching ARM artifacts retained; library review gaps remain explicit")
 if __name__=='__main__': main()

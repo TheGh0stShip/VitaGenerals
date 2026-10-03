@@ -36,3 +36,18 @@ Next steps: implement typed INI/WND/MAP reference discovery and source handler
 registration inventories; preserve file/line or member/offset provenance;
 join those records to target compile commands, linker map and defined symbols.
 Runtime load/callback observations must close routes on physical Vita/PSTV.
+
+The C boundary probe now validates complete BIGF directories with bytewise
+mixed-endian reads, bounded name scans and subtraction-based payload range
+checks. It accepts empty offset-zero records and directory padding without
+interpreting wildcard, duplicate or override semantics. Payloads need not be
+resident. Malformed input leaves the decoded output unchanged.
+
+The original integration owner is `Win32BIGFileSystem::openArchiveFile` in
+`GameEngineDevice/Source/Win32Device/Common/Win32BIGFileSystem.cpp`. Integration
+into its replacement platform boundary remains open; the validator is currently
+a standalone probe. Host sanitizer cases cover truncated directories, missing
+terminators, invalid counts, payload overlap with the directory, end-of-file
+ranges, 32-bit wraparound and four input alignments. Both boundary probes compile
+and link for ARM with ELF attribute gates and matching artifact identities.
+These checks do not prove original engine loading or physical device behavior.

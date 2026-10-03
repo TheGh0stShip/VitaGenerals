@@ -13,4 +13,12 @@ typedef struct {
  * This validates the header only, not the directory or its entries. */
 int vg_big_header_read(const unsigned char *bytes, size_t length,
                        uint64_t actual_file_size, vg_big_header *out);
+/* Validate all entry records using a buffer containing the complete directory.
+ * Payload bytes need not be loaded. Names are bounded NUL-terminated bytes;
+ * this does not interpret paths, duplicates, wildcard or mount semantics.
+ * Empty entries may have offset zero. Nonempty payloads must follow the
+ * directory and fit in the archive. Directory padding is permitted.
+ * Failure leaves out unchanged. */
+int vg_big_directory_validate(const unsigned char *bytes, size_t length,
+                              uint64_t actual_file_size, vg_big_header *out);
 #endif
