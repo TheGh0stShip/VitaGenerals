@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "upstream_url": "https://github.com/electronicarts/CnC_Generals_Zero_Hour",
+  "upstream_commit": "0a05454d8574207440a5fb15241b98ad0b435590",
+  "scope": "GeneralsMD/Code",
+  "files": 3197,
+  "tree_sha256": "1fce818714d13f96eec45b6d40bb4854dfddce22a1ede336527443ad004cb8e6"
+}

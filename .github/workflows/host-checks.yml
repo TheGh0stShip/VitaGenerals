@@ -34,3 +34,8 @@ jobs:
           cmake -S . -B build-arm-ci -DCMAKE_TOOLCHAIN_FILE="$VITASDK/share/vita.toolchain.cmake" -DCMAKE_BUILD_TYPE=Debug
           cmake --build build-arm-ci --parallel 2
           python3 tools/record_build_identity.py --build-dir build-arm-ci
+      - name: Reproduce original-project inventory
+        run: |
+          python3 tools/fetch_source_baseline.py --directory build-source-ci
+          python3 tools/audit_original_projects.py --source build-source-ci/GeneralsMD/Code --compile-commands build-arm-ci/compile_commands.json --output build-arm-ci/original-projects.json
+          python3 tools/verify_project_inventory.py build-arm-ci/original-projects.json
