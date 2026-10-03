@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "upstream_url": "https://github.com/electronicarts/CnC_Generals_Zero_Hour",
+  "upstream_commit": "0a05454d8574207440a5fb15241b98ad0b435590",
+  "files": [
+    {
+      "path": "wwlib/realcrc.cpp",
+      "upstream_path": "GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/realcrc.cpp",
+      "sha256": "a55070e0569f6e9afca6839fb71ae9888a75adf55678957156483013d0d08fa2",
+      "staged_sha256": "44622651663d8c8e1859bec90acda92186a09aed356d17908256aeaf745715a0"
+    },
+    {
+      "path": "wwlib/realcrc.h",
+      "upstream_path": "GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/realcrc.h",
+      "sha256": "a1f766a7ac4b4d724a6b594c9e1f6bed4600bedf593fe3271aff9e0e5da9cdf4",
+      "staged_sha256": "2cc4f66793946eb02a949ed0ea50e65db532e3aea07c5e8c0f6082f573551322"
+    }
+  ],
+  "patches": [
+    {
+      "path": "port/patches/realcrc-width.patch",
+      "sha256": "4e4544e8435147120f62dcc113953f72636afe0f8e8ccd509e41d457176f32a7"
+    }
+  ]
+}

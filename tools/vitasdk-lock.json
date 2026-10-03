@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "release": "sdk-snapshot-20260926.790.1",
+  "host": "x86_64-linux-gnu",
+  "target": "arm-vita-eabi",
+  "url": "https://github.com/vitasdk/autobuilds/releases/download/sdk-snapshot-20260926.790.1/vitasdk-x86_64-linux-gnu-2026-09-26_08-31-53.tar.bz2",
+  "sha256": "87b111ff350c1f36bde1c2923e57467c1f86b044d54bc616631260486f2a512c"
+}

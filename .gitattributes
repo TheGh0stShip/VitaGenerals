@@ -1,0 +1,4 @@
+# Preserve upstream bytes and patch context without rewriting original notices.
+vendor/ea/wwlib/* -text -whitespace
+LICENSE.md -text
+port/patches/*.patch text eol=lf -whitespace
