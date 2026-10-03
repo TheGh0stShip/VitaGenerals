@@ -39,3 +39,5 @@ jobs:
           python3 tools/fetch_source_baseline.py --directory build-source-ci
           python3 tools/audit_original_projects.py --source build-source-ci/GeneralsMD/Code --compile-commands build-arm-ci/compile_commands.json --output build-arm-ci/original-projects.json
           python3 tools/verify_project_inventory.py build-arm-ci/original-projects.json
+          python3 tools/audit_module_registrations.py --source build-source-ci/GeneralsMD/Code --output build-arm-ci/module-registrations.json
+          cmp reports/generated/module-registrations.json build-arm-ci/module-registrations.json

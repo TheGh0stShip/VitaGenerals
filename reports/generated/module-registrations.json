@@ -1,0 +1,2317 @@
+{
+  "complete": false,
+  "macro_definitions": [
+    {
+      "line": 110,
+      "path": "GameEngine/Include/Common/ModuleFactory.h"
+    }
+  ],
+  "rows": [
+    {
+      "argument": "AutoHealBehavior",
+      "class_name": "AutoHealBehavior",
+      "conditional_branches": [],
+      "line": 328,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "GrantStealthBehavior",
+      "class_name": "GrantStealthBehavior",
+      "conditional_branches": [],
+      "line": 329,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "NeutronBlastBehavior",
+      "class_name": "NeutronBlastBehavior",
+      "conditional_branches": [],
+      "line": 330,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "BridgeBehavior",
+      "class_name": "BridgeBehavior",
+      "conditional_branches": [],
+      "line": 331,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "BridgeScaffoldBehavior",
+      "class_name": "BridgeScaffoldBehavior",
+      "conditional_branches": [],
+      "line": 332,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "BridgeTowerBehavior",
+      "class_name": "BridgeTowerBehavior",
+      "conditional_branches": [],
+      "line": 333,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "CountermeasuresBehavior",
+      "class_name": "CountermeasuresBehavior",
+      "conditional_branches": [],
+      "line": 334,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "DumbProjectileBehavior",
+      "class_name": "DumbProjectileBehavior",
+      "conditional_branches": [],
+      "line": 335,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "PhysicsBehavior",
+      "class_name": "PhysicsBehavior",
+      "conditional_branches": [],
+      "line": 336,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "InstantDeathBehavior",
+      "class_name": "InstantDeathBehavior",
+      "conditional_branches": [],
+      "line": 337,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "SlowDeathBehavior",
+      "class_name": "SlowDeathBehavior",
+      "conditional_branches": [],
+      "line": 338,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "HelicopterSlowDeathBehavior",
+      "class_name": "HelicopterSlowDeathBehavior",
+      "conditional_branches": [],
+      "line": 339,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "NeutronMissileSlowDeathBehavior",
+      "class_name": "NeutronMissileSlowDeathBehavior",
+      "conditional_branches": [],
+      "line": 340,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "CaveContain",
+      "class_name": "CaveContain",
+      "conditional_branches": [],
+      "line": 341,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "OpenContain",
+      "class_name": "OpenContain",
+      "conditional_branches": [],
+      "line": 342,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "OverchargeBehavior",
+      "class_name": "OverchargeBehavior",
+      "conditional_branches": [],
+      "line": 343,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "HealContain",
+      "class_name": "HealContain",
+      "conditional_branches": [],
+      "line": 344,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "GarrisonContain",
+      "class_name": "GarrisonContain",
+      "conditional_branches": [],
+      "line": 345,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "InternetHackContain",
+      "class_name": "InternetHackContain",
+      "conditional_branches": [],
+      "line": 346,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "TransportContain",
+      "class_name": "TransportContain",
+      "conditional_branches": [],
+      "line": 347,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "RiderChangeContain",
+      "class_name": "RiderChangeContain",
+      "conditional_branches": [],
+      "line": 348,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "RailedTransportContain",
+      "class_name": "RailedTransportContain",
+      "conditional_branches": [],
+      "line": 349,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "MobNexusContain",
+      "class_name": "MobNexusContain",
+      "conditional_branches": [],
+      "line": 350,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "TunnelContain",
+      "class_name": "TunnelContain",
+      "conditional_branches": [],
+      "line": 351,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "OverlordContain",
+      "class_name": "OverlordContain",
+      "conditional_branches": [],
+      "line": 352,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "HelixContain",
+      "class_name": "HelixContain",
+      "conditional_branches": [],
+      "line": 353,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "ParachuteContain",
+      "class_name": "ParachuteContain",
+      "conditional_branches": [],
+      "line": 354,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "POWTruckBehavior",
+      "class_name": "POWTruckBehavior",
+      "conditional_branches": [
+        [
+          {
+            "directive": "ifdef",
+            "expression": "ALLOW_SURRENDER",
+            "line": 355
+          }
+        ]
+      ],
+      "line": 356,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "PrisonBehavior",
+      "class_name": "PrisonBehavior",
+      "conditional_branches": [
+        [
+          {
+            "directive": "ifdef",
+            "expression": "ALLOW_SURRENDER",
+            "line": 355
+          }
+        ]
+      ],
+      "line": 357,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "PropagandaCenterBehavior",
+      "class_name": "PropagandaCenterBehavior",
+      "conditional_branches": [
+        [
+          {
+            "directive": "ifdef",
+            "expression": "ALLOW_SURRENDER",
+            "line": 355
+          }
+        ]
+      ],
+      "line": 358,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "PropagandaTowerBehavior",
+      "class_name": "PropagandaTowerBehavior",
+      "conditional_branches": [],
+      "line": 360,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "BunkerBusterBehavior",
+      "class_name": "BunkerBusterBehavior",
+      "conditional_branches": [],
+      "line": 361,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "FireWeaponWhenDamagedBehavior",
+      "class_name": "FireWeaponWhenDamagedBehavior",
+      "conditional_branches": [],
+      "line": 362,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "FireWeaponWhenDeadBehavior",
+      "class_name": "FireWeaponWhenDeadBehavior",
+      "conditional_branches": [],
+      "line": 363,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "GenerateMinefieldBehavior",
+      "class_name": "GenerateMinefieldBehavior",
+      "conditional_branches": [],
+      "line": 364,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "ParkingPlaceBehavior",
+      "class_name": "ParkingPlaceBehavior",
+      "conditional_branches": [],
+      "line": 365,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "FlightDeckBehavior",
+      "class_name": "FlightDeckBehavior",
+      "conditional_branches": [],
+      "line": 366,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "PoisonedBehavior",
+      "class_name": "PoisonedBehavior",
+      "conditional_branches": [],
+      "line": 367,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "RebuildHoleBehavior",
+      "class_name": "RebuildHoleBehavior",
+      "conditional_branches": [],
+      "line": 368,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "SupplyWarehouseCripplingBehavior",
+      "class_name": "SupplyWarehouseCripplingBehavior",
+      "conditional_branches": [],
+      "line": 369,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "TechBuildingBehavior",
+      "class_name": "TechBuildingBehavior",
+      "conditional_branches": [],
+      "line": 370,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "MinefieldBehavior",
+      "class_name": "MinefieldBehavior",
+      "conditional_branches": [],
+      "line": 371,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "BattleBusSlowDeathBehavior",
+      "class_name": "BattleBusSlowDeathBehavior",
+      "conditional_branches": [],
+      "line": 372,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "JetSlowDeathBehavior",
+      "class_name": "JetSlowDeathBehavior",
+      "conditional_branches": [],
+      "line": 373,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "RailroadBehavior",
+      "class_name": "RailroadBehavior",
+      "conditional_branches": [],
+      "line": 374,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "SpawnBehavior",
+      "class_name": "SpawnBehavior",
+      "conditional_branches": [],
+      "line": 375,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "DestroyDie",
+      "class_name": "DestroyDie",
+      "conditional_branches": [],
+      "line": 378,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "FXListDie",
+      "class_name": "FXListDie",
+      "conditional_branches": [],
+      "line": 379,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "CrushDie",
+      "class_name": "CrushDie",
+      "conditional_branches": [],
+      "line": 380,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "DamDie",
+      "class_name": "DamDie",
+      "conditional_branches": [],
+      "line": 381,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "CreateCrateDie",
+      "class_name": "CreateCrateDie",
+      "conditional_branches": [],
+      "line": 382,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "CreateObjectDie",
+      "class_name": "CreateObjectDie",
+      "conditional_branches": [],
+      "line": 383,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "EjectPilotDie",
+      "class_name": "EjectPilotDie",
+      "conditional_branches": [],
+      "line": 384,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "SpecialPowerCompletionDie",
+      "class_name": "SpecialPowerCompletionDie",
+      "conditional_branches": [],
+      "line": 385,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "RebuildHoleExposeDie",
+      "class_name": "RebuildHoleExposeDie",
+      "conditional_branches": [],
+      "line": 386,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "UpgradeDie",
+      "class_name": "UpgradeDie",
+      "conditional_branches": [],
+      "line": 387,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "KeepObjectDie",
+      "class_name": "KeepObjectDie",
+      "conditional_branches": [],
+      "line": 388,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "AssistedTargetingUpdate",
+      "class_name": "AssistedTargetingUpdate",
+      "conditional_branches": [],
+      "line": 391,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "AutoFindHealingUpdate",
+      "class_name": "AutoFindHealingUpdate",
+      "conditional_branches": [],
+      "line": 392,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "BaseRegenerateUpdate",
+      "class_name": "BaseRegenerateUpdate",
+      "conditional_branches": [],
+      "line": 393,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "StealthDetectorUpdate",
+      "class_name": "StealthDetectorUpdate",
+      "conditional_branches": [],
+      "line": 394,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "StealthUpdate",
+      "class_name": "StealthUpdate",
+      "conditional_branches": [],
+      "line": 395,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "DeletionUpdate",
+      "class_name": "DeletionUpdate",
+      "conditional_branches": [],
+      "line": 396,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "SmartBombTargetHomingUpdate",
+      "class_name": "SmartBombTargetHomingUpdate",
+      "conditional_branches": [],
+      "line": 397,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "DynamicShroudClearingRangeUpdate",
+      "class_name": "DynamicShroudClearingRangeUpdate",
+      "conditional_branches": [],
+      "line": 398,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "DeployStyleAIUpdate",
+      "class_name": "DeployStyleAIUpdate",
+      "conditional_branches": [],
+      "line": 399,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "AssaultTransportAIUpdate",
+      "class_name": "AssaultTransportAIUpdate",
+      "conditional_branches": [],
+      "line": 400,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "HordeUpdate",
+      "class_name": "HordeUpdate",
+      "conditional_branches": [],
+      "line": 401,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "ToppleUpdate",
+      "class_name": "ToppleUpdate",
+      "conditional_branches": [],
+      "line": 402,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "EnemyNearUpdate",
+      "class_name": "EnemyNearUpdate",
+      "conditional_branches": [],
+      "line": 403,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "LifetimeUpdate",
+      "class_name": "LifetimeUpdate",
+      "conditional_branches": [],
+      "line": 404,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "RadiusDecalUpdate",
+      "class_name": "RadiusDecalUpdate",
+      "conditional_branches": [],
+      "line": 405,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "EMPUpdate",
+      "class_name": "EMPUpdate",
+      "conditional_branches": [],
+      "line": 406,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "LeafletDropBehavior",
+      "class_name": "LeafletDropBehavior",
+      "conditional_branches": [],
+      "line": 407,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "AutoDepositUpdate",
+      "class_name": "AutoDepositUpdate",
+      "conditional_branches": [],
+      "line": 408,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "WeaponBonusUpdate",
+      "class_name": "WeaponBonusUpdate",
+      "conditional_branches": [],
+      "line": 409,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "MissileAIUpdate",
+      "class_name": "MissileAIUpdate",
+      "conditional_branches": [],
+      "line": 410,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "NeutronMissileUpdate",
+      "class_name": "NeutronMissileUpdate",
+      "conditional_branches": [],
+      "line": 411,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "FireSpreadUpdate",
+      "class_name": "FireSpreadUpdate",
+      "conditional_branches": [],
+      "line": 412,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "FireWeaponUpdate",
+      "class_name": "FireWeaponUpdate",
+      "conditional_branches": [],
+      "line": 413,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "FlammableUpdate",
+      "class_name": "FlammableUpdate",
+      "conditional_branches": [],
+      "line": 414,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "FloatUpdate",
+      "class_name": "FloatUpdate",
+      "conditional_branches": [],
+      "line": 415,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "TensileFormationUpdate",
+      "class_name": "TensileFormationUpdate",
+      "conditional_branches": [],
+      "line": 416,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "HeightDieUpdate",
+      "class_name": "HeightDieUpdate",
+      "conditional_branches": [],
+      "line": 417,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "ChinookAIUpdate",
+      "class_name": "ChinookAIUpdate",
+      "conditional_branches": [],
+      "line": 418,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "JetAIUpdate",
+      "class_name": "JetAIUpdate",
+      "conditional_branches": [],
+      "line": 419,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "AIUpdateInterface",
+      "class_name": "AIUpdateInterface",
+      "conditional_branches": [],
+      "line": 420,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "SupplyTruckAIUpdate",
+      "class_name": "SupplyTruckAIUpdate",
+      "conditional_branches": [],
+      "line": 421,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "DeliverPayloadAIUpdate",
+      "class_name": "DeliverPayloadAIUpdate",
+      "conditional_branches": [],
+      "line": 422,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "HackInternetAIUpdate",
+      "class_name": "HackInternetAIUpdate",
+      "conditional_branches": [],
+      "line": 423,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "DynamicGeometryInfoUpdate",
+      "class_name": "DynamicGeometryInfoUpdate",
+      "conditional_branches": [],
+      "line": 424,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "FirestormDynamicGeometryInfoUpdate",
+      "class_name": "FirestormDynamicGeometryInfoUpdate",
+      "conditional_branches": [],
+      "line": 425,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "LaserUpdate",
+      "class_name": "LaserUpdate",
+      "conditional_branches": [],
+      "line": 426,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "PointDefenseLaserUpdate",
+      "class_name": "PointDefenseLaserUpdate",
+      "conditional_branches": [],
+      "line": 427,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "CleanupHazardUpdate",
+      "class_name": "CleanupHazardUpdate",
+      "conditional_branches": [],
+      "line": 428,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "CommandButtonHuntUpdate",
+      "class_name": "CommandButtonHuntUpdate",
+      "conditional_branches": [],
+      "line": 429,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "PilotFindVehicleUpdate",
+      "class_name": "PilotFindVehicleUpdate",
+      "conditional_branches": [],
+      "line": 430,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "DemoTrapUpdate",
+      "class_name": "DemoTrapUpdate",
+      "conditional_branches": [],
+      "line": 431,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "ParticleUplinkCannonUpdate",
+      "class_name": "ParticleUplinkCannonUpdate",
+      "conditional_branches": [],
+      "line": 432,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "SpectreGunshipUpdate",
+      "class_name": "SpectreGunshipUpdate",
+      "conditional_branches": [],
+      "line": 433,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "SpectreGunshipDeploymentUpdate",
+      "class_name": "SpectreGunshipDeploymentUpdate",
+      "conditional_branches": [],
+      "line": 434,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "BaikonurLaunchPower",
+      "class_name": "BaikonurLaunchPower",
+      "conditional_branches": [],
+      "line": 435,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "BattlePlanUpdate",
+      "class_name": "BattlePlanUpdate",
+      "conditional_branches": [],
+      "line": 436,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "ProjectileStreamUpdate",
+      "class_name": "ProjectileStreamUpdate",
+      "conditional_branches": [],
+      "line": 437,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "QueueProductionExitUpdate",
+      "class_name": "QueueProductionExitUpdate",
+      "conditional_branches": [],
+      "line": 438,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "RepairDockUpdate",
+      "class_name": "RepairDockUpdate",
+      "conditional_branches": [],
+      "line": 439,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "PrisonDockUpdate",
+      "class_name": "PrisonDockUpdate",
+      "conditional_branches": [
+        [
+          {
+            "directive": "ifdef",
+            "expression": "ALLOW_SURRENDER",
+            "line": 440
+          }
+        ]
+      ],
+      "line": 441,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "RailedTransportDockUpdate",
+      "class_name": "RailedTransportDockUpdate",
+      "conditional_branches": [],
+      "line": 443,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "DefaultProductionExitUpdate",
+      "class_name": "DefaultProductionExitUpdate",
+      "conditional_branches": [],
+      "line": 444,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "SpawnPointProductionExitUpdate",
+      "class_name": "SpawnPointProductionExitUpdate",
+      "conditional_branches": [],
+      "line": 445,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "SpyVisionUpdate",
+      "class_name": "SpyVisionUpdate",
+      "conditional_branches": [],
+      "line": 446,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "SlavedUpdate",
+      "class_name": "SlavedUpdate",
+      "conditional_branches": [],
+      "line": 447,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "MobMemberSlavedUpdate",
+      "class_name": "MobMemberSlavedUpdate",
+      "conditional_branches": [],
+      "line": 448,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "OCLUpdate",
+      "class_name": "OCLUpdate",
+      "conditional_branches": [],
+      "line": 449,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "SpecialAbilityUpdate",
+      "class_name": "SpecialAbilityUpdate",
+      "conditional_branches": [],
+      "line": 450,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "MissileLauncherBuildingUpdate",
+      "class_name": "MissileLauncherBuildingUpdate",
+      "conditional_branches": [],
+      "line": 451,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "SupplyCenterProductionExitUpdate",
+      "class_name": "SupplyCenterProductionExitUpdate",
+      "conditional_branches": [],
+      "line": 452,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "SupplyCenterDockUpdate",
+      "class_name": "SupplyCenterDockUpdate",
+      "conditional_branches": [],
+      "line": 453,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "SupplyWarehouseDockUpdate",
+      "class_name": "SupplyWarehouseDockUpdate",
+      "conditional_branches": [],
+      "line": 454,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "DozerAIUpdate",
+      "class_name": "DozerAIUpdate",
+      "conditional_branches": [],
+      "line": 455,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "POWTruckAIUpdate",
+      "class_name": "POWTruckAIUpdate",
+      "conditional_branches": [
+        [
+          {
+            "directive": "ifdef",
+            "expression": "ALLOW_SURRENDER",
+            "line": 456
+          }
+        ]
+      ],
+      "line": 457,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "RailedTransportAIUpdate",
+      "class_name": "RailedTransportAIUpdate",
+      "conditional_branches": [],
+      "line": 459,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "ProductionUpdate",
+      "class_name": "ProductionUpdate",
+      "conditional_branches": [],
+      "line": 460,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "ProneUpdate",
+      "class_name": "ProneUpdate",
+      "conditional_branches": [],
+      "line": 461,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "StickyBombUpdate",
+      "class_name": "StickyBombUpdate",
+      "conditional_branches": [],
+      "line": 462,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "FireOCLAfterWeaponCooldownUpdate",
+      "class_name": "FireOCLAfterWeaponCooldownUpdate",
+      "conditional_branches": [],
+      "line": 463,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "HijackerUpdate",
+      "class_name": "HijackerUpdate",
+      "conditional_branches": [],
+      "line": 464,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "StructureToppleUpdate",
+      "class_name": "StructureToppleUpdate",
+      "conditional_branches": [],
+      "line": 465,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "StructureCollapseUpdate",
+      "class_name": "StructureCollapseUpdate",
+      "conditional_branches": [],
+      "line": 466,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "BoneFXUpdate",
+      "class_name": "BoneFXUpdate",
+      "conditional_branches": [],
+      "line": 467,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "RadarUpdate",
+      "class_name": "RadarUpdate",
+      "conditional_branches": [],
+      "line": 468,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "AnimationSteeringUpdate",
+      "class_name": "AnimationSteeringUpdate",
+      "conditional_branches": [],
+      "line": 469,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "TransportAIUpdate",
+      "class_name": "TransportAIUpdate",
+      "conditional_branches": [],
+      "line": 470,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "WanderAIUpdate",
+      "class_name": "WanderAIUpdate",
+      "conditional_branches": [],
+      "line": 471,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "WaveGuideUpdate",
+      "class_name": "WaveGuideUpdate",
+      "conditional_branches": [],
+      "line": 472,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "WorkerAIUpdate",
+      "class_name": "WorkerAIUpdate",
+      "conditional_branches": [],
+      "line": 473,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "PowerPlantUpdate",
+      "class_name": "PowerPlantUpdate",
+      "conditional_branches": [],
+      "line": 474,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "CheckpointUpdate",
+      "class_name": "CheckpointUpdate",
+      "conditional_branches": [],
+      "line": 475,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "CostModifierUpgrade",
+      "class_name": "CostModifierUpgrade",
+      "conditional_branches": [],
+      "line": 478,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "ActiveShroudUpgrade",
+      "class_name": "ActiveShroudUpgrade",
+      "conditional_branches": [],
+      "line": 479,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "ArmorUpgrade",
+      "class_name": "ArmorUpgrade",
+      "conditional_branches": [],
+      "line": 480,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "CommandSetUpgrade",
+      "class_name": "CommandSetUpgrade",
+      "conditional_branches": [],
+      "line": 481,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "GrantScienceUpgrade",
+      "class_name": "GrantScienceUpgrade",
+      "conditional_branches": [],
+      "line": 482,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "PassengersFireUpgrade",
+      "class_name": "PassengersFireUpgrade",
+      "conditional_branches": [],
+      "line": 483,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "StatusBitsUpgrade",
+      "class_name": "StatusBitsUpgrade",
+      "conditional_branches": [],
+      "line": 484,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "SubObjectsUpgrade",
+      "class_name": "SubObjectsUpgrade",
+      "conditional_branches": [],
+      "line": 485,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "StealthUpgrade",
+      "class_name": "StealthUpgrade",
+      "conditional_branches": [],
+      "line": 486,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "RadarUpgrade",
+      "class_name": "RadarUpgrade",
+      "conditional_branches": [],
+      "line": 487,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "PowerPlantUpgrade",
+      "class_name": "PowerPlantUpgrade",
+      "conditional_branches": [],
+      "line": 488,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "LocomotorSetUpgrade",
+      "class_name": "LocomotorSetUpgrade",
+      "conditional_branches": [],
+      "line": 489,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "ObjectCreationUpgrade",
+      "class_name": "ObjectCreationUpgrade",
+      "conditional_branches": [],
+      "line": 490,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "ReplaceObjectUpgrade",
+      "class_name": "ReplaceObjectUpgrade",
+      "conditional_branches": [],
+      "line": 491,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "ModelConditionUpgrade",
+      "class_name": "ModelConditionUpgrade",
+      "conditional_branches": [],
+      "line": 492,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "UnpauseSpecialPowerUpgrade",
+      "class_name": "UnpauseSpecialPowerUpgrade",
+      "conditional_branches": [],
+      "line": 493,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "WeaponBonusUpgrade",
+      "class_name": "WeaponBonusUpgrade",
+      "conditional_branches": [],
+      "line": 494,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "WeaponSetUpgrade",
+      "class_name": "WeaponSetUpgrade",
+      "conditional_branches": [],
+      "line": 495,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "WeaponBonusUpgrade",
+      "class_name": "WeaponBonusUpgrade",
+      "conditional_branches": [],
+      "line": 496,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "ExperienceScalarUpgrade",
+      "class_name": "ExperienceScalarUpgrade",
+      "conditional_branches": [],
+      "line": 497,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "MaxHealthUpgrade",
+      "class_name": "MaxHealthUpgrade",
+      "conditional_branches": [],
+      "line": 498,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "LockWeaponCreate",
+      "class_name": "LockWeaponCreate",
+      "conditional_branches": [],
+      "line": 501,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "PreorderCreate",
+      "class_name": "PreorderCreate",
+      "conditional_branches": [],
+      "line": 502,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "SupplyCenterCreate",
+      "class_name": "SupplyCenterCreate",
+      "conditional_branches": [],
+      "line": 503,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "SupplyWarehouseCreate",
+      "class_name": "SupplyWarehouseCreate",
+      "conditional_branches": [],
+      "line": 504,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "SpecialPowerCreate",
+      "class_name": "SpecialPowerCreate",
+      "conditional_branches": [],
+      "line": 505,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "GrantUpgradeCreate",
+      "class_name": "GrantUpgradeCreate",
+      "conditional_branches": [],
+      "line": 506,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "VeterancyGainCreate",
+      "class_name": "VeterancyGainCreate",
+      "conditional_branches": [],
+      "line": 507,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "BoneFXDamage",
+      "class_name": "BoneFXDamage",
+      "conditional_branches": [],
+      "line": 510,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "TransitionDamageFX",
+      "class_name": "TransitionDamageFX",
+      "conditional_branches": [],
+      "line": 511,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "FireWeaponCollide",
+      "class_name": "FireWeaponCollide",
+      "conditional_branches": [],
+      "line": 514,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "SquishCollide",
+      "class_name": "SquishCollide",
+      "conditional_branches": [],
+      "line": 515,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "HealCrateCollide",
+      "class_name": "HealCrateCollide",
+      "conditional_branches": [],
+      "line": 517,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "MoneyCrateCollide",
+      "class_name": "MoneyCrateCollide",
+      "conditional_branches": [],
+      "line": 518,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "ShroudCrateCollide",
+      "class_name": "ShroudCrateCollide",
+      "conditional_branches": [],
+      "line": 519,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "UnitCrateCollide",
+      "class_name": "UnitCrateCollide",
+      "conditional_branches": [],
+      "line": 520,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "VeterancyCrateCollide",
+      "class_name": "VeterancyCrateCollide",
+      "conditional_branches": [],
+      "line": 521,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "ConvertToCarBombCrateCollide",
+      "class_name": "ConvertToCarBombCrateCollide",
+      "conditional_branches": [],
+      "line": 522,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "ConvertToHijackedVehicleCrateCollide",
+      "class_name": "ConvertToHijackedVehicleCrateCollide",
+      "conditional_branches": [],
+      "line": 523,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "SabotageCommandCenterCrateCollide",
+      "class_name": "SabotageCommandCenterCrateCollide",
+      "conditional_branches": [],
+      "line": 524,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "SabotageFakeBuildingCrateCollide",
+      "class_name": "SabotageFakeBuildingCrateCollide",
+      "conditional_branches": [],
+      "line": 525,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "SabotageInternetCenterCrateCollide",
+      "class_name": "SabotageInternetCenterCrateCollide",
+      "conditional_branches": [],
+      "line": 526,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "SabotageMilitaryFactoryCrateCollide",
+      "class_name": "SabotageMilitaryFactoryCrateCollide",
+      "conditional_branches": [],
+      "line": 527,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "SabotagePowerPlantCrateCollide",
+      "class_name": "SabotagePowerPlantCrateCollide",
+      "conditional_branches": [],
+      "line": 528,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "SabotageSuperweaponCrateCollide",
+      "class_name": "SabotageSuperweaponCrateCollide",
+      "conditional_branches": [],
+      "line": 529,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "SabotageSupplyCenterCrateCollide",
+      "class_name": "SabotageSupplyCenterCrateCollide",
+      "conditional_branches": [],
+      "line": 530,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "SabotageSupplyDropzoneCrateCollide",
+      "class_name": "SabotageSupplyDropzoneCrateCollide",
+      "conditional_branches": [],
+      "line": 531,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "SalvageCrateCollide",
+      "class_name": "SalvageCrateCollide",
+      "conditional_branches": [],
+      "line": 532,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "InactiveBody",
+      "class_name": "InactiveBody",
+      "conditional_branches": [],
+      "line": 535,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "ActiveBody",
+      "class_name": "ActiveBody",
+      "conditional_branches": [],
+      "line": 536,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "HighlanderBody",
+      "class_name": "HighlanderBody",
+      "conditional_branches": [],
+      "line": 537,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "ImmortalBody",
+      "class_name": "ImmortalBody",
+      "conditional_branches": [],
+      "line": 538,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "StructureBody",
+      "class_name": "StructureBody",
+      "conditional_branches": [],
+      "line": 539,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "HiveStructureBody",
+      "class_name": "HiveStructureBody",
+      "conditional_branches": [],
+      "line": 540,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "UndeadBody",
+      "class_name": "UndeadBody",
+      "conditional_branches": [],
+      "line": 541,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "CashHackSpecialPower",
+      "class_name": "CashHackSpecialPower",
+      "conditional_branches": [],
+      "line": 547,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "DefectorSpecialPower",
+      "class_name": "DefectorSpecialPower",
+      "conditional_branches": [],
+      "line": 548,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "DemoralizeSpecialPower",
+      "class_name": "DemoralizeSpecialPower",
+      "conditional_branches": [
+        [
+          {
+            "directive": "ifdef",
+            "expression": "ALLOW_DEMORALIZE",
+            "line": 549
+          }
+        ]
+      ],
+      "line": 550,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "OCLSpecialPower",
+      "class_name": "OCLSpecialPower",
+      "conditional_branches": [],
+      "line": 552,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "FireWeaponPower",
+      "class_name": "FireWeaponPower",
+      "conditional_branches": [],
+      "line": 553,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "SpecialAbility",
+      "class_name": "SpecialAbility",
+      "conditional_branches": [],
+      "line": 554,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "SpyVisionSpecialPower",
+      "class_name": "SpyVisionSpecialPower",
+      "conditional_branches": [],
+      "line": 555,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "CashBountyPower",
+      "class_name": "CashBountyPower",
+      "conditional_branches": [],
+      "line": 556,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "CleanupAreaPower",
+      "class_name": "CleanupAreaPower",
+      "conditional_branches": [],
+      "line": 557,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "AnimatedParticleSysBoneClientUpdate",
+      "class_name": "AnimatedParticleSysBoneClientUpdate",
+      "conditional_branches": [],
+      "line": 563,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "SwayClientUpdate",
+      "class_name": "SwayClientUpdate",
+      "conditional_branches": [],
+      "line": 564,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "BeaconClientUpdate",
+      "class_name": "BeaconClientUpdate",
+      "conditional_branches": [],
+      "line": 565,
+      "path": "GameEngine/Source/Common/Thing/ModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "d3a287cb652dd0489350172fb12789063fbcb7714eb50cd2502283e23a487052"
+    },
+    {
+      "argument": "W3DDefaultDraw",
+      "class_name": "W3DDefaultDraw",
+      "conditional_branches": [],
+      "line": 62,
+      "path": "GameEngineDevice/Source/W3DDevice/Common/Thing/W3DModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "5df30baa59d55808a97b37f72e925dc9fec36484fc74e3f712194c3df6b67f9a"
+    },
+    {
+      "argument": "W3DDebrisDraw",
+      "class_name": "W3DDebrisDraw",
+      "conditional_branches": [],
+      "line": 63,
+      "path": "GameEngineDevice/Source/W3DDevice/Common/Thing/W3DModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "5df30baa59d55808a97b37f72e925dc9fec36484fc74e3f712194c3df6b67f9a"
+    },
+    {
+      "argument": "W3DModelDraw",
+      "class_name": "W3DModelDraw",
+      "conditional_branches": [],
+      "line": 64,
+      "path": "GameEngineDevice/Source/W3DDevice/Common/Thing/W3DModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "5df30baa59d55808a97b37f72e925dc9fec36484fc74e3f712194c3df6b67f9a"
+    },
+    {
+      "argument": "W3DLaserDraw",
+      "class_name": "W3DLaserDraw",
+      "conditional_branches": [],
+      "line": 65,
+      "path": "GameEngineDevice/Source/W3DDevice/Common/Thing/W3DModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "5df30baa59d55808a97b37f72e925dc9fec36484fc74e3f712194c3df6b67f9a"
+    },
+    {
+      "argument": "W3DOverlordTankDraw",
+      "class_name": "W3DOverlordTankDraw",
+      "conditional_branches": [],
+      "line": 66,
+      "path": "GameEngineDevice/Source/W3DDevice/Common/Thing/W3DModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "5df30baa59d55808a97b37f72e925dc9fec36484fc74e3f712194c3df6b67f9a"
+    },
+    {
+      "argument": "W3DOverlordTruckDraw",
+      "class_name": "W3DOverlordTruckDraw",
+      "conditional_branches": [],
+      "line": 67,
+      "path": "GameEngineDevice/Source/W3DDevice/Common/Thing/W3DModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "5df30baa59d55808a97b37f72e925dc9fec36484fc74e3f712194c3df6b67f9a"
+    },
+    {
+      "argument": "W3DOverlordAircraftDraw",
+      "class_name": "W3DOverlordAircraftDraw",
+      "conditional_branches": [],
+      "line": 68,
+      "path": "GameEngineDevice/Source/W3DDevice/Common/Thing/W3DModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "5df30baa59d55808a97b37f72e925dc9fec36484fc74e3f712194c3df6b67f9a"
+    },
+    {
+      "argument": "W3DProjectileStreamDraw",
+      "class_name": "W3DProjectileStreamDraw",
+      "conditional_branches": [],
+      "line": 69,
+      "path": "GameEngineDevice/Source/W3DDevice/Common/Thing/W3DModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "5df30baa59d55808a97b37f72e925dc9fec36484fc74e3f712194c3df6b67f9a"
+    },
+    {
+      "argument": "W3DPoliceCarDraw",
+      "class_name": "W3DPoliceCarDraw",
+      "conditional_branches": [],
+      "line": 70,
+      "path": "GameEngineDevice/Source/W3DDevice/Common/Thing/W3DModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "5df30baa59d55808a97b37f72e925dc9fec36484fc74e3f712194c3df6b67f9a"
+    },
+    {
+      "argument": "W3DRopeDraw",
+      "class_name": "W3DRopeDraw",
+      "conditional_branches": [],
+      "line": 71,
+      "path": "GameEngineDevice/Source/W3DDevice/Common/Thing/W3DModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "5df30baa59d55808a97b37f72e925dc9fec36484fc74e3f712194c3df6b67f9a"
+    },
+    {
+      "argument": "W3DScienceModelDraw",
+      "class_name": "W3DScienceModelDraw",
+      "conditional_branches": [],
+      "line": 72,
+      "path": "GameEngineDevice/Source/W3DDevice/Common/Thing/W3DModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "5df30baa59d55808a97b37f72e925dc9fec36484fc74e3f712194c3df6b67f9a"
+    },
+    {
+      "argument": "W3DSupplyDraw",
+      "class_name": "W3DSupplyDraw",
+      "conditional_branches": [],
+      "line": 73,
+      "path": "GameEngineDevice/Source/W3DDevice/Common/Thing/W3DModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "5df30baa59d55808a97b37f72e925dc9fec36484fc74e3f712194c3df6b67f9a"
+    },
+    {
+      "argument": "W3DDependencyModelDraw",
+      "class_name": "W3DDependencyModelDraw",
+      "conditional_branches": [],
+      "line": 74,
+      "path": "GameEngineDevice/Source/W3DDevice/Common/Thing/W3DModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "5df30baa59d55808a97b37f72e925dc9fec36484fc74e3f712194c3df6b67f9a"
+    },
+    {
+      "argument": "W3DTankDraw",
+      "class_name": "W3DTankDraw",
+      "conditional_branches": [],
+      "line": 75,
+      "path": "GameEngineDevice/Source/W3DDevice/Common/Thing/W3DModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "5df30baa59d55808a97b37f72e925dc9fec36484fc74e3f712194c3df6b67f9a"
+    },
+    {
+      "argument": "W3DTruckDraw",
+      "class_name": "W3DTruckDraw",
+      "conditional_branches": [],
+      "line": 76,
+      "path": "GameEngineDevice/Source/W3DDevice/Common/Thing/W3DModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "5df30baa59d55808a97b37f72e925dc9fec36484fc74e3f712194c3df6b67f9a"
+    },
+    {
+      "argument": "W3DTracerDraw",
+      "class_name": "W3DTracerDraw",
+      "conditional_branches": [],
+      "line": 77,
+      "path": "GameEngineDevice/Source/W3DDevice/Common/Thing/W3DModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "5df30baa59d55808a97b37f72e925dc9fec36484fc74e3f712194c3df6b67f9a"
+    },
+    {
+      "argument": "W3DTankTruckDraw",
+      "class_name": "W3DTankTruckDraw",
+      "conditional_branches": [],
+      "line": 78,
+      "path": "GameEngineDevice/Source/W3DDevice/Common/Thing/W3DModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "5df30baa59d55808a97b37f72e925dc9fec36484fc74e3f712194c3df6b67f9a"
+    },
+    {
+      "argument": "W3DTreeDraw",
+      "class_name": "W3DTreeDraw",
+      "conditional_branches": [],
+      "line": 79,
+      "path": "GameEngineDevice/Source/W3DDevice/Common/Thing/W3DModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "5df30baa59d55808a97b37f72e925dc9fec36484fc74e3f712194c3df6b67f9a"
+    },
+    {
+      "argument": "W3DPropDraw",
+      "class_name": "W3DPropDraw",
+      "conditional_branches": [],
+      "line": 80,
+      "path": "GameEngineDevice/Source/W3DDevice/Common/Thing/W3DModuleFactory.cpp",
+      "preprocessor_reachability": "unknown",
+      "runtime_registration": "unverified",
+      "source_sha256": "5df30baa59d55808a97b37f72e925dc9fec36484fc74e3f712194c3df6b67f9a"
+    }
+  ],
+  "schema": 1,
+  "scope": "Authored addModule macro call sites across C/C++ source and headers",
+  "source_tree_sha256": "1fce818714d13f96eec45b6d40bb4854dfddce22a1ede336527443ad004cb8e6",
+  "summary": {
+    "distinct_class_names": 223,
+    "files_scanned": 2961,
+    "guarded_sites": 6,
+    "registration_sites": 224
+  },
+  "unknowns": [
+    "Other registrar mechanisms and macro aliases",
+    "Raw strings, token pasting and complete C++ preprocessing are outside this lexical scanner",
+    "Full preprocessor expansion and configuration reachability",
+    "Class implementation and INI binding coverage",
+    "Link retention and startup execution",
+    "Physical Vita/PSTV runtime behavior"
+  ],
+  "upstream_commit": "0a05454d8574207440a5fb15241b98ad0b435590"
+}
