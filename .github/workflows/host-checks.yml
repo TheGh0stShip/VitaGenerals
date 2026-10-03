@@ -8,7 +8,10 @@ jobs:
   portable-boundaries:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 2
+          persist-credentials: false
       - name: Configure
         run: cmake -S . -B build-host -DCMAKE_BUILD_TYPE=Debug
       - name: Build
@@ -18,4 +21,4 @@ jobs:
       - name: Python inventory counterexamples
         run: python3 -m unittest discover -s tests -p 'test_*.py'
       - name: Whitespace check
-        run: git diff-tree --check HEAD -- . ':!LICENSE.md'
+        run: git diff-tree --root --check HEAD -- . ':!LICENSE.md'
