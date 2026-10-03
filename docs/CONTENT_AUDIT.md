@@ -1,0 +1,38 @@
+# Content and source audit
+
+The inventory follows four separate evidence stages: source enumeration,
+selected/retained build symbols, authored retail references, and runtime route
+verification. Presence at one stage does not close the others. The complete
+port remains the objective; an inventory is an intermediate tool.
+
+The initial scanner enumerates and hashes every supplied source file, records
+translation units, lexical function/pointer-width/script-dispatch candidates,
+and file-valued source string literals. It reads supplied BIGF directories with
+bounded member-name and payload-range checks, records loose-file metadata,
+and associates exact normalized source paths with retail member candidates.
+It retains unresolved literals and multiple candidates explicitly.
+
+```sh
+python3 tools/inventory_content.py --source /path/to/GeneralsMD/Code \
+  --data /path/to/zero-hour --data /path/to/generals \
+  --output .local/content-inventory.json
+python3 -m unittest discover -s tests -p 'test_*.py'
+```
+
+Detailed output is restricted to ignored `.local/`. No assets are extracted,
+no payloads are copied, and no absolute input roots are written to the receipt.
+Archive hashes cover the header/directory only, not payload identity.
+
+This is preliminary static discovery. Lexical function candidates are not a
+complete C++ function index; pointer-width candidates are not a pointer graph.
+The scanner does not resolve computed names, preprocessor reachability, INI
+inheritance, script actions/conditions, map triggers, WND menu callbacks,
+MappedImage sprites, sound events, CSF localization or nested W3D materials.
+Exact path absence is unresolved evidence, not proof that an asset is missing.
+Retail mount order and overrides remain unknown. Parser failures cause a
+nonzero exit and remain in the receipt.
+
+Next steps: implement typed INI/WND/MAP reference discovery and source handler
+registration inventories; preserve file/line or member/offset provenance;
+join those records to target compile commands, linker map and defined symbols.
+Runtime load/callback observations must close routes on physical Vita/PSTV.

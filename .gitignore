@@ -1,0 +1,10 @@
+/build*/
+/.local/
+/CnC_Generals_Zero_Hour-main/
+/upstream/
+AGENTS.md
+.env*
+*.vpk
+*.self
+*.elf
+__pycache__/
