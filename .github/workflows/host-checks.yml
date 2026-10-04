@@ -67,6 +67,8 @@ jobs:
           python3 tools/compare_report.py reports/generated/system-ownership.json.gz build-arm-ci/system-ownership.json.gz
           build-parser/bin/python tools/audit_chunk_routes.py --source build-source-ci/GeneralsMD/Code --output build-arm-ci/chunk-routes.json.gz
           python3 tools/compare_report.py reports/generated/chunk-routes.json.gz build-arm-ci/chunk-routes.json.gz
+          build-parser/bin/python tools/audit_movie_routes.py --source build-source-ci/GeneralsMD/Code --output build-arm-ci/movie-routes.json.gz
+          python3 tools/compare_report.py reports/generated/movie-routes.json.gz build-arm-ci/movie-routes.json.gz
           python3 tools/consolidate_sweep_gaps.py --output build-arm-ci/consolidated-gaps.json --ledger build-arm-ci/PORT_GAPS.md
           cmp reports/generated/consolidated-gaps.json build-arm-ci/consolidated-gaps.json
           cmp docs/PORT_GAPS.md build-arm-ci/PORT_GAPS.md
