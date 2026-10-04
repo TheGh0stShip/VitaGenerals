@@ -166,13 +166,18 @@
           "observed_value": false,
           "pointer": "/engine_build_established",
           "report": "engine-stage-baseline.json"
+        },
+        {
+          "observed_value": 434,
+          "pointer": "/summary/unresolved_format_expressions",
+          "report": "text-formats.json.gz"
         }
       ],
       "id": "ENGINE-BUILD",
       "kind": "evidence_gap",
       "severity": "blocking",
       "status": "open",
-      "title": "Target selection covers a checksum probe rather than the original game engine"
+      "title": "Original full-engine target selection and platform integration remain incomplete"
     },
     {
       "closure_evidence": "Reconcile recovered nodes with original macros, configuration-aware parsing and compiler evidence; review literal/empty/sole-return candidates without assuming stubs.",
@@ -451,9 +456,13 @@
     {
       "report": "chunk-routes.json.gz",
       "sha256": "f5cb385a9cfc7052bbc759fa1ced368efd1ec801ea244c060252a007f0ed3bd1"
+    },
+    {
+      "report": "text-formats.json.gz",
+      "sha256": "112f86aad0d4a1863f232ca12fa035abfa6823775be8177603200b6513ea0995"
     }
   ],
-  "registry_sha256": "ec0551a7eb2fcefff6ab9bb38878ca8766f5797683978af326cab31e60bb7e63",
+  "registry_sha256": "a1ef108c7440972b5f5064f0a91f117825fbffb44eca8c2918a26a2fe882c9df",
   "schema": 1,
   "source_tree_sha256": "1fce818714d13f96eec45b6d40bb4854dfddce22a1ede336527443ad004cb8e6",
   "summary": {

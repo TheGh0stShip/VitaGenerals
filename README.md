@@ -92,5 +92,7 @@ The [include path sweep](docs/INCLUDE_PATH_SWEEP.md) preserves header spelling a
 search-root ambiguities before platform header changes.
 The [system and snapshot sweep](docs/SYSTEM_OWNERSHIP_SWEEP.md) records candidate
 inheritance, lifecycle routes and authored save/CRC registrations.
+The [text formatting sweep](docs/TEXT_FORMAT_SWEEP.md) records literal directives
+and unresolved format expressions before UTF-16 platform integration.
 The [consolidated gap ledger](docs/PORT_GAPS.md) joins sweep evidence and closure
 dependencies while preserving incomplete coverage across the complete game.

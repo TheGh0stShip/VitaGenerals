@@ -1,6 +1,6 @@
 # Consolidated port gaps
 
-Generated from `port/sweep-gaps.json` and 11 pinned sweep reports. All findings
+Generated from `port/sweep-gaps.json` and 12 pinned sweep reports. All findings
 are open evidence gaps; counts do not represent unique defects or game completion.
 Repeated engine-build gaps from individual sweeps share one parent finding.
 Dependencies are joint closure prerequisites, not an exclusive work schedule.
@@ -11,7 +11,7 @@ registry decision. The nine current findings are not a complete defect census.
 | --- | --- | --- |
 | SOURCE-ROLES: Original runtime source roles and configuration reachability remain unresolved | blocking | None |
 | DEPENDENCIES: Original workspace dependencies and middleware providers are unresolved | blocking | None |
-| ENGINE-BUILD: Target selection covers a checksum probe rather than the original game engine | blocking | SOURCE-ROLES, DEPENDENCIES |
+| ENGINE-BUILD: Original full-engine target selection and platform integration remain incomplete | blocking | SOURCE-ROLES, DEPENDENCIES |
 | PARSE-COVERAGE: Parser recoveries prevent a complete callable and guard denominator | required | SOURCE-ROLES |
 | REGISTRATION: Authored registration sites do not establish target callback execution | required | ENGINE-BUILD, PARSE-COVERAGE |
 | SCRIPT-COMPATIBILITY: Script enum, template and dispatch mismatches need compatibility review | required | PARSE-COVERAGE |
@@ -37,7 +37,7 @@ Evidence: [original-projects.json.gz](../reports/generated/original-projects.jso
 
 Deterministically stage the original runtime graph and link the complete engine with audited platform boundaries and matching artifact identities.
 
-Evidence: [original-projects.json.gz](../reports/generated/original-projects.json.gz) `/selected_original_sources`, [original-projects.json.gz](../reports/generated/original-projects.json.gz) `/summary/translation_units`, [engine-stage-baseline.json](../reports/generated/engine-stage-baseline.json) `/source_files`, [engine-stage-baseline.json](../reports/generated/engine-stage-baseline.json) `/engine_build_established`.
+Evidence: [original-projects.json.gz](../reports/generated/original-projects.json.gz) `/selected_original_sources`, [original-projects.json.gz](../reports/generated/original-projects.json.gz) `/summary/translation_units`, [engine-stage-baseline.json](../reports/generated/engine-stage-baseline.json) `/source_files`, [engine-stage-baseline.json](../reports/generated/engine-stage-baseline.json) `/engine_build_established`, [text-formats.json.gz](../reports/generated/text-formats.json.gz) `/summary/unresolved_format_expressions`.
 
 ### PARSE-COVERAGE
 

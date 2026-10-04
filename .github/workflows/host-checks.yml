@@ -78,6 +78,8 @@ jobs:
           python3 tools/compare_report.py reports/generated/function-lexicon.json.gz build-arm-ci/function-lexicon.json.gz
           build-parser/bin/python tools/audit_float_routes.py --source build-source-ci/GeneralsMD/Code --output build-arm-ci/float-routes.json.gz
           python3 tools/compare_report.py reports/generated/float-routes.json.gz build-arm-ci/float-routes.json.gz
+          build-parser/bin/python tools/audit_text_formats.py --source build-source-ci/GeneralsMD/Code --output build-arm-ci/text-formats.json.gz
+          python3 tools/compare_report.py reports/generated/text-formats.json.gz build-arm-ci/text-formats.json.gz
           python3 tools/consolidate_sweep_gaps.py --output build-arm-ci/consolidated-gaps.json --ledger build-arm-ci/PORT_GAPS.md
           cmp reports/generated/consolidated-gaps.json build-arm-ci/consolidated-gaps.json
           cmp docs/PORT_GAPS.md build-arm-ci/PORT_GAPS.md

@@ -11,7 +11,8 @@
     "engine-stage-baseline.json",
     "include-paths.json.gz",
     "system-ownership.json.gz",
-    "chunk-routes.json.gz"
+    "chunk-routes.json.gz",
+    "text-formats.json.gz"
   ],
   "findings": [
     {
@@ -69,7 +70,7 @@
       "severity": "blocking",
       "kind": "evidence_gap",
       "status": "open",
-      "title": "Target selection covers a checksum probe rather than the original game engine",
+      "title": "Original full-engine target selection and platform integration remain incomplete",
       "depends_on": [
         "SOURCE-ROLES",
         "DEPENDENCIES"
@@ -90,6 +91,10 @@
         {
           "report": "engine-stage-baseline.json",
           "pointer": "/engine_build_established"
+        },
+        {
+          "report": "text-formats.json.gz",
+          "pointer": "/summary/unresolved_format_expressions"
         }
       ],
       "closure_evidence": "Deterministically stage the original runtime graph and link the complete engine with audited platform boundaries and matching artifact identities."
