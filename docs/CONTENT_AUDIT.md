@@ -70,3 +70,11 @@ and wide size headers, terminal literals, wrapper validation, duplicate labels
 and truncated or oversized structures. Retail-derived results stay private.
 The module is an inventory aid; original engine integration and physical
 Vita/PSTV validation remain separate requirements.
+
+`tools/map_values.py` reads counted ASCII byte strings and typed dictionaries
+with explicit scalar widths. Entries preserve order and duplicates, signed
+packed-key shifting, ambiguous table labels, raw float32 bits and UTF-16 code
+units. Embedded NULs and unpaired surrogates remain visible for review. The
+module refuses native-layout unpack formats and does not use host wchar_t.
+These wire-value records do not establish runtime string behavior, dictionary
+capacity, property interpretation or serialization ABI compatibility.
