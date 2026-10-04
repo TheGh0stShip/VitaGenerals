@@ -3,13 +3,13 @@
   "engine_build_established": false,
   "evidence_class": "source_staging_only",
   "hardware_verified": false,
-  "patch_manifest_sha256": "5aadd5e7251da2fac62d9ed48aa0ff1b1cf5f2b0ac9ec3a6c7c7c8b46d81f127",
+  "patch_manifest_sha256": "0cb64e592af80f2ab5a55e48b26f9e9c5c3d9566da82cb98069a21e077af67dc",
   "patched_files": 5,
   "schema": 1,
   "scope": "Complete pinned Code file staging and declared patch outputs",
   "source_files": 3197,
   "source_lock_sha256": "b8eeb02ada074b2cbe0c675f62c1a2eda01e793b07d82028f2fb7c2fd318dd59",
   "source_tree_sha256": "1fce818714d13f96eec45b6d40bb4854dfddce22a1ede336527443ad004cb8e6",
-  "staged_tree_sha256": "7dafaa342b09b3c831efbfb51cc0ece92bd9fdea0c675f42f10a2057ae77d104",
+  "staged_tree_sha256": "89b7d7625b74d01c5020f1904157a387ceee41055896a4ba2ebfa4a56176ba92",
   "upstream_commit": "0a05454d8574207440a5fb15241b98ad0b435590"
 }

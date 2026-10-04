@@ -29,7 +29,7 @@ set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS
   vendor/ea/manifest.json vendor/ea/wwlib/realcrc.cpp vendor/ea/wwlib/realcrc.h
   port/patches/realcrc-width.patch tools/stage_original.py
   vendor/ea/wwmath/wwmath.h vendor/ea/wwlib/always.h
-  port/patches/wwmath-validity-width.patch)
+  port/patches/wwmath-validity-width.patch port/patches/wwmath-int-conversion.patch)
 
 add_library(vg_archive STATIC src/big_header.c)
 target_include_directories(vg_archive PUBLIC src)

@@ -1,0 +1,59 @@
+--- a/wwmath/wwmath.h
++++ b/wwmath/wwmath.h
+@@ -567,28 +567,34 @@
+ 
+ WWINLINE int WWMath::Float_To_Int_Chop(const float& f)
+ {
+-    int a	= *reinterpret_cast<const int*>(&f);				// take bit pattern of float into a register
+-    int sign	= (a>>31);												// sign = 0xFFFFFFFF if original value is negative, 0 if positive
+-    int mantissa	= (a&((1<<23)-1))|(1<<23);						// extract mantissa and add the hidden bit
+-    int exponent	= ((a&0x7fffffff)>>23)-127;					// extract the exponent
+-    int r	= ((unsigned int)(mantissa)<<8)>>(31-exponent);	// ((1<<exponent)*mantissa)>>24 -- (we know that mantissa > (1<<24))
+-    return ((r ^ (sign)) - sign ) &~ (exponent>>31);			// add original sign. If exponent was negative, make return value 0.
+-}
+-
+-WWINLINE int WWMath::Float_To_Int_Floor (const float& f)
+-{
+-	int a			= *reinterpret_cast<const int*>(&f);			// take bit pattern of float into a register
+-	int sign		= (a>>31);												// sign = 0xFFFFFFFF if original value is negative, 0 if positive
+-	a&=0x7fffffff;															// we don't need the sign any more
+-
+-	int exponent	= (a>>23)-127;										// extract the exponent
+-	int expsign	= ~(exponent>>31);									// 0xFFFFFFFF if exponent is positive, 0 otherwise
+-	int imask		= ( (1<<(31-(exponent))))-1;					// mask for true integer values
+-	int mantissa	= (a&((1<<23)-1));								// extract mantissa (without the hidden bit)
+-	int r			= ((unsigned int)(mantissa|(1<<23))<<8)>>(31-exponent);	// ((1<<exponent)*(mantissa|hidden bit))>>24 -- (we know that mantissa > (1<<24))
+-
+-	r = ((r & expsign) ^ (sign)) + ((!((mantissa<<8)&imask)&(expsign^((a-1)>>31)))&sign);	// if (fabs(value)<1.0) value = 0; copy sign; if (value < 0 && value==(int)(value)) value++;
+-	return r;
++ // Preserve original x86 modulo-32 shift counts and two-complement arithmetic.
++ static_assert(sizeof(int) == 4 && sizeof(float) == 4, "WWMath requires 32-bit int and float");
++ uint32_t bits; memcpy(&bits, &f, sizeof(bits));
++ const uint32_t sign = 0u - (bits >> 31);
++ const int exponent = int((bits & 0x7fffffffu) >> 23) - 127;
++ const uint32_t mantissa = (bits & 0x7fffffu) | 0x800000u;
++ const uint32_t magnitude = (mantissa << 8) >> (unsigned(31 - exponent) & 31u);
++ const uint32_t result = ((magnitude ^ sign) - sign) & (exponent < 0 ? 0u : UINT32_MAX);
++ int output; memcpy(&output, &result, sizeof(output)); return output;
++}
++
++WWINLINE int WWMath::Float_To_Int_Floor(const float& f)
++{
++ // Preserve original x86 modulo-32 shift counts and two-complement arithmetic.
++ static_assert(sizeof(int) == 4 && sizeof(float) == 4, "WWMath requires 32-bit int and float");
++ uint32_t bits; memcpy(&bits, &f, sizeof(bits));
++ const uint32_t sign = 0u - (bits >> 31);
++ const uint32_t absolute = bits & 0x7fffffffu;
++ const int exponent = int(absolute >> 23) - 127;
++ const uint32_t exponent_mask = exponent < 0 ? 0u : UINT32_MAX;
++ const unsigned shift = unsigned(31 - exponent) & 31u;
++ const uint32_t integer_mask = (uint32_t(1) << shift) - 1u;
++ const uint32_t mantissa = absolute & 0x7fffffu;
++ const uint32_t magnitude = ((mantissa | 0x800000u) << 8) >> shift;
++ const uint32_t correction = uint32_t(!((mantissa << 8) & integer_mask)) &
++     (exponent_mask ^ (absolute == 0 ? UINT32_MAX : 0u)) & sign;
++ const uint32_t result = ((magnitude & exponent_mask) ^ sign) + correction;
++ int output; memcpy(&output, &result, sizeof(output)); return output;
+ }
+ 
+ // ----------------------------------------------------------------------------

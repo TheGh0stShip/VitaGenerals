@@ -21,3 +21,19 @@ double representations. Host sanitizer execution and ARM compile/link are
 separate gates. Its allocation declaration guard selects actual standard
 operators from `<new>`; it does not validate the engine allocator. Physical
 Vita execution and full WWMath integration remain unverified.
+
+The integer conversion patch also removes float/int pointer aliasing and
+undefined shifts from `Float_To_Int_Chop` and `Float_To_Int_Floor`. It makes
+original x86 modulo-32 shift counts and two-complement wrap explicit using
+32-bit unsigned operations. Results are copied into the signed return type;
+there is no overflowing float-to-int cast or new invalid-input sentinel.
+
+The probe visits 2,097,152 binary32 samples across every sign/exponent field
+and compares representable inputs with double-precision truncation/floor.
+Twenty golden cases retain original x86 expression results for signed zero,
+subnormals, range endpoints, infinities and NaN payloads. A separate development
+comparison matched 16,384 vectors against the original expressions compiled
+for x86 with GCC. This is not verification against the original MSVC retail
+executable or multiplayer determinism. Invalid trigonometric table inputs and
+full caller-domain coverage remain open; this patch preserves their conversion
+results without claiming to fix those callers.

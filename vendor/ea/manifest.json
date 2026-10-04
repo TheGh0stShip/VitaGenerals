@@ -25,7 +25,7 @@
       "path": "wwmath/wwmath.h",
       "upstream_path": "GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/wwmath.h",
       "sha256": "255334fe157908152e4528eecee4d87b445854983b989bafedaf4c395a6e6466",
-      "staged_sha256": "331753a82e15a9ae70b39ac4e8200293f676513133ba1dad64f253651fabd0ec"
+      "staged_sha256": "15313dc81520ef29dff0ff4621a325c764bac77d6d63246ebab7f1b7ec9be2e8"
     },
     {
       "path": "wwlib/always.h",
@@ -46,6 +46,10 @@
     {
       "path": "port/patches/wwmath-validity-width.patch",
       "sha256": "d35214a941fc0901e515aa9fdf15add435beb7a6a7ff7c349c5d58d36277a4b2"
+    },
+    {
+      "path": "port/patches/wwmath-int-conversion.patch",
+      "sha256": "2040c09810cc3970cab138039c2203bc09f9b36a300a00603c0c07c461ae7a15"
     }
   ]
 }
