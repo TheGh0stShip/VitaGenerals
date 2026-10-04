@@ -109,3 +109,21 @@ Quoted ASCII stays unresolved, preserving the original reader's behavior for
 separate review. The caller must establish block ownership and retain lexical
 input issues. Overlong or multi-line inputs are refused. This module neither
 selects defaults/providers nor proves audio paths, playback or video coverage.
+
+`tools/csf_labels.py` reads bounded CSF wire records with explicit little-endian
+32-bit header/count fields and 16-bit encoded string-unit lengths. It preserves
+ordered labels, duplicates, embedded label NULs, all string frames, encoded-data
+hashes, encoded zero-unit positions and speech metadata. It does not use native
+`wchar_t`, invert or trim text, select the first string, or choose a provider.
+
+Diagnostic policy limits are 16 MiB per input and one million counts/records;
+negative counts, invalid tags, incomplete records and trailing partial data fail.
+Records are read to EOF rather than synthesized or discarded to fit header
+counts; disagreements remain explicit. Label and speech lengths count bytes;
+encoded string lengths count 16-bit units. Unit counts are checked before the
+byte-length multiplication. Version, language and reserved header fields remain uninterpreted.
+Zero-string labels are retained. This is an inventory reader, not the original
+engine's runtime text parser. UTF-16/native string conversion, STR alternatives,
+locale/provider selection, window style and physical glyph rendering remain open.
+Synthetic contracts cover byte widths, encoded units, speech frames, duplicate
+labels, zero-string records, count mismatches, truncations and policy limits.
