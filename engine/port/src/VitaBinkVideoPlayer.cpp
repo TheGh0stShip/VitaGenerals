@@ -77,6 +77,7 @@ VideoStreamInterface *BinkVideoPlayer::createStream(VitaBinkVideoDecoder *decode
         stream->m_audioOutput = NULL;
         decoder->disableAudioOutput();
     }
+    decoder->startPresentation(MovieClockMicroseconds());
     stream->m_next = m_firstStream;
     stream->m_player = this;
     m_firstStream = stream;

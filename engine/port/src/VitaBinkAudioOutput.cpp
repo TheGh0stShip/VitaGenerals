@@ -89,6 +89,10 @@ void VitaBinkAudioOutput::run()
     std::array<std::int16_t, FramesPerBuffer * 2> output;
     bool started = false;
     while (!m_stop.load(std::memory_order_acquire)) {
+        if (!m_decoder->presentationStarted()) {
+            sceKernelDelayThread(1000);
+            continue;
+        }
         const std::size_t queued = m_decoder->queuedAudioFrames();
         const bool complete = m_decoder->audioComplete();
         if (!started && queued < StartupFrames && !complete) {

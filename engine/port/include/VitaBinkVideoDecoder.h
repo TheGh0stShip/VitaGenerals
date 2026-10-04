@@ -24,6 +24,8 @@ public:
 
     bool open(const char *path, std::int64_t clockMicroseconds);
     void close();
+    void startPresentation(std::int64_t clockMicroseconds);
+    bool presentationStarted() const;
     bool decodeNextFrame();
     bool isFrameReady(std::int64_t clockMicroseconds) const;
     bool copyFrame(void *destination, std::size_t pitch, unsigned height,

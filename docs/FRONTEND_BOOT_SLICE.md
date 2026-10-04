@@ -49,6 +49,16 @@ archive inspection and a final link against `SceAudio_stub` cover this boundary;
 audible output, clock synchronization and starvation behavior still require
 physical Vita/PSTV validation.
 
+Opening a stream decodes the first video frame, then performs bounded demux
+prefetch until the audio reserve is ready while retaining intervening video
+packets in order. The first frame and audio worker remain gated until stream
+construction arms a shared presentation origin. FFmpeg send backpressure keeps
+the current packet referenced until the decoder accepts it. Packet-count and
+byte ceilings bound startup work; if those ceilings prevent a safe reserve,
+audio is disabled for that movie instead of starting late or losing samples.
+This establishes the scheduling contract in host decode and ARM link evidence,
+but only device measurements can establish audible synchronization.
+
 The Renegade Vita frontend history establishes several reusable requirements,
 not runtime proof for this title. Decoder packets must survive FFmpeg
 backpressure; presentation time starts only when decoded output can actually be

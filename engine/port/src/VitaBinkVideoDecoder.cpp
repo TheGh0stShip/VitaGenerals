@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <atomic>
 #include <climits>
+#include <deque>
 #include <limits>
 #include <new>
 #include <pthread.h>
@@ -22,6 +23,11 @@ namespace {
 const int AudioRate = 48000;
 const int AudioChannels = 2;
 const std::size_t AudioRingSamples = 2U * AudioRate * AudioChannels;
+const std::size_t AudioStartupFrames = 6U * 1024U;
+const std::size_t PrefetchPacketLimit = 16U;
+const std::size_t PrefetchTriggerBytes = 8U * 1024U * 1024U;
+const std::size_t PrefetchAbsoluteBytes = 16U * 1024U * 1024U;
+const std::size_t PrefetchReadLimit = 64U;
 }
 
 struct VitaBinkVideoDecoder::State
@@ -41,9 +47,11 @@ struct VitaBinkVideoDecoder::State
     std::int64_t clockOrigin;
     std::int64_t ptsOrigin;
     std::int64_t presentation;
+    std::atomic<bool> clockArmed;
     bool draining;
     bool finished;
     bool hasFrame;
+    bool packetPending;
     std::atomic<bool> audioFlushed;
     std::atomic<bool> demuxEnded;
     std::vector<std::int16_t> audioRing;
@@ -53,16 +61,19 @@ struct VitaBinkVideoDecoder::State
     std::size_t audioCount;
     bool audioConsumerActive;
     bool audioDiscard;
+    std::deque<AVPacket *> pendingVideo;
+    std::size_t pendingVideoBytes;
     mutable pthread_mutex_t audioMutex;
     pthread_cond_t audioCondition;
 
     State() : format(NULL), decoder(NULL), frame(NULL), packet(NULL), scaler(NULL),
         audioDecoder(NULL), audioFrame(NULL), resampler(NULL), stream(-1),
         audioStream(-1), index(-1), count(0), clockOrigin(0),
-        ptsOrigin(AV_NOPTS_VALUE), presentation(0), draining(false),
-        finished(false), hasFrame(false), audioFlushed(false), demuxEnded(false),
+        ptsOrigin(AV_NOPTS_VALUE), presentation(0), clockArmed(false),
+        draining(false), finished(false), hasFrame(false), packetPending(false),
+        audioFlushed(false), demuxEnded(false),
         audioRead(0), audioWrite(0), audioCount(0), audioConsumerActive(false),
-        audioDiscard(false)
+        audioDiscard(false), pendingVideoBytes(0)
     {
         pthread_mutex_init(&audioMutex, NULL);
         pthread_cond_init(&audioCondition, NULL);
@@ -81,6 +92,17 @@ std::int64_t RescaleTimestamp(std::int64_t timestamp, AVRational timeBase)
 {
     if (timestamp == AV_NOPTS_VALUE) return AV_NOPTS_VALUE;
     return av_rescale_q(timestamp, timeBase, AVRational{1, 1000000});
+}
+
+template <typename StateType>
+void ClearPendingVideo(StateType *state)
+{
+    while (!state->pendingVideo.empty()) {
+        AVPacket *packet = state->pendingVideo.front();
+        state->pendingVideo.pop_front();
+        av_packet_free(&packet);
+    }
+    state->pendingVideoBytes = 0;
 }
 
 template <typename StateType>
@@ -205,6 +227,57 @@ void FlushAudio(StateType *state)
     state->audioFlushed.store(true, std::memory_order_release);
 }
 
+template <typename StateType>
+bool PrefetchStartupAudio(StateType *state)
+{
+    if (state->audioStream < 0) return true;
+    AVPacket *packet = av_packet_alloc();
+    if (packet == NULL) return false;
+    bool success = true;
+    std::size_t packetsRead = 0;
+    while (state->audioCount / AudioChannels < AudioStartupFrames &&
+           state->pendingVideo.size() < PrefetchPacketLimit &&
+           state->pendingVideoBytes < PrefetchTriggerBytes &&
+           packetsRead < PrefetchReadLimit) {
+        av_packet_unref(packet);
+        if (av_read_frame(state->format, packet) < 0) {
+            state->demuxEnded.store(true, std::memory_order_release);
+            FlushAudio(state);
+            break;
+        }
+        ++packetsRead;
+        if (packet->stream_index == state->audioStream) {
+            if (!SendAudioPacket(state, packet)) {
+                success = false;
+                break;
+            }
+        } else if (packet->stream_index == state->stream) {
+            const std::size_t bytes = packet->size > 0 ?
+                static_cast<std::size_t>(packet->size) : 0U;
+            if (bytes > PrefetchAbsoluteBytes - state->pendingVideoBytes) {
+                success = false;
+                break;
+            }
+            AVPacket *copy = av_packet_clone(packet);
+            if (copy == NULL) {
+                success = false;
+                break;
+            }
+            state->pendingVideo.push_back(copy);
+            state->pendingVideoBytes += bytes;
+        }
+    }
+    av_packet_free(&packet);
+    if (success && state->audioCount / AudioChannels < AudioStartupFrames &&
+        !state->demuxEnded.load(std::memory_order_acquire)) {
+        pthread_mutex_lock(&state->audioMutex);
+        state->audioDiscard = true;
+        state->audioRead = state->audioWrite = state->audioCount = 0;
+        pthread_mutex_unlock(&state->audioMutex);
+    }
+    return success;
+}
+
 } // namespace
 
 VitaBinkVideoDecoder::VitaBinkVideoDecoder() : m_state(new (std::nothrow) State) {}
@@ -248,6 +321,7 @@ bool VitaBinkVideoDecoder::open(const char *path, std::int64_t clockMicroseconds
     }
     m_state->stream = stream;
     m_state->clockOrigin = clockMicroseconds;
+    m_state->clockArmed.store(false, std::memory_order_release);
     m_state->count = video->nb_frames;
     if (m_state->count <= 0 && video->duration > 0 && video->avg_frame_rate.num > 0) {
         m_state->count = av_rescale_q_rnd(video->duration, video->time_base,
@@ -287,12 +361,18 @@ bool VitaBinkVideoDecoder::open(const char *path, std::int64_t clockMicroseconds
             avcodec_free_context(&m_state->audioDecoder);
         }
     }
-    return decodeNextFrame();
+    if (!decodeNextFrame()) return false;
+    if (!PrefetchStartupAudio(m_state)) {
+        close();
+        return false;
+    }
+    return true;
 }
 
 void VitaBinkVideoDecoder::close()
 {
     if (m_state == NULL) return;
+    ClearPendingVideo(m_state);
     sws_freeContext(m_state->scaler);
     m_state->scaler = NULL;
     swr_free(&m_state->resampler);
@@ -304,6 +384,18 @@ void VitaBinkVideoDecoder::close()
     avformat_close_input(&m_state->format);
     m_state->~State();
     new (m_state) State;
+}
+
+void VitaBinkVideoDecoder::startPresentation(std::int64_t clockMicroseconds)
+{
+    if (!isOpen()) return;
+    m_state->clockOrigin = clockMicroseconds;
+    m_state->clockArmed.store(true, std::memory_order_release);
+}
+
+bool VitaBinkVideoDecoder::presentationStarted() const
+{
+    return isOpen() && m_state->clockArmed.load(std::memory_order_acquire);
 }
 
 bool VitaBinkVideoDecoder::decodeNextFrame()
@@ -319,7 +411,7 @@ bool VitaBinkVideoDecoder::decodeNextFrame()
                                                 video->time_base);
             if (pts == AV_NOPTS_VALUE) pts = m_state->index * 33333;
             if (m_state->ptsOrigin == AV_NOPTS_VALUE) m_state->ptsOrigin = pts;
-            m_state->presentation = m_state->clockOrigin + pts - m_state->ptsOrigin;
+            m_state->presentation = pts - m_state->ptsOrigin;
             m_state->hasFrame = true;
             return true;
         }
@@ -332,21 +424,41 @@ bool VitaBinkVideoDecoder::decodeNextFrame()
         if (m_state->draining) {
             return FinishStream(m_state);
         }
+        if (m_state->packetPending) {
+            result = avcodec_send_packet(m_state->decoder, m_state->packet);
+            if (result == AVERROR(EAGAIN)) continue;
+            av_packet_unref(m_state->packet);
+            m_state->packetPending = false;
+            if (result < 0) return FinishStream(m_state);
+            continue;
+        }
+        if (!m_state->pendingVideo.empty()) {
+            AVPacket *pending = m_state->pendingVideo.front();
+            m_state->pendingVideo.pop_front();
+            const std::size_t bytes = pending->size > 0 ?
+                static_cast<std::size_t>(pending->size) : 0U;
+            m_state->pendingVideoBytes -= std::min(bytes, m_state->pendingVideoBytes);
+            av_packet_move_ref(m_state->packet, pending);
+            av_packet_free(&pending);
+            m_state->packetPending = true;
+            continue;
+        }
+        if (m_state->demuxEnded.load(std::memory_order_acquire)) {
+            result = avcodec_send_packet(m_state->decoder, NULL);
+            if (result == AVERROR(EAGAIN)) continue;
+            if (result < 0 && result != AVERROR_EOF)
+                return FinishStream(m_state);
+            m_state->draining = true;
+            continue;
+        }
         av_packet_unref(m_state->packet);
         result = av_read_frame(m_state->format, m_state->packet);
         if (result < 0) {
             m_state->demuxEnded.store(true, std::memory_order_release);
             FlushAudio(m_state);
-            m_state->draining = true;
-            if (avcodec_send_packet(m_state->decoder, NULL) < 0) {
-                return FinishStream(m_state);
-            }
+            continue;
         } else if (m_state->packet->stream_index == m_state->stream) {
-            result = avcodec_send_packet(m_state->decoder, m_state->packet);
-            av_packet_unref(m_state->packet);
-            if (result < 0) {
-                return FinishStream(m_state);
-            }
+            m_state->packetPending = true;
         } else if (m_state->packet->stream_index == m_state->audioStream) {
             SendAudioPacket(m_state, m_state->packet);
             av_packet_unref(m_state->packet);
@@ -356,8 +468,8 @@ bool VitaBinkVideoDecoder::decodeNextFrame()
 
 bool VitaBinkVideoDecoder::isFrameReady(std::int64_t clockMicroseconds) const
 {
-    return m_state != NULL && m_state->hasFrame &&
-           clockMicroseconds >= m_state->presentation;
+    return m_state != NULL && m_state->hasFrame && presentationStarted() &&
+           clockMicroseconds >= m_state->clockOrigin + m_state->presentation;
 }
 
 bool VitaBinkVideoDecoder::copyFrame(void *destination, std::size_t pitch,
@@ -391,6 +503,7 @@ bool VitaBinkVideoDecoder::copyFrame(void *destination, std::size_t pitch,
 bool VitaBinkVideoDecoder::seekFrame(std::int64_t target, std::int64_t clockMicroseconds)
 {
     if (!isOpen() || target < 0) return false;
+    const bool wasArmed = m_state->clockArmed.load(std::memory_order_acquire);
     AVStream *video = m_state->format->streams[m_state->stream];
     AVRational rate = video->avg_frame_rate.num > 0 ? video->avg_frame_rate :
                                                      AVRational{30, 1};
@@ -402,8 +515,12 @@ bool VitaBinkVideoDecoder::seekFrame(std::int64_t target, std::int64_t clockMicr
     pthread_mutex_lock(&m_state->audioMutex);
     m_state->audioRead = m_state->audioWrite = m_state->audioCount = 0;
     pthread_mutex_unlock(&m_state->audioMutex);
+    ClearPendingVideo(m_state);
+    av_packet_unref(m_state->packet);
+    m_state->packetPending = false;
     m_state->index = target - 1;
     m_state->clockOrigin = clockMicroseconds;
+    m_state->clockArmed.store(wasArmed, std::memory_order_release);
     m_state->ptsOrigin = AV_NOPTS_VALUE;
     m_state->draining = false;
     m_state->finished = false;
