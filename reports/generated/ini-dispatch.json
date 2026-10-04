@@ -1,0 +1,954 @@
+{
+  "complete": false,
+  "dispatch_source_sha256": "829d874d2b9073cf23b220426a7c5eafb887204da370abc59f6df65e8f9615a5",
+  "rows": [
+    {
+      "definition_candidates": [
+        {
+          "line": 47,
+          "path": "GameEngine/Source/Common/INI/INIAiData.cpp",
+          "sha256": "b56ab1975bc82e91cb440c81595ad1faf2c793c7b89389c19fb80ce7a077d251"
+        }
+      ],
+      "handler": "INI::parseAIDataDefinition",
+      "line": 86,
+      "path": "GameEngine/Source/Common/INI/INI.cpp",
+      "runtime_binding": "unverified",
+      "target_selection": "unknown",
+      "token": "AIData"
+    },
+    {
+      "definition_candidates": [
+        {
+          "line": 39,
+          "path": "GameEngine/Source/Common/INI/INIAnimation.cpp",
+          "sha256": "8ab1cc419af807505b1ca736e0a8c9accab15ccc59b92324050f0885d5798d7a"
+        }
+      ],
+      "handler": "INI::parseAnim2DDefinition",
+      "line": 87,
+      "path": "GameEngine/Source/Common/INI/INI.cpp",
+      "runtime_binding": "unverified",
+      "target_selection": "unknown",
+      "token": "Animation"
+    },
+    {
+      "definition_candidates": [
+        {
+          "line": 149,
+          "path": "GameEngine/Source/GameLogic/Object/Armor.cpp",
+          "sha256": "3aaee84db9a0c2ad0d72e5099790d672c0dc67f4ec8781590568d9befb76ed14"
+        }
+      ],
+      "handler": "INI::parseArmorDefinition",
+      "line": 88,
+      "path": "GameEngine/Source/Common/INI/INI.cpp",
+      "runtime_binding": "unverified",
+      "target_selection": "unknown",
+      "token": "Armor"
+    },
+    {
+      "definition_candidates": [
+        {
+          "line": 71,
+          "path": "GameEngine/Source/Common/INI/INIAudioEventInfo.cpp",
+          "sha256": "c5c3f07b0cbe4793cabbc12ee7ef1dd41b9e9cd031dc3aaf411ca0e425a22ce7"
+        }
+      ],
+      "handler": "INI::parseAudioEventDefinition",
+      "line": 89,
+      "path": "GameEngine/Source/Common/INI/INI.cpp",
+      "runtime_binding": "unverified",
+      "target_selection": "unknown",
+      "token": "AudioEvent"
+    },
+    {
+      "definition_candidates": [
+        {
+          "line": 1138,
+          "path": "GameEngine/Source/Common/Audio/GameAudio.cpp",
+          "sha256": "59ef8aed873dbf968e2fdba460ccba5f5219822e5ec1089e7513eb9485d6770d"
+        }
+      ],
+      "handler": "INI::parseAudioSettingsDefinition",
+      "line": 90,
+      "path": "GameEngine/Source/Common/INI/INI.cpp",
+      "runtime_binding": "unverified",
+      "target_selection": "unknown",
+      "token": "AudioSettings"
+    },
+    {
+      "definition_candidates": [
+        {
+          "line": 39,
+          "path": "GameEngine/Source/Common/INI/INITerrainBridge.cpp",
+          "sha256": "4d6be6ac2faa7b982bfad32c966303a2a64ed727625cd031cf77685285bea830"
+        }
+      ],
+      "handler": "INI::parseTerrainBridgeDefinition",
+      "line": 91,
+      "path": "GameEngine/Source/Common/INI/INI.cpp",
+      "runtime_binding": "unverified",
+      "target_selection": "unknown",
+      "token": "Bridge"
+    },
+    {
+      "definition_candidates": [
+        {
+          "line": 95,
+          "path": "GameEngine/Source/GameClient/System/CampaignManager.cpp",
+          "sha256": "3aa07ee98b3103c86c7adfe2daa33c2cb96ef3bf66e889cceacf6e4d676d3bce"
+        }
+      ],
+      "handler": "INI::parseCampaignDefinition",
+      "line": 92,
+      "path": "GameEngine/Source/Common/INI/INI.cpp",
+      "runtime_binding": "unverified",
+      "target_selection": "unknown",
+      "token": "Campaign"
+    },
+    {
+      "definition_candidates": [
+        {
+          "line": 125,
+          "path": "GameEngine/Source/GameClient/GUI/ChallengeGenerals.cpp",
+          "sha256": "e973513892b50c2f3d447ba1d609044c9e17534bf3066c64b0cbdf73f5efafae"
+        }
+      ],
+      "handler": "INI::parseChallengeModeDefinition",
+      "line": 93,
+      "path": "GameEngine/Source/Common/INI/INI.cpp",
+      "runtime_binding": "unverified",
+      "target_selection": "unknown",
+      "token": "ChallengeGenerals"
+    },
+    {
+      "definition_candidates": [
+        {
+          "line": 41,
+          "path": "GameEngine/Source/Common/INI/INICommandButton.cpp",
+          "sha256": "84738e7d3b5e04ac56f4b80bf8eac9d3eea563e8244c568bb586cb69c6a9d4de"
+        }
+      ],
+      "handler": "INI::parseCommandButtonDefinition",
+      "line": 94,
+      "path": "GameEngine/Source/Common/INI/INI.cpp",
+      "runtime_binding": "unverified",
+      "target_selection": "unknown",
+      "token": "CommandButton"
+    },
+    {
+      "definition_candidates": [
+        {
+          "line": 722,
+          "path": "GameEngine/Source/GameClient/MessageStream/MetaEvent.cpp",
+          "sha256": "a9e8189205e803f5e908e41aa3b389c2caf25cc826b58d99701ad5a795f9c963"
+        }
+      ],
+      "handler": "INI::parseMetaMapDefinition",
+      "line": 95,
+      "path": "GameEngine/Source/Common/INI/INI.cpp",
+      "runtime_binding": "unverified",
+      "target_selection": "unknown",
+      "token": "CommandMap"
+    },
+    {
+      "definition_candidates": [
+        {
+          "line": 40,
+          "path": "GameEngine/Source/Common/INI/INICommandSet.cpp",
+          "sha256": "8bee95cab190f64efc7a7de94729ecd4ce60590ad9ca4e38764f489a9d40a236"
+        }
+      ],
+      "handler": "INI::parseCommandSetDefinition",
+      "line": 96,
+      "path": "GameEngine/Source/Common/INI/INI.cpp",
+      "runtime_binding": "unverified",
+      "target_selection": "unknown",
+      "token": "CommandSet"
+    },
+    {
+      "definition_candidates": [
+        {
+          "line": 73,
+          "path": "GameEngine/Source/Common/INI/INIControlBarScheme.cpp",
+          "sha256": "4516cfeb795430f23eda8ec0417e434d9642a0c43bdc2b256aecf8c4206b8198"
+        }
+      ],
+      "handler": "INI::parseControlBarSchemeDefinition",
+      "line": 97,
+      "path": "GameEngine/Source/Common/INI/INI.cpp",
+      "runtime_binding": "unverified",
+      "target_selection": "unknown",
+      "token": "ControlBarScheme"
+    },
+    {
+      "definition_candidates": [
+        {
+          "line": 210,
+          "path": "GameEngine/Source/GameClient/GUI/ControlBar/ControlBarResizer.cpp",
+          "sha256": "0bb507b611cc9a3e5b2147c8de63f462aa6c6139446a4c1be98db4dcece53cff"
+        }
+      ],
+      "handler": "INI::parseControlBarResizerDefinition",
+      "line": 98,
+      "path": "GameEngine/Source/Common/INI/INI.cpp",
+      "runtime_binding": "unverified",
+      "target_selection": "unknown",
+      "token": "ControlBarResizer"
+    },
+    {
+      "definition_candidates": [
+        {
+          "line": 43,
+          "path": "GameEngine/Source/Common/INI/INICrate.cpp",
+          "sha256": "c058cd007217a8ebef21d57c04b7611eeaa5b4b33dd51324de287a22a60be2d4"
+        }
+      ],
+      "handler": "INI::parseCrateTemplateDefinition",
+      "line": 99,
+      "path": "GameEngine/Source/Common/INI/INI.cpp",
+      "runtime_binding": "unverified",
+      "target_selection": "unknown",
+      "token": "CrateData"
+    },
+    {
+      "definition_candidates": [
+        {
+          "line": 92,
+          "path": "GameEngine/Source/GameClient/Credits.cpp",
+          "sha256": "4fe935059d70a698659d55ba9e1f2f782a9cd4a164c6c90e4ee34eef207c918d"
+        }
+      ],
+      "handler": "INI::parseCredits",
+      "line": 100,
+      "path": "GameEngine/Source/Common/INI/INI.cpp",
+      "runtime_binding": "unverified",
+      "target_selection": "unknown",
+      "token": "Credits"
+    },
+    {
+      "definition_candidates": [
+        {
+          "line": 77,
+          "path": "GameEngine/Source/GameClient/GUI/GameWindowTransitions.cpp",
+          "sha256": "07b0d0992b6b317f7aaac53b52046e19333d22b9f06db82fda6c5c28c11d7d83"
+        }
+      ],
+      "handler": "INI::parseWindowTransitions",
+      "line": 101,
+      "path": "GameEngine/Source/Common/INI/INI.cpp",
+      "runtime_binding": "unverified",
+      "target_selection": "unknown",
+      "token": "WindowTransition"
+    },
+    {
+      "definition_candidates": [
+        {
+          "line": 40,
+          "path": "GameEngine/Source/Common/INI/INIDamageFX.cpp",
+          "sha256": "6a6df3d8a280078c071c6052fb8cafab8f7f6bccd61572f55394d22b898be2a3"
+        }
+      ],
+      "handler": "INI::parseDamageFXDefinition",
+      "line": 102,
+      "path": "GameEngine/Source/Common/INI/INI.cpp",
+      "runtime_binding": "unverified",
+      "target_selection": "unknown",
+      "token": "DamageFX"
+    },
+    {
+      "definition_candidates": [
+        {
+          "line": 98,
+          "path": "GameEngine/Source/Common/INI/INIAudioEventInfo.cpp",
+          "sha256": "c5c3f07b0cbe4793cabbc12ee7ef1dd41b9e9cd031dc3aaf411ca0e425a22ce7"
+        }
+      ],
+      "handler": "INI::parseDialogDefinition",
+      "line": 103,
+      "path": "GameEngine/Source/Common/INI/INI.cpp",
+      "runtime_binding": "unverified",
+      "target_selection": "unknown",
+      "token": "DialogEvent"
+    },
+    {
+      "definition_candidates": [
+        {
+          "line": 83,
+          "path": "GameEngine/Source/Common/INI/INIDrawGroupInfo.cpp",
+          "sha256": "0e9f0a8634598ea6c04f658cb77a268ccea3c632bd03d0bca76a08b334a188ba"
+        }
+      ],
+      "handler": "INI::parseDrawGroupNumberDefinition",
+      "line": 104,
+      "path": "GameEngine/Source/Common/INI/INI.cpp",
+      "runtime_binding": "unverified",
+      "target_selection": "unknown",
+      "token": "DrawGroupInfo"
+    },
+    {
+      "definition_candidates": [
+        {
+          "line": 165,
+          "path": "GameEngine/Source/GameClient/Eva.cpp",
+          "sha256": "fcd3ddbc111fe8f9b8b87a7a6cebc65ace6d6f2bce83f74ae77a4145c36e28bc"
+        }
+      ],
+      "handler": "INI::parseEvaEvent",
+      "line": 105,
+      "path": "GameEngine/Source/Common/INI/INI.cpp",
+      "runtime_binding": "unverified",
+      "target_selection": "unknown",
+      "token": "EvaEvent"
+    },
+    {
+      "definition_candidates": [
+        {
+          "line": 874,
+          "path": "GameEngine/Source/GameClient/FXList.cpp",
+          "sha256": "9913da9ad55b4c53dcc41a3d01905f20993ba8ae991f22be0ab63e187dfd7cd2"
+        }
+      ],
+      "handler": "INI::parseFXListDefinition",
+      "line": 106,
+      "path": "GameEngine/Source/Common/INI/INI.cpp",
+      "runtime_binding": "unverified",
+      "target_selection": "unknown",
+      "token": "FXList"
+    },
+    {
+      "definition_candidates": [
+        {
+          "line": 47,
+          "path": "GameEngine/Source/Common/INI/INIGameData.cpp",
+          "sha256": "754582142452704df3998ed8ce0fdc29a681921ace4622ef17d2a886d9ff9a59"
+        }
+      ],
+      "handler": "INI::parseGameDataDefinition",
+      "line": 107,
+      "path": "GameEngine/Source/Common/INI/INI.cpp",
+      "runtime_binding": "unverified",
+      "target_selection": "unknown",
+      "token": "GameData"
+    },
+    {
+      "definition_candidates": [
+        {
+          "line": 885,
+          "path": "GameEngine/Source/GameClient/InGameUI.cpp",
+          "sha256": "e3ec95f463fd4ccae745fe875efbe624d33b50ac6e1294825d8c418ecf75c5eb"
+        }
+      ],
+      "handler": "INI::parseInGameUIDefinition",
+      "line": 108,
+      "path": "GameEngine/Source/Common/INI/INI.cpp",
+      "runtime_binding": "unverified",
+      "target_selection": "unknown",
+      "token": "InGameUI"
+    },
+    {
+      "definition_candidates": [
+        {
+          "line": 641,
+          "path": "GameEngine/Source/GameLogic/Object/Locomotor.cpp",
+          "sha256": "3d1382a6273518a5430bf2aeb9019a93d9955a7ce8733245e012b6bfa115487c"
+        }
+      ],
+      "handler": "INI::parseLocomotorTemplateDefinition",
+      "line": 109,
+      "path": "GameEngine/Source/Common/INI/INI.cpp",
+      "runtime_binding": "unverified",
+      "target_selection": "unknown",
+      "token": "Locomotor"
+    },
+    {
+      "definition_candidates": [
+        {
+          "line": 99,
+          "path": "GameEngine/Source/GameClient/GlobalLanguage.cpp",
+          "sha256": "abd72681d930869564a772eb2fd11582dc4073bed8494028199d1c9aa79af947"
+        }
+      ],
+      "handler": "INI::parseLanguageDefinition",
+      "line": 110,
+      "path": "GameEngine/Source/Common/INI/INI.cpp",
+      "runtime_binding": "unverified",
+      "target_selection": "unknown",
+      "token": "Language"
+    },
+    {
+      "definition_candidates": [
+        {
+          "line": 122,
+          "path": "GameEngine/Source/Common/INI/INIMapCache.cpp",
+          "sha256": "f9d438489bb927f44078ae7fc8461b9a6ad23a29f3cf3cf127ccba5a5043002a"
+        }
+      ],
+      "handler": "INI::parseMapCacheDefinition",
+      "line": 111,
+      "path": "GameEngine/Source/Common/INI/INI.cpp",
+      "runtime_binding": "unverified",
+      "target_selection": "unknown",
+      "token": "MapCache"
+    },
+    {
+      "definition_candidates": [
+        {
+          "line": 46,
+          "path": "GameEngine/Source/Common/INI/INIMapData.cpp",
+          "sha256": "9a5895c2a92f51f5a1ae168e868cc16f0b62dcb904578d14d4fd511f78588387"
+        }
+      ],
+      "handler": "INI::parseMapDataDefinition",
+      "line": 112,
+      "path": "GameEngine/Source/Common/INI/INI.cpp",
+      "runtime_binding": "unverified",
+      "target_selection": "unknown",
+      "token": "MapData"
+    },
+    {
+      "definition_candidates": [
+        {
+          "line": 43,
+          "path": "GameEngine/Source/Common/INI/INIMappedImage.cpp",
+          "sha256": "5306af033d304fcce6220af28546275bcde879ccf425726d2150a202e905f72c"
+        }
+      ],
+      "handler": "INI::parseMappedImageDefinition",
+      "line": 113,
+      "path": "GameEngine/Source/Common/INI/INI.cpp",
+      "runtime_binding": "unverified",
+      "target_selection": "unknown",
+      "token": "MappedImage"
+    },
+    {
+      "definition_candidates": [
+        {
+          "line": 75,
+          "path": "GameEngine/Source/Common/INI/INIMiscAudio.cpp",
+          "sha256": "8184729a66068383c9208fd6795e625fc2a5d28d233432ef48bff226702b532b"
+        }
+      ],
+      "handler": "INI::parseMiscAudio",
+      "line": 114,
+      "path": "GameEngine/Source/Common/INI/INI.cpp",
+      "runtime_binding": "unverified",
+      "target_selection": "unknown",
+      "token": "MiscAudio"
+    },
+    {
+      "definition_candidates": [
+        {
+          "line": 1220,
+          "path": "GameEngine/Source/GameClient/Input/Mouse.cpp",
+          "sha256": "8f117db58fc51223df145a44231c3f728e89e84eba9ddc56c6015896146c377b"
+        }
+      ],
+      "handler": "INI::parseMouseDefinition",
+      "line": 115,
+      "path": "GameEngine/Source/Common/INI/INI.cpp",
+      "runtime_binding": "unverified",
+      "target_selection": "unknown",
+      "token": "Mouse"
+    },
+    {
+      "definition_candidates": [
+        {
+          "line": 1192,
+          "path": "GameEngine/Source/GameClient/Input/Mouse.cpp",
+          "sha256": "8f117db58fc51223df145a44231c3f728e89e84eba9ddc56c6015896146c377b"
+        }
+      ],
+      "handler": "INI::parseMouseCursorDefinition",
+      "line": 116,
+      "path": "GameEngine/Source/Common/INI/INI.cpp",
+      "runtime_binding": "unverified",
+      "target_selection": "unknown",
+      "token": "MouseCursor"
+    },
+    {
+      "definition_candidates": [
+        {
+          "line": 59,
+          "path": "GameEngine/Source/Common/INI/INIMultiplayer.cpp",
+          "sha256": "beb88ac4812aa50fe4d6c0e1741f7650d1ea890e9e59e6e46396945b301403dc"
+        }
+      ],
+      "handler": "INI::parseMultiplayerColorDefinition",
+      "line": 117,
+      "path": "GameEngine/Source/Common/INI/INI.cpp",
+      "runtime_binding": "unverified",
+      "target_selection": "unknown",
+      "token": "MultiplayerColor"
+    },
+    {
+      "definition_candidates": [
+        {
+          "line": 98,
+          "path": "GameEngine/Source/Common/INI/INIMultiplayer.cpp",
+          "sha256": "beb88ac4812aa50fe4d6c0e1741f7650d1ea890e9e59e6e46396945b301403dc"
+        }
+      ],
+      "handler": "INI::parseMultiplayerStartingMoneyChoiceDefinition",
+      "line": 118,
+      "path": "GameEngine/Source/Common/INI/INI.cpp",
+      "runtime_binding": "unverified",
+      "target_selection": "unknown",
+      "token": "MultiplayerStartingMoneyChoice"
+    },
+    {
+      "definition_candidates": [
+        {
+          "line": 82,
+          "path": "GameEngine/Source/GameNetwork/GameSpy/Chat.cpp",
+          "sha256": "f04bfde16bf337dbd3ba221e71508ee040a7307c11c99e518393be5653a18b6c"
+        }
+      ],
+      "handler": "INI::parseOnlineChatColorDefinition",
+      "line": 119,
+      "path": "GameEngine/Source/Common/INI/INI.cpp",
+      "runtime_binding": "unverified",
+      "target_selection": "unknown",
+      "token": "OnlineChatColors"
+    },
+    {
+      "definition_candidates": [
+        {
+          "line": 36,
+          "path": "GameEngine/Source/Common/INI/INIMultiplayer.cpp",
+          "sha256": "beb88ac4812aa50fe4d6c0e1741f7650d1ea890e9e59e6e46396945b301403dc"
+        }
+      ],
+      "handler": "INI::parseMultiplayerSettingsDefinition",
+      "line": 120,
+      "path": "GameEngine/Source/Common/INI/INI.cpp",
+      "runtime_binding": "unverified",
+      "target_selection": "unknown",
+      "token": "MultiplayerSettings"
+    },
+    {
+      "definition_candidates": [
+        {
+          "line": 43,
+          "path": "GameEngine/Source/Common/INI/INIAudioEventInfo.cpp",
+          "sha256": "c5c3f07b0cbe4793cabbc12ee7ef1dd41b9e9cd031dc3aaf411ca0e425a22ce7"
+        }
+      ],
+      "handler": "INI::parseMusicTrackDefinition",
+      "line": 121,
+      "path": "GameEngine/Source/Common/INI/INI.cpp",
+      "runtime_binding": "unverified",
+      "target_selection": "unknown",
+      "token": "MusicTrack"
+    },
+    {
+      "definition_candidates": [
+        {
+          "line": 45,
+          "path": "GameEngine/Source/Common/INI/INIObject.cpp",
+          "sha256": "92815bd67873d7bf3934fdc4b6f22f8ef8da27fe4b62d0551b53df6a1e28e26e"
+        }
+      ],
+      "handler": "INI::parseObjectDefinition",
+      "line": 122,
+      "path": "GameEngine/Source/Common/INI/INI.cpp",
+      "runtime_binding": "unverified",
+      "target_selection": "unknown",
+      "token": "Object"
+    },
+    {
+      "definition_candidates": [
+        {
+          "line": 1632,
+          "path": "GameEngine/Source/GameLogic/Object/ObjectCreationList.cpp",
+          "sha256": "e3505dcf4ac1b79c09df3fd95f2a8ae3635caa25dbf531619002b2d41d2f500c"
+        }
+      ],
+      "handler": "INI::parseObjectCreationListDefinition",
+      "line": 123,
+      "path": "GameEngine/Source/Common/INI/INI.cpp",
+      "runtime_binding": "unverified",
+      "target_selection": "unknown",
+      "token": "ObjectCreationList"
+    },
+    {
+      "definition_candidates": [
+        {
+          "line": 54,
+          "path": "GameEngine/Source/Common/INI/INIObject.cpp",
+          "sha256": "92815bd67873d7bf3934fdc4b6f22f8ef8da27fe4b62d0551b53df6a1e28e26e"
+        }
+      ],
+      "handler": "INI::parseObjectReskinDefinition",
+      "line": 124,
+      "path": "GameEngine/Source/Common/INI/INI.cpp",
+      "runtime_binding": "unverified",
+      "target_selection": "unknown",
+      "token": "ObjectReskin"
+    },
+    {
+      "definition_candidates": [
+        {
+          "line": 39,
+          "path": "GameEngine/Source/Common/INI/INIParticleSys.cpp",
+          "sha256": "b8630fb23d3b5299a9b962baced17fa8a556670a223d42e2ede8864418e22b1c"
+        }
+      ],
+      "handler": "INI::parseParticleSystemDefinition",
+      "line": 125,
+      "path": "GameEngine/Source/Common/INI/INI.cpp",
+      "runtime_binding": "unverified",
+      "target_selection": "unknown",
+      "token": "ParticleSystem"
+    },
+    {
+      "definition_candidates": [
+        {
+          "line": 414,
+          "path": "GameEngine/Source/Common/RTS/PlayerTemplate.cpp",
+          "sha256": "7094803b64c1be02fd1f23c4f4a6800286dee3b2f4e5734ad6c5e094f0ed8fa4"
+        }
+      ],
+      "handler": "INI::parsePlayerTemplateDefinition",
+      "line": 126,
+      "path": "GameEngine/Source/Common/INI/INI.cpp",
+      "runtime_binding": "unverified",
+      "target_selection": "unknown",
+      "token": "PlayerTemplate"
+    },
+    {
+      "definition_candidates": [
+        {
+          "line": 39,
+          "path": "GameEngine/Source/Common/INI/INITerrainRoad.cpp",
+          "sha256": "608b642f5264d3a90ca2cc1c543675ec4742321d28be176c01de4d512af6280a"
+        }
+      ],
+      "handler": "INI::parseTerrainRoadDefinition",
+      "line": 127,
+      "path": "GameEngine/Source/Common/INI/INI.cpp",
+      "runtime_binding": "unverified",
+      "target_selection": "unknown",
+      "token": "Road"
+    },
+    {
+      "definition_candidates": [
+        {
+          "line": 379,
+          "path": "GameEngine/Source/Common/RTS/Science.cpp",
+          "sha256": "df9d389ea3784f24deab6276407acf68c087231b35988a3dbd904e922fe90469"
+        }
+      ],
+      "handler": "INI::parseScienceDefinition",
+      "line": 128,
+      "path": "GameEngine/Source/Common/INI/INI.cpp",
+      "runtime_binding": "unverified",
+      "target_selection": "unknown",
+      "token": "Science"
+    },
+    {
+      "definition_candidates": [
+        {
+          "line": 179,
+          "path": "GameEngine/Source/GameLogic/System/RankInfo.cpp",
+          "sha256": "6f455164871b7fa216117f9db543d702d2a5861dec9d12763d88ec1c3ec16b2b"
+        }
+      ],
+      "handler": "INI::parseRankDefinition",
+      "line": 129,
+      "path": "GameEngine/Source/Common/INI/INI.cpp",
+      "runtime_binding": "unverified",
+      "target_selection": "unknown",
+      "token": "Rank"
+    },
+    {
+      "definition_candidates": [
+        {
+          "line": 38,
+          "path": "GameEngine/Source/Common/INI/INISpecialPower.cpp",
+          "sha256": "5cfd545bade95cfbbf692dc996c0d13e5e3c06167686c197d9bfcd0a5907830b"
+        }
+      ],
+      "handler": "INI::parseSpecialPowerDefinition",
+      "line": 130,
+      "path": "GameEngine/Source/Common/INI/INI.cpp",
+      "runtime_binding": "unverified",
+      "target_selection": "unknown",
+      "token": "SpecialPower"
+    },
+    {
+      "definition_candidates": [
+        {
+          "line": 75,
+          "path": "GameEngine/Source/GameClient/GUI/Shell/ShellMenuScheme.cpp",
+          "sha256": "8097a950aed43be3067f3e54996394515008daeb29acd911b655920b53e86425"
+        }
+      ],
+      "handler": "INI::parseShellMenuSchemeDefinition",
+      "line": 131,
+      "path": "GameEngine/Source/Common/INI/INI.cpp",
+      "runtime_binding": "unverified",
+      "target_selection": "unknown",
+      "token": "ShellMenuScheme"
+    },
+    {
+      "definition_candidates": [
+        {
+          "line": 39,
+          "path": "GameEngine/Source/Common/INI/INITerrain.cpp",
+          "sha256": "527d5c98cef9b7f0716393aede6a606ac0dfa759ab4153f6c0de1e367f79ce38"
+        }
+      ],
+      "handler": "INI::parseTerrainDefinition",
+      "line": 132,
+      "path": "GameEngine/Source/Common/INI/INI.cpp",
+      "runtime_binding": "unverified",
+      "target_selection": "unknown",
+      "token": "Terrain"
+    },
+    {
+      "definition_candidates": [
+        {
+          "line": 39,
+          "path": "GameEngine/Source/Common/INI/INIUpgrade.cpp",
+          "sha256": "94832d7af53046b95db72de2770f94853fc676457743b8d248b01a782ec72a2c"
+        }
+      ],
+      "handler": "INI::parseUpgradeDefinition",
+      "line": 133,
+      "path": "GameEngine/Source/Common/INI/INI.cpp",
+      "runtime_binding": "unverified",
+      "target_selection": "unknown",
+      "token": "Upgrade"
+    },
+    {
+      "definition_candidates": [
+        {
+          "line": 47,
+          "path": "GameEngine/Source/Common/INI/INIVideo.cpp",
+          "sha256": "63bcef275c229100e28b35aef0d7f57cd4862480e36f4840ce3974d4743df134"
+        }
+      ],
+      "handler": "INI::parseVideoDefinition",
+      "line": 134,
+      "path": "GameEngine/Source/Common/INI/INI.cpp",
+      "runtime_binding": "unverified",
+      "target_selection": "unknown",
+      "token": "Video"
+    },
+    {
+      "definition_candidates": [
+        {
+          "line": 49,
+          "path": "GameEngine/Source/Common/INI/INIWater.cpp",
+          "sha256": "0f0910cf6cbeddaa7b98c16a8edfef02416ff515986e2d1b5bd8199110763b69"
+        }
+      ],
+      "handler": "INI::parseWaterSettingDefinition",
+      "line": 135,
+      "path": "GameEngine/Source/Common/INI/INI.cpp",
+      "runtime_binding": "unverified",
+      "target_selection": "unknown",
+      "token": "WaterSet"
+    },
+    {
+      "definition_candidates": [
+        {
+          "line": 89,
+          "path": "GameEngine/Source/Common/INI/INIWater.cpp",
+          "sha256": "0f0910cf6cbeddaa7b98c16a8edfef02416ff515986e2d1b5bd8199110763b69"
+        }
+      ],
+      "handler": "INI::parseWaterTransparencyDefinition",
+      "line": 136,
+      "path": "GameEngine/Source/Common/INI/INI.cpp",
+      "runtime_binding": "unverified",
+      "target_selection": "unknown",
+      "token": "WaterTransparency"
+    },
+    {
+      "definition_candidates": [
+        {
+          "line": 126,
+          "path": "GameEngine/Source/GameClient/Snow.cpp",
+          "sha256": "dde5f36851a4a3eb19d152933a99acbff599fc7fce1dcde56e25858de327a04d"
+        }
+      ],
+      "handler": "INI::parseWeatherDefinition",
+      "line": 137,
+      "path": "GameEngine/Source/Common/INI/INI.cpp",
+      "runtime_binding": "unverified",
+      "target_selection": "unknown",
+      "token": "Weather"
+    },
+    {
+      "definition_candidates": [
+        {
+          "line": 43,
+          "path": "GameEngine/Source/Common/INI/INIWeapon.cpp",
+          "sha256": "adeca15e12f800fcd09af34476637cbc88f8b9aa38dd048d4044ceb0435b15b4"
+        }
+      ],
+      "handler": "INI::parseWeaponTemplateDefinition",
+      "line": 138,
+      "path": "GameEngine/Source/Common/INI/INI.cpp",
+      "runtime_binding": "unverified",
+      "target_selection": "unknown",
+      "token": "Weapon"
+    },
+    {
+      "definition_candidates": [
+        {
+          "line": 83,
+          "path": "GameEngine/Source/Common/INI/INIWebpageURL.cpp",
+          "sha256": "bb4c6c0f70c3a1692624cb5272bc427a74ae3b4e46eae8afb613b1562d7960b2"
+        }
+      ],
+      "handler": "INI::parseWebpageURLDefinition",
+      "line": 139,
+      "path": "GameEngine/Source/Common/INI/INI.cpp",
+      "runtime_binding": "unverified",
+      "target_selection": "unknown",
+      "token": "WebpageURL"
+    },
+    {
+      "definition_candidates": [
+        {
+          "line": 83,
+          "path": "GameEngine/Source/GameClient/GUI/HeaderTemplate.cpp",
+          "sha256": "9e882d357644e6e29b1de349185d4ade816495907e395e15913e913020283356"
+        }
+      ],
+      "handler": "INI::parseHeaderTemplateDefinition",
+      "line": 140,
+      "path": "GameEngine/Source/Common/INI/INI.cpp",
+      "runtime_binding": "unverified",
+      "target_selection": "unknown",
+      "token": "HeaderTemplate"
+    },
+    {
+      "definition_candidates": [
+        {
+          "line": 402,
+          "path": "GameEngine/Source/Common/GameLOD.cpp",
+          "sha256": "abb094e030774dd9da353b0912b967476dd84f293b23c7bc2ddaffe8a19c8c90"
+        }
+      ],
+      "handler": "INI::parseStaticGameLODDefinition",
+      "line": 141,
+      "path": "GameEngine/Source/Common/INI/INI.cpp",
+      "runtime_binding": "unverified",
+      "target_selection": "unknown",
+      "token": "StaticGameLOD"
+    },
+    {
+      "definition_candidates": [
+        {
+          "line": 595,
+          "path": "GameEngine/Source/Common/GameLOD.cpp",
+          "sha256": "abb094e030774dd9da353b0912b967476dd84f293b23c7bc2ddaffe8a19c8c90"
+        }
+      ],
+      "handler": "INI::parseDynamicGameLODDefinition",
+      "line": 142,
+      "path": "GameEngine/Source/Common/INI/INI.cpp",
+      "runtime_binding": "unverified",
+      "target_selection": "unknown",
+      "token": "DynamicGameLOD"
+    },
+    {
+      "definition_candidates": [
+        {
+          "line": 183,
+          "path": "GameEngine/Source/Common/GameLOD.cpp",
+          "sha256": "abb094e030774dd9da353b0912b967476dd84f293b23c7bc2ddaffe8a19c8c90"
+        }
+      ],
+      "handler": "INI::parseLODPreset",
+      "line": 143,
+      "path": "GameEngine/Source/Common/INI/INI.cpp",
+      "runtime_binding": "unverified",
+      "target_selection": "unknown",
+      "token": "LODPreset"
+    },
+    {
+      "definition_candidates": [
+        {
+          "line": 165,
+          "path": "GameEngine/Source/Common/GameLOD.cpp",
+          "sha256": "abb094e030774dd9da353b0912b967476dd84f293b23c7bc2ddaffe8a19c8c90"
+        }
+      ],
+      "handler": "INI::parseBenchProfile",
+      "line": 144,
+      "path": "GameEngine/Source/Common/INI/INI.cpp",
+      "runtime_binding": "unverified",
+      "target_selection": "unknown",
+      "token": "BenchProfile"
+    },
+    {
+      "definition_candidates": [
+        {
+          "line": 155,
+          "path": "GameEngine/Source/Common/GameLOD.cpp",
+          "sha256": "abb094e030774dd9da353b0912b967476dd84f293b23c7bc2ddaffe8a19c8c90"
+        }
+      ],
+      "handler": "parseReallyLowMHz",
+      "line": 145,
+      "path": "GameEngine/Source/Common/INI/INI.cpp",
+      "runtime_binding": "unverified",
+      "target_selection": "unknown",
+      "token": "ReallyLowMHz"
+    },
+    {
+      "definition_candidates": [
+        {
+          "line": 378,
+          "path": "GameEngine/Source/GameLogic/ScriptEngine/ScriptEngine.cpp",
+          "sha256": "b7cc3f100f1a5830d56cf7a4e004910e2248099073e638752dbf23891889f4e1"
+        }
+      ],
+      "handler": "ScriptEngine::parseScriptAction",
+      "line": 146,
+      "path": "GameEngine/Source/Common/INI/INI.cpp",
+      "runtime_binding": "unverified",
+      "target_selection": "unknown",
+      "token": "ScriptAction"
+    },
+    {
+      "definition_candidates": [
+        {
+          "line": 413,
+          "path": "GameEngine/Source/GameLogic/ScriptEngine/ScriptEngine.cpp",
+          "sha256": "b7cc3f100f1a5830d56cf7a4e004910e2248099073e638752dbf23891889f4e1"
+        }
+      ],
+      "handler": "ScriptEngine::parseScriptCondition",
+      "line": 147,
+      "path": "GameEngine/Source/Common/INI/INI.cpp",
+      "runtime_binding": "unverified",
+      "target_selection": "unknown",
+      "token": "ScriptCondition"
+    }
+  ],
+  "schema": 1,
+  "scope": "Original theTypeTable top-level INI tokens and lexical handler definition candidates",
+  "source_tree_sha256": "1fce818714d13f96eec45b6d40bb4854dfddce22a1ede336527443ad004cb8e6",
+  "summary": {
+    "block_tokens": 62,
+    "files_scanned_for_definitions": 2961,
+    "tokens_with_multiple_definition_candidates": 0,
+    "tokens_without_definition_candidate": 0
+  },
+  "unknowns": [
+    "Full C++ preprocessing, raw strings and generated definitions",
+    "Nested field parse tables and object module configuration",
+    "Retail block/field references and mount precedence",
+    "Inheritance, overrides, includes and duplicate semantics",
+    "Pointer/offset field layout on ARM and LP64 host",
+    "Target build selection, link retention and physical runtime behavior"
+  ],
+  "upstream_commit": "0a05454d8574207440a5fb15241b98ad0b435590"
+}
