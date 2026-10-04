@@ -28,6 +28,9 @@ graphics provider. `tools/build_vitagl.py` builds a checksum-pinned LGPLv3
 vitaGL revision with ARMv7 hard-float flags and retains its complete source and
 license texts. The local patches preserve compact unlit vertices, indexed
 immediate submission, complete replacement uploads and transactional DDS chains.
+The dependency is compiled with `SKIP_SPLASHSCREEN`; its build rejects archives
+that retain the splash thread, lifecycle symbols or semaphore markers. This
+applies equally to physical Vita/PSTV packages and Vita3K builds.
 They extend the platform boundary beneath W3D; they do not replace W3D traversal,
 format selection, texture ownership or render state. Packaging has the same
 source, relinkable-object and license obligations as the other static LGPL

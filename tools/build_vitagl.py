@@ -121,6 +121,8 @@ def main():
     shutil.rmtree(normalize)
     run('member_abi', ['python3', str(root / 'tools/check_ffmpeg_vita_abi.py'),
                        '--vita-sdk', str(sdk), '--label', 'vitaGL', str(library)], root)
+    run('no_splash', ['python3', str(root / 'tools/check_vitagl_no_splash.py'),
+                      '--vita-sdk', str(sdk), str(library)], root)
 
     install = output / 'install'
     (install / 'lib').mkdir(parents=True)
@@ -139,6 +141,7 @@ def main():
     receipt['licenses'] = [{'path': str(path.relative_to(output)), 'sha256': sha(path)}
                            for path in sorted(licenses.iterdir())]
     receipt['source_retained'] = True
+    receipt['splash_renderer'] = 'disabled-and-archive-verified'
     (output / 'receipt.json').write_text(json.dumps(receipt, indent=2) + '\n')
     print('PASS: Vita graphics dependency built; renderer and hardware remain separate gates')
 
