@@ -1,17 +1,18 @@
 --- a/Code/GameEngine/Include/Common/AsciiString.h
 +++ b/Code/GameEngine/Include/Common/AsciiString.h
-@@ -57,7 +57,9 @@
+@@ -57,7 +57,10 @@
  
  class UnicodeString;
  
 -#include "windows.h"
 +#include <cstdint>
++#include <cstdlib>
 +#include <cstddef>
 +extern "C" int _stricmp(const char*, const char*); // unresolved original CRT boundary
  
  // -----------------------------------------------------
  /**
-@@ -94,8 +96,12 @@
+@@ -94,8 +97,29 @@
  #if defined(_DEBUG) || defined(_INTERNAL)
  		const char* m_debugptr;	// just makes it easier to read in the debugger
  #endif
@@ -21,49 +22,95 @@
 +        void initialize(unsigned short capacity) { m_countCapacity = (std::uint32_t(capacity)<<16)|1u; }
 +        unsigned short getCount() const { return static_cast<unsigned short>(__atomic_load_n(&m_countCapacity,__ATOMIC_SEQ_CST)); }
 +        unsigned short getCapacity() const { return static_cast<unsigned short>(__atomic_load_n(&m_countCapacity,__ATOMIC_SEQ_CST)>>16); }
-+        void retain() { __atomic_add_fetch(&m_countCapacity,1u,__ATOMIC_SEQ_CST); }
-+        void release() { __atomic_sub_fetch(&m_countCapacity,1u,__ATOMIC_SEQ_CST); }
++        bool tryRetain() {
++            std::uint32_t previous = __atomic_load_n(&m_countCapacity, __ATOMIC_SEQ_CST);
++            for (;;) {
++                const std::uint32_t count = previous & 0xffffu;
++                if (count == 0) std::abort();
++                if (count == 0xffffu) return false;
++                if (__atomic_compare_exchange_n(&m_countCapacity, &previous, previous + 1u,
++                                                false, __ATOMIC_SEQ_CST, __ATOMIC_SEQ_CST)) return true;
++            }
++        }
++        bool release() {
++            std::uint32_t previous = __atomic_load_n(&m_countCapacity, __ATOMIC_SEQ_CST);
++            for (;;) {
++                if ((previous & 0xffffu) == 0) std::abort();
++                if (__atomic_compare_exchange_n(&m_countCapacity, &previous, previous - 1u,
++                                                false, __ATOMIC_SEQ_CST, __ATOMIC_SEQ_CST))
++                    return (previous & 0xffffu) == 1u;
++            }
++        }
  		// char m_stringdata[];
  
  		inline char* peek() { return (char*)(this+1); }
-@@ -377,9 +383,9 @@
-   // don't need this if we're using InterlockedIncrement
-   // FastCriticalSectionClass::LockClass lock(TheAsciiStringCriticalSection);
- 	if (m_data)
--		// ++m_data->m_refCount;
-+		// ++m_data->getCount();
-     // yes, I know it's not a DWord but we're incrementing so we're safe
--    InterlockedIncrement((long *)&m_data->m_refCount);
-+    m_data->retain();
- 	validate();
+@@ -372,15 +396,9 @@
  }
  
-@@ -391,8 +397,8 @@
+ // -----------------------------------------------------
+-inline AsciiString::AsciiString(const AsciiString& stringSrc) : m_data(stringSrc.m_data)
+-{
+-  // don't need this if we're using InterlockedIncrement
+-  // FastCriticalSectionClass::LockClass lock(TheAsciiStringCriticalSection);
+-	if (m_data)
+-		// ++m_data->m_refCount;
+-    // yes, I know it's not a DWord but we're incrementing so we're safe
+-    InterlockedIncrement((long *)&m_data->m_refCount);
+-	validate();
++inline AsciiString::AsciiString(const AsciiString& stringSrc) : m_data(0)
++{
++    set(stringSrc);
+ }
+ 
+ // -----------------------------------------------------
+@@ -391,8 +409,7 @@
  	validate();
  	if (m_data)
  	{
 -    InterlockedDecrement((long *)&m_data->m_refCount);
 -		if (!m_data->m_refCount)
-+    m_data->release();
-+		if (!m_data->getCount())
++    if (m_data->release())
  			freeBytes();
  		m_data = 0;
  	}
-@@ -456,14 +462,14 @@
-     // from the same thread which is illegal using fast CS's
- 		if (m_data)
-     {
+@@ -447,25 +464,22 @@
+ // -----------------------------------------------------
+ inline void AsciiString::set(const AsciiString& stringSrc)
+ {
+-  //FastCriticalSectionClass::LockClass lock(TheAsciiStringCriticalSection);
+-
+-	validate();
+-	if (&stringSrc != this)
+-	{
+-    // do not call releaseBuffer(); here, it locks the CS twice
+-    // from the same thread which is illegal using fast CS's
+-		if (m_data)
+-    {
 -      InterlockedDecrement((long *)&m_data->m_refCount);
 -		  if (!m_data->m_refCount)
-+      m_data->release();
-+		  if (!m_data->getCount())
- 			  freeBytes();
+-			  freeBytes();
++    validate();
++    if (&stringSrc != this) {
++        AsciiStringData* incoming = stringSrc.m_data;
++        if (incoming && !incoming->tryRetain()) {
++            // Keep the packed capacity intact when the reference count is full.
++            AsciiString replacement(stringSrc.str());
++            releaseBuffer();
++            m_data = replacement.m_data;
++            replacement.m_data = 0;
++        } else {
++            // Acquire first so aliased assignment and allocation failure retain ownership.
++            releaseBuffer();
++            m_data = incoming;
++        }
      }
- 
- 		m_data = stringSrc.m_data;
- 		if (m_data)
+-
+-		m_data = stringSrc.m_data;
+-		if (m_data)
 -      InterlockedIncrement((long *)&m_data->m_refCount);
-+      m_data->retain();
- 	}
- 	validate();
+-	}
+-	validate();
++    validate();
  }
+ 
+ // -----------------------------------------------------

@@ -7,7 +7,7 @@
       "path": "Code/GameEngine/Include/Common/AsciiString.h",
       "upstream_path": "GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h",
       "sha256": "8a3def23dc81ae33f254a6c869ab03a636a8de99f0620a3721f2c022f31e2423",
-      "staged_sha256": "59ff4caf8dc8756cc854c8c011ed96028ae5a2af313b93f33614489624567025"
+      "staged_sha256": "025a0cccba2e8cf7afac355b67c50e3cd3953cb1606019b251cf4d74cc1bd428"
     },
     {
       "path": "Code/GameEngine/Include/Common/CriticalSection.h",
@@ -427,7 +427,7 @@
   "patches": [
     {
       "path": "port/patches/cluster/GameEngine__Include__Common__AsciiString.h.patch",
-      "sha256": "be3e51cd97e7d0761ec1a152e8afbbfb19b90d6689008f22c6305eb41a4d4b66"
+      "sha256": "5219d03a0ae78fca115230af332fb1ed9515908987071efa3a0fde22015349c2"
     },
     {
       "path": "port/patches/cluster/GameEngine__Include__Common__CriticalSection.h.patch",

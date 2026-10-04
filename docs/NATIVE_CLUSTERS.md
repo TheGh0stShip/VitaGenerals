@@ -23,7 +23,7 @@ Stage the official pinned source with `tools/stage_engine_tree.py`. Configure
 `GENERALS_MEMORY_POOL_CONFIG_PATH=Data/INI/MemoryPools.ini` and
 `GENERALS_ICONV_PREFIX` pointing to the appropriate pinned libiconv build.
 Use the Vita toolchain for native builds. Host builds enable ASan and UBSan and
-register five tests with CTest. Native builds check each archive member and
+register six tests with CTest. Native builds check each archive member and
 diagnostic executable for ARM hard-float ABI consistency.
 
 The full 35-source math archive and 24-source provider archive are retained
@@ -33,8 +33,8 @@ The allocator and file probes are separate components, not an integrated game.
 
 Open integration requirements include UTF-16 consumers, installed code-page
 selection and Windows best-fit conversion parity, filename case resolution,
-named mutex behavior, matrix inverse failure handling, string reference-count
-overflow, serialization bounds and transactional failure paths, and physical
+named mutex behavior, matrix inverse failure handling,
+serialization bounds and transactional failure paths, and physical
 RTC/filesystem validation. The diagnostic encoding is explicitly CP1252.
 The native filesystem adapter preserves the SDK's descriptor ownership and
 uses 64-bit RTC conversion; its private descriptor interface requires SDK pinning.
@@ -46,3 +46,15 @@ The unmodified MIT-licensed descriptor declaration is retained at
 remain intact. Derived EA declarations retain the original license notices;
 the repository license and additional terms apply. GNU libiconv distribution
 requirements are described in [ENCODING_DEPENDENCY.md](ENCODING_DEPENDENCY.md).
+
+ASCII copy-on-write strings retain the original packed 16-bit count and capacity.
+Saturated counts use a separate buffer rather than carrying into capacity.
+Final destruction uses the successful atomic decrement's result; other owners
+never reread the shared header after releasing it. Assignment acquires its new
+ownership before releasing the old buffer. The reference probe covers saturation,
+aliased assignment and continued use after releasing many owners. Host tests
+also exercise concurrent release and copying on distinct string objects;
+the host probe installs DMA and pool locks as the original startup does and
+clears those pointers after joining its workers.
+concurrent mutation of the same string object is unsupported. Native compilation
+does not establish hardware thread behavior.

@@ -60,13 +60,13 @@ def main():
                          'version':subprocess.check_output([compiler,'--version'],text=True,env=environment),
                          'target':subprocess.check_output([compiler,'-dumpmachine'],text=True,env=environment).strip()}
     if args.mode=='vita':
-        for name in ('allocator_alignment','ascii_allocator','wwmath_link_entry'):
+        for name in ('allocator_alignment','ascii_allocator','ascii_reference','wwmath_link_entry'):
             executable=str(output/'cmake'/name)
             run(name+'-symbols',[str(sdk/'bin/arm-vita-eabi-nm'),'--defined-only',executable])
             run(name+'-attributes',[str(sdk/'bin/arm-vita-eabi-readelf'),'-h','-A',executable])
     if args.mode=='host':run('tests',['ctest','--test-dir',str(output/'cmake'),'--output-on-failure'])
     artifacts=[p for p in (output/'cmake').iterdir() if p.is_file() and
-               (p.suffix in ('.a','.map') or p.name in ('allocator_alignment','ascii_allocator','wwmath_link_entry',
+               (p.suffix in ('.a','.map') or p.name in ('allocator_alignment','ascii_allocator','ascii_reference','wwmath_link_entry',
                                                        'rawfile_probe','factory_probe','chunk-file_probe'))]
     receipt['artifacts']=[{'path':p.relative_to(output).as_posix(),
                           'sha256':hashlib.sha256(p.read_bytes()).hexdigest()} for p in sorted(artifacts)]
