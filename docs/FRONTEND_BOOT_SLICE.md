@@ -33,6 +33,17 @@ format selection, texture ownership or render state. Packaging has the same
 source, relinkable-object and license obligations as the other static LGPL
 dependency. A successful archive build is not renderer or hardware evidence.
 
+The DX8-shaped base texture and surface boundary now provides checked CPU
+storage for the original `TextureClass` and `SurfaceClass` ownership model.
+Writable unlock submits the complete logical surface through a platform upload
+callback while preserving padded row pitch; read-only locks do not upload.
+The boundary retains surfaces independently of their texture owner and rejects
+invalid sizes, alignments, rectangles, nested locks and unsupported flags.
+Host sanitizer tests cover the four original movie formats and failure/lifetime
+paths, while ARM builds verify the provider archive and linked probe ABI. The
+vitaGL upload callback, original `DX8Wrapper` factory connection and indexed
+`Render2D` draw remain required before decoded frames can reach the display.
+
 The Renegade Vita provider is a reviewed implementation reference for FFmpeg
 decode scheduling, Vita audio output and texture upload. Zero Hour retains its
 own `VideoPlayer`, `VideoStreamInterface`, `VideoBuffer`, `Display`, shell and

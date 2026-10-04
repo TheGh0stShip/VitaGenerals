@@ -140,6 +140,38 @@ if(NOT CMAKE_CROSSCOMPILING)
   add_test(NAME unicode_reference COMMAND unicode_reference)
 endif()
 
+add_library(generals_w3d_texture_surface STATIC
+  port/src/VitaW3DTextureSurface.cpp)
+target_include_directories(generals_w3d_texture_surface PUBLIC port/include)
+target_compile_options(generals_w3d_texture_surface PRIVATE
+  -Wall -Wextra -Werror)
+if(CMAKE_CROSSCOMPILING)
+  target_compile_options(generals_w3d_texture_surface PRIVATE
+    -mcpu=cortex-a9 -mthumb -mfpu=neon -mfloat-abi=hard)
+endif()
+add_executable(vita_texture_surface tests/vita-texture-surface-probe.cpp)
+target_link_libraries(vita_texture_surface PRIVATE generals_w3d_texture_surface)
+target_compile_options(vita_texture_surface PRIVATE -Wall -Wextra -Werror)
+if(CMAKE_CROSSCOMPILING)
+  target_compile_options(vita_texture_surface PRIVATE
+    -mcpu=cortex-a9 -mthumb -mfpu=neon -mfloat-abi=hard)
+  target_link_options(vita_texture_surface PRIVATE
+    -Wl,-Map,${CMAKE_CURRENT_BINARY_DIR}/vita_texture_surface.map)
+  add_custom_command(TARGET vita_texture_surface POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E env VITASDK=${VITASDK}
+      ${Python3_EXECUTABLE} ${VG_PROJECT_ROOT}/tools/check_vita_abi.py
+      $<TARGET_FILE:generals_w3d_texture_surface>
+      $<TARGET_FILE:vita_texture_surface> VERBATIM)
+else()
+  target_compile_options(generals_w3d_texture_surface PRIVATE
+    -fsanitize=address,undefined -fno-omit-frame-pointer)
+  target_compile_options(vita_texture_surface PRIVATE
+    -fsanitize=address,undefined -fno-omit-frame-pointer)
+  target_link_options(vita_texture_surface PRIVATE
+    -fsanitize=address,undefined)
+  add_test(NAME vita_texture_surface COMMAND vita_texture_surface)
+endif()
+
 include(wwmath-cluster.cmake)
 
 include(file-cluster-host.cmake)
