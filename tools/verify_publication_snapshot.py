@@ -7,6 +7,7 @@ import json
 import os
 from pathlib import Path
 import subprocess
+import sys
 import tarfile
 import tempfile
 
@@ -25,7 +26,7 @@ def main():
         environment=os.environ.copy()
         # Host checks must not silently consume the caller's cross toolchain.
         environment.pop('CMAKE_TOOLCHAIN_FILE',None)
-        checks=[('host_contracts',['python3','tools/run_host_probes.py','--build-dir','build-publication-host','--sanitizer','asan-ubsan'])]
+        checks=[('host_contracts',[sys.executable,'tools/run_host_probes.py','--build-dir','build-publication-host','--sanitizer','asan-ubsan'])]
         if a.vita_sdk:
             sdk=a.vita_sdk.resolve();environment['VITASDK']=str(sdk)
             checks += [('arm_configure',['cmake','-S','.','-B','build-publication-arm','-DCMAKE_BUILD_TYPE=Debug',

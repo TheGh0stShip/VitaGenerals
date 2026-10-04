@@ -6,7 +6,7 @@ permissions:
   contents: read
 jobs:
   portable-boundaries:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     strategy:
       matrix:
         sanitizer: [none, asan-ubsan]
@@ -15,12 +15,16 @@ jobs:
         with:
           fetch-depth: 2
           persist-credentials: false
+      - name: Install pinned inventory parser
+        run: |
+          python3.12 -m venv build-parser
+          build-parser/bin/python -m pip install --only-binary=:all: --require-hashes -r tools/parser-requirements.txt
       - name: Host and contract probes
-        run: python3 tools/run_host_probes.py --build-dir build-ci-${{ matrix.sanitizer }} --sanitizer ${{ matrix.sanitizer }}
+        run: build-parser/bin/python tools/run_host_probes.py --build-dir build-ci-${{ matrix.sanitizer }} --sanitizer ${{ matrix.sanitizer }}
       - name: Whitespace check
         run: git diff-tree --root --check HEAD -- . ':!LICENSE.md'
   arm-baseline:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
@@ -29,6 +33,10 @@ jobs:
         run: |
           python3 tools/install_ci_sdk.py --directory build-sdk-ci
           echo "VITASDK=$GITHUB_WORKSPACE/build-sdk-ci/vitasdk" >> "$GITHUB_ENV"
+      - name: Install pinned inventory parser
+        run: |
+          python3.12 -m venv build-parser
+          build-parser/bin/python -m pip install --only-binary=:all: --require-hashes -r tools/parser-requirements.txt
       - name: Compile and link ARM baseline
         run: |
           cmake -S . -B build-arm-ci -DCMAKE_TOOLCHAIN_FILE="$VITASDK/share/vita.toolchain.cmake" -DCMAKE_BUILD_TYPE=Debug
@@ -47,3 +55,5 @@ jobs:
           cmp reports/generated/ini-dispatch.json build-arm-ci/ini-dispatch.json
           python3 tools/audit_renderer_boundary.py --source build-source-ci/GeneralsMD/Code --output build-arm-ci/renderer-boundary.json.gz
           cmp reports/generated/renderer-boundary.json.gz build-arm-ci/renderer-boundary.json.gz
+          build-parser/bin/python tools/audit_source_structure.py --source build-source-ci/GeneralsMD/Code --output build-arm-ci/source-structure.json.gz
+          cmp reports/generated/source-structure.json.gz build-arm-ci/source-structure.json.gz

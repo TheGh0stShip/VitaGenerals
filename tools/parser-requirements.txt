@@ -1,0 +1,6 @@
+# Host inventory tooling only; CPython 3.12 Linux x86-64 wheels.
+# Both packages are MIT licensed. Source build hooks are prohibited.
+tree-sitter==0.25.2 \
+    --hash=sha256:b43a9e4c89d4d0839de27cd4d6902d33396de700e9ff4c5ab7631f277a85ead9
+tree-sitter-cpp==0.23.4 \
+    --hash=sha256:773d2cafc08bbc0f998687fa33f42f378c1a371cdb582870c4d13abb06092706

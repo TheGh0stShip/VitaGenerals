@@ -16,10 +16,12 @@ It retains unresolved literals and multiple candidates explicitly.
 python3 tools/inventory_content.py --source /path/to/GeneralsMD/Code \
   --data /path/to/zero-hour --data /path/to/generals \
   --output .local/content-inventory.json
-python3 -m unittest discover -s tests -p 'test_*.py'
+build-parser/bin/python -m unittest discover -s tests -p 'test_*.py'
 ```
 
-Detailed output is restricted to ignored `.local/`. No assets are extracted,
+Set up the pinned parser environment described in the README before running
+the complete Python contracts. Detailed retail output is restricted to ignored
+`.local/`. No assets are extracted,
 no payloads are copied, and no absolute input roots are written to the receipt.
 Archive hashes cover the header/directory only, not payload identity.
 

@@ -13,7 +13,7 @@ semantics and original subsystem ownership. The target is 60 FPS; feasibility re
 decisions must follow measurements on the target hardware.
 
 No playable game or hardware-tested build is available yet. The current build
-covers BIGF header parsing, a staged original WWLib checksum module,
+covers BIGF header/directory validation, a staged original WWLib checksum module,
 source/retail inventory tooling and target ABI checks. There is no full engine build, renderer, launcher or game package.
 
 The portable archive boundary module is new GPL-3.0-or-later code. EA's upstream
@@ -31,6 +31,15 @@ cmake --build build-host
 ctest --test-dir build-host --output-on-failure
 ```
 
+For all host and Python inventory contracts, use the pinned parser environment
+(CPython 3.12 on Linux x86-64):
+
+```sh
+python3.12 -m venv build-parser
+build-parser/bin/python -m pip install --only-binary=:all: --require-hashes -r tools/parser-requirements.txt
+build-parser/bin/python tools/run_host_probes.py --build-dir build-host-probes --sanitizer asan-ubsan
+```
+
 ## Vita compile checks
 
 Set VITASDK to the installed SDK root, then run:
@@ -43,7 +52,7 @@ python3 tools/check_vita_abi.py build-vita/CMakeFiles/vg_vita_abi.dir/src/vita_a
 
 Use the ELF checker on every dependency selected for linking. Members without
 ABI attributes require individual review; they are not silently approved.
-These builds produce libraries, an ABI probe and a linked checksum test ELF.
+These builds produce libraries, an ABI probe and linked archive/checksum test ELFs.
 They do not produce a game executable or VPK.
 See [port constraints and next milestones](docs/PORTING.md) and the
 [source and content audit](docs/CONTENT_AUDIT.md).

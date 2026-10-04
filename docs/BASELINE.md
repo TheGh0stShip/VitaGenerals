@@ -22,7 +22,9 @@ must not be confused with the game's separate snapshot checksum.
 ## Reproduction and evidence
 
 ```sh
-python3 tools/run_host_probes.py --build-dir build-host-probes --sanitizer asan-ubsan
+python3.12 -m venv build-parser
+build-parser/bin/python -m pip install --only-binary=:all: --require-hashes -r tools/parser-requirements.txt
+build-parser/bin/python tools/run_host_probes.py --build-dir build-host-probes --sanitizer asan-ubsan
 python3 tools/install_ci_sdk.py --directory build-sdk-ci
 export VITASDK="$PWD/build-sdk-ci/vitasdk"
 cmake -S . -B build-arm-ci -DCMAKE_TOOLCHAIN_FILE="$VITASDK/share/vita.toolchain.cmake" -DCMAKE_BUILD_TYPE=Debug
