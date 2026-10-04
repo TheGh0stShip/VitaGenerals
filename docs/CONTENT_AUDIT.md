@@ -101,3 +101,11 @@ at the original buffer boundary remain explicit issues. Quoted text and nested
 block scope are deliberately unresolved; a declaration candidate does not
 establish a top-level parser invocation, selected provider or loaded resource.
 Synthetic contracts cover these boundaries without retail fixtures.
+
+`tools/ini_audio_values.py` diagnoses selected audio list and filename/settings
+handlers on one physical INI line. Sound lists use comma separators and record
+clear-then-assign semantics; unquoted ASCII fields consume the first token.
+Quoted ASCII stays unresolved, preserving the original reader's behavior for
+separate review. The caller must establish block ownership and retain lexical
+input issues. Overlong or multi-line inputs are refused. This module neither
+selects defaults/providers nor proves audio paths, playback or video coverage.
