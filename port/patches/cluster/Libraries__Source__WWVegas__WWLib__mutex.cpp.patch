@@ -1,0 +1,147 @@
+--- a/Code/Libraries/Source/WWVegas/WWLib/mutex.cpp
++++ b/Code/Libraries/Source/WWVegas/WWLib/mutex.cpp
+@@ -18,14 +18,60 @@
+ 
+ #include "mutex.h"
+ #include "wwdebug.h"
++#if defined(GENERALS_PLATFORM_VITA)
++#include <cstdlib>
++#if defined(__arm__)
++#include <psp2/kernel/threadmgr.h>
++#include <psp2/kernel/error.h>
++#include <psp2/kernel/processmgr.h>
++#include <cstdint>
++struct NativeRecursiveLock {
++ SceKernelLwMutexWork work;
++ NativeRecursiveLock() { if(sceKernelCreateLwMutex(&work,"WWLib",SCE_KERNEL_MUTEX_ATTR_RECURSIVE,0,nullptr)<0) std::abort(); }
++ ~NativeRecursiveLock() { if(sceKernelDeleteLwMutex(&work)<0) std::abort(); }
++ bool acquire(int ms) {
++  if(ms < -1) std::abort();
++  if(ms == 0) {
++   int result = sceKernelTryLockLwMutex(&work,1);
++   if(result == static_cast<int>(SCE_KERNEL_ERROR_LW_MUTEX_FAILED_TO_OWN)) return false;
++   if(result < 0) std::abort();
++   return true;
++  }
++  const uint64_t deadline = ms == -1 ? 0 : sceKernelGetProcessTimeWide() + static_cast<uint64_t>(ms)*1000;
++  for(;;) {
++   const uint64_t now = sceKernelGetProcessTimeWide();
++   const uint64_t remaining = ms == -1 ? 0 : (now < deadline ? deadline-now : 0);
++   if(ms != -1 && !remaining) return false;
++   unsigned timeout = remaining > UINT32_MAX ? UINT32_MAX : static_cast<unsigned>(remaining);
++   int result = sceKernelLockLwMutex(&work,1,ms == -1 ? nullptr : &timeout);
++   if(result == 0) return true;
++   if(result != static_cast<int>(SCE_KERNEL_ERROR_WAIT_TIMEOUT)) std::abort();
++  }
++ }
++ void release() { if(sceKernelUnlockLwMutex(&work,1)<0) std::abort(); }
++};
++#else
++#include <mutex>
++#include <chrono>
++struct NativeRecursiveLock {
++ std::recursive_timed_mutex lock;
++ bool acquire(int ms) { if(ms < -1) std::abort(); if(ms == -1) {lock.lock(); return true;} return lock.try_lock_for(std::chrono::milliseconds(ms)); }
++ void release() {lock.unlock();}
++};
++#endif
++#else
+ #include <windows.h>
++#endif
+ 
+ 
+ // ----------------------------------------------------------------------------
+ 
+ MutexClass::MutexClass(const char* name) : handle(NULL), locked(false)
+ {
+-	#ifdef _UNIX
++	#if defined(GENERALS_PLATFORM_VITA)
++		if(name && *name) std::abort(); // Named inter-process mutex semantics require a separate provider.
++		handle=new NativeRecursiveLock;
++	#elif defined(_UNIX)
+ 		//assert(0);
+ 	#else
+ 		handle=CreateMutex(NULL,false,name);
+@@ -35,7 +81,10 @@
+ 
+ MutexClass::~MutexClass()
+ {
+-	#ifdef _UNIX
++	#if defined(GENERALS_PLATFORM_VITA)
++		if(locked) std::abort();
++		delete static_cast<NativeRecursiveLock*>(handle);
++	#elif defined(_UNIX)
+ 		//assert(0);
+ 	#else
+ 		WWASSERT(!locked); // Can't delete locked mutex!
+@@ -45,7 +94,10 @@
+ 
+ bool MutexClass::Lock(int time)
+ {
+-	#ifdef _UNIX
++	#if defined(GENERALS_PLATFORM_VITA)
++		if(!static_cast<NativeRecursiveLock*>(handle)->acquire(time)) return false;
++		++locked; return true;
++	#elif defined(_UNIX)
+ 		//assert(0);
+ 		return true;
+ 	#else
+@@ -58,7 +110,10 @@
+ 
+ void MutexClass::Unlock()
+ {
+-	#ifdef _UNIX
++	#if defined(GENERALS_PLATFORM_VITA)
++		if(!locked) std::abort();
++		--locked; static_cast<NativeRecursiveLock*>(handle)->release();
++	#elif defined(_UNIX)
+ 		//assert(0);
+ 	#else
+ 		WWASSERT(locked);
+@@ -91,7 +146,9 @@
+ 
+ CriticalSectionClass::CriticalSectionClass() : handle(NULL), locked(false)
+ {
+-	#ifdef _UNIX
++	#if defined(GENERALS_PLATFORM_VITA)
++		handle=new NativeRecursiveLock;
++	#elif defined(_UNIX)
+ 		//assert(0);
+ 	#else
+ 		handle=W3DNEWARRAY char[sizeof(CRITICAL_SECTION)];
+@@ -101,7 +158,10 @@
+ 
+ CriticalSectionClass::~CriticalSectionClass()
+ {
+-	#ifdef _UNIX
++	#if defined(GENERALS_PLATFORM_VITA)
++		if(locked) std::abort();
++		delete static_cast<NativeRecursiveLock*>(handle);
++	#elif defined(_UNIX)
+ 		//assert(0);
+ 	#else
+ 		WWASSERT(!locked); // Can't delete locked mutex!
+@@ -112,7 +172,10 @@
+ 
+ void CriticalSectionClass::Lock()
+ {
+-	#ifdef _UNIX
++	#if defined(GENERALS_PLATFORM_VITA)
++		if(!static_cast<NativeRecursiveLock*>(handle)->acquire(-1)) std::abort();
++		++locked;
++	#elif defined(_UNIX)
+ 		//assert(0);
+ 	#else
+ 		EnterCriticalSection((CRITICAL_SECTION*)handle);
+@@ -122,7 +185,10 @@
+ 
+ void CriticalSectionClass::Unlock()
+ {
+-	#ifdef _UNIX
++	#if defined(GENERALS_PLATFORM_VITA)
++		if(!locked) std::abort();
++		--locked; static_cast<NativeRecursiveLock*>(handle)->release();
++	#elif defined(_UNIX)
+ 		//assert(0);
+ 	#else
+ 		WWASSERT(locked);

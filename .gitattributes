@@ -2,5 +2,8 @@
 vendor/ea/wwlib/* -text -whitespace
 vendor/ea/wwmath/* -text -whitespace
 vendor/ea/GameEngine/** -text -whitespace
+vendor/ea/Code/** -text -whitespace
+engine/port/include/thirdparty/newlib-vitadescriptor.h -text -whitespace
 LICENSE.md -text
 port/patches/*.patch text eol=lf -whitespace
+port/patches/cluster/*.patch text eol=lf -whitespace

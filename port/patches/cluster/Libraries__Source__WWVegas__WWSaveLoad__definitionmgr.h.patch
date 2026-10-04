@@ -1,0 +1,11 @@
+--- a/Code/Libraries/Source/WWVegas/WWSaveLoad/definitionmgr.h
++++ b/Code/Libraries/Source/WWVegas/WWSaveLoad/definitionmgr.h
+@@ -50,7 +50,7 @@
+ #include "wwdebug.h"
+ #include "wwstring.h"
+ #include "hashtemplate.h"
+-#include "vector.h"
++#include "Vector.H"
+ 
+ 
+ // Forward declarations

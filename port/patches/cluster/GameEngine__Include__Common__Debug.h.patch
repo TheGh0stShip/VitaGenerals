@@ -1,0 +1,25 @@
+--- a/Code/GameEngine/Include/Common/Debug.h
++++ b/Code/GameEngine/Include/Common/Debug.h
+@@ -44,6 +44,7 @@
+ ///////////////////////////////////////////////////////////////////////////////
+ 
+ #pragma once
++#include <cstdint>
+ 
+ #ifndef __DEBUG_H_
+ #define __DEBUG_H_
+@@ -210,10 +211,10 @@
+ class SimpleProfiler
+ {
+ private:
+-	__int64 m_freq;
+-	__int64 m_startThisSession;
+-	__int64 m_totalThisSession;
+-	__int64 m_totalAllSessions;
++	std::int64_t m_freq;
++	std::int64_t m_startThisSession;
++	std::int64_t m_totalThisSession;
++	std::int64_t m_totalAllSessions;
+ 	int			m_numSessions;
+ 
+ public:

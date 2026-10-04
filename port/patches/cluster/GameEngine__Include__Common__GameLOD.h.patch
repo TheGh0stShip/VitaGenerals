@@ -1,0 +1,27 @@
+--- a/Code/GameEngine/Include/Common/GameLOD.h
++++ b/Code/GameEngine/Include/Common/GameLOD.h
+@@ -32,6 +32,7 @@
+ ///////////////////////////////////////////////////////////////////////////////
+ 
+ #pragma once
++#include "Common/StaticGameLODDefinition.h"
+ 
+ #ifndef _GAME_LOD_H_
+ #define _GAME_LOD_H_
+@@ -42,15 +43,7 @@
+ #define MAX_BENCH_PROFILES	16
+ 
+ //Make sure this enum stays in sync with GameLODNames[]
+-enum StaticGameLODLevel
+-{
+-	STATIC_GAME_LOD_UNKNOWN=-1,
+-	STATIC_GAME_LOD_LOW,
+-	STATIC_GAME_LOD_MEDIUM,
+-	STATIC_GAME_LOD_HIGH,
+-	STATIC_GAME_LOD_CUSTOM,	//make sure this remains last!
+-	STATIC_GAME_LOD_COUNT
+-};
++
+ 
+ enum DynamicGameLODLevel
+ {

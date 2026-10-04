@@ -26,10 +26,16 @@ if(NOT VG_STAGE_RESULT EQUAL 0)
   message(FATAL_ERROR "Original source staging failed")
 endif()
 set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS
-  vendor/ea/manifest.json vendor/ea/wwlib/realcrc.cpp vendor/ea/wwlib/realcrc.h
-  port/patches/realcrc-width.patch tools/stage_original.py
-  vendor/ea/wwmath/wwmath.h vendor/ea/wwlib/always.h
-  port/patches/wwmath-validity-width.patch port/patches/wwmath-int-conversion.patch)
+  vendor/ea/manifest.json tools/stage_original.py)
+execute_process(COMMAND ${Python3_EXECUTABLE} -c
+  "import json; m=json.load(open('vendor/ea/manifest.json')); print(';'.join(['vendor/ea/'+r['path'] for r in m['files']]+[r['path'] for r in m['patches']]))"
+  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+  OUTPUT_VARIABLE VG_STAGE_INPUTS OUTPUT_STRIP_TRAILING_WHITESPACE
+  RESULT_VARIABLE VG_STAGE_INPUT_RESULT)
+if(NOT VG_STAGE_INPUT_RESULT EQUAL 0)
+  message(FATAL_ERROR "Cannot enumerate pinned staging inputs")
+endif()
+set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS ${VG_STAGE_INPUTS})
 
 add_library(vg_archive STATIC src/big_header.c)
 target_include_directories(vg_archive PUBLIC src)

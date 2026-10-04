@@ -1,0 +1,11 @@
+--- a/Code/Libraries/Source/WWVegas/WWSaveLoad/pointerremap.h
++++ b/Code/Libraries/Source/WWVegas/WWSaveLoad/pointerremap.h
+@@ -48,7 +48,7 @@
+ #endif
+ 
+ #include "always.h"
+-#include "vector.h"
++#include "../WWLib/Vector.H"
+ 
+ class RefCountClass;
+ 

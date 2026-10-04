@@ -1,0 +1,69 @@
+--- a/Code/GameEngine/Include/Common/AsciiString.h
++++ b/Code/GameEngine/Include/Common/AsciiString.h
+@@ -57,7 +57,9 @@
+ 
+ class UnicodeString;
+ 
+-#include "windows.h"
++#include <cstdint>
++#include <cstddef>
++extern "C" int _stricmp(const char*, const char*); // unresolved original CRT boundary
+ 
+ // -----------------------------------------------------
+ /**
+@@ -94,8 +96,12 @@
+ #if defined(_DEBUG) || defined(_INTERNAL)
+ 		const char* m_debugptr;	// just makes it easier to read in the debugger
+ #endif
+-		unsigned short	m_refCount;						// reference count
+-		unsigned short	m_numCharsAllocated;  // length of data allocated
++		std::uint32_t m_countCapacity;
++        void initialize(unsigned short capacity) { m_countCapacity = (std::uint32_t(capacity)<<16)|1u; }
++        unsigned short getCount() const { return static_cast<unsigned short>(__atomic_load_n(&m_countCapacity,__ATOMIC_SEQ_CST)); }
++        unsigned short getCapacity() const { return static_cast<unsigned short>(__atomic_load_n(&m_countCapacity,__ATOMIC_SEQ_CST)>>16); }
++        void retain() { __atomic_add_fetch(&m_countCapacity,1u,__ATOMIC_SEQ_CST); }
++        void release() { __atomic_sub_fetch(&m_countCapacity,1u,__ATOMIC_SEQ_CST); }
+ 		// char m_stringdata[];
+ 
+ 		inline char* peek() { return (char*)(this+1); }
+@@ -377,9 +383,9 @@
+   // don't need this if we're using InterlockedIncrement
+   // FastCriticalSectionClass::LockClass lock(TheAsciiStringCriticalSection);
+ 	if (m_data)
+-		// ++m_data->m_refCount;
++		// ++m_data->getCount();
+     // yes, I know it's not a DWord but we're incrementing so we're safe
+-    InterlockedIncrement((long *)&m_data->m_refCount);
++    m_data->retain();
+ 	validate();
+ }
+ 
+@@ -391,8 +397,8 @@
+ 	validate();
+ 	if (m_data)
+ 	{
+-    InterlockedDecrement((long *)&m_data->m_refCount);
+-		if (!m_data->m_refCount)
++    m_data->release();
++		if (!m_data->getCount())
+ 			freeBytes();
+ 		m_data = 0;
+ 	}
+@@ -456,14 +462,14 @@
+     // from the same thread which is illegal using fast CS's
+ 		if (m_data)
+     {
+-      InterlockedDecrement((long *)&m_data->m_refCount);
+-		  if (!m_data->m_refCount)
++      m_data->release();
++		  if (!m_data->getCount())
+ 			  freeBytes();
+     }
+ 
+ 		m_data = stringSrc.m_data;
+ 		if (m_data)
+-      InterlockedIncrement((long *)&m_data->m_refCount);
++      m_data->retain();
+ 	}
+ 	validate();
+ }

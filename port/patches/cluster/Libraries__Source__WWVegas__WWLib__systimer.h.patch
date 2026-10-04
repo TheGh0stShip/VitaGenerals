@@ -1,0 +1,20 @@
+--- a/Code/Libraries/Source/WWVegas/WWLib/systimer.h
++++ b/Code/Libraries/Source/WWVegas/WWLib/systimer.h
+@@ -38,8 +38,17 @@
+ #ifndef _SYSTIMER_H
+ 
+ #include "always.h"
++#if defined(GENERALS_PLATFORM_VITA)
++#include <psp2/kernel/processmgr.h>
++#include <cstdint>
++static inline uint32_t timeGetTime()
++{
++	return static_cast<uint32_t>(sceKernelGetProcessTimeWide() / UINT64_C(1000));
++}
++#else
+ #include <windows.h>
+ #include "mmsys.h"
++#endif
+ 
+ #define TIMEGETTIME SystemTime.Get
+ #define MS_TIMER_SECOND 1000

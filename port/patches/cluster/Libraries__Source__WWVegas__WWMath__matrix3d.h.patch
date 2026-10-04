@@ -1,0 +1,10 @@
+--- a/Code/Libraries/Source/WWVegas/WWMath/matrix3d.h
++++ b/Code/Libraries/Source/WWVegas/WWMath/matrix3d.h
+@@ -316,6 +316,7 @@
+ 	// general case, check where we were using Get_Inverse since usually it should
+ 	// be changed to Get_Orthogonal_Inverse...
+ 	void Get_Inverse(Matrix3D & set_inverse) const;
++	bool Try_Get_Inverse(Matrix3D & set_inverse) const;
+ 	void Get_Orthogonal_Inverse(Matrix3D & set_inverse) const;
+ 	
+ 	// used for importing SurRender matrices

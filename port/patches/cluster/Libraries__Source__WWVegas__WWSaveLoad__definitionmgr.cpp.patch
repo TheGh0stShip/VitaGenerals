@@ -1,0 +1,49 @@
+--- a/Code/Libraries/Source/WWVegas/WWSaveLoad/definitionmgr.cpp
++++ b/Code/Libraries/Source/WWVegas/WWSaveLoad/definitionmgr.cpp
+@@ -35,6 +35,16 @@
+  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+ 
+ #include "definitionmgr.h"
++
++#if defined(GENERALS_PLATFORM_VITA)
++#include <strings.h>
++#include <cctype>
++static void wwlib_lowercase(char* text) { for(;*text;++text) *text=static_cast<char>(std::tolower(static_cast<unsigned char>(*text))); }
++static int wwlib_case_compare(const char* a, const char* b) { return ::strcasecmp(a,b); }
++#else
++#include <string.h>
++static int wwlib_case_compare(const char* a, const char* b) { return ::stricmp(a,b); }
++#endif
+ #include "definition.h"
+ #include "definitionfactory.h"
+ #include "definitionfactorymgr.h"
+@@ -193,7 +203,7 @@
+ 		//
+ 		//	Is this the definition we were looking for?
+ 		//
+-		if (curr_def != NULL && ::stricmp (curr_def->Get_Name (), name) == 0) {
++		if (curr_def != NULL && wwlib_case_compare (curr_def->Get_Name (), name) == 0) {
+ 			definition = curr_def;
+ 			break;
+ 		}
+@@ -242,7 +252,11 @@
+ 	WWASSERT(DefinitionHash != NULL);
+ 
+ 	StringClass lower_case_name(name,true);
++	#if defined(GENERALS_PLATFORM_VITA)
++	wwlib_lowercase(lower_case_name.Peek_Buffer());
++#else
+ 	_strlwr(lower_case_name.Peek_Buffer());
++#endif
+ 	DynamicVectorClass<DefinitionClass*>* defs = DefinitionHash->Get(lower_case_name);
+ 
+ 	if (defs) {
+@@ -280,7 +294,7 @@
+ 					//
+ 					//	Is this the definition we were looking for?
+ 					//
+-					if (::stricmp (curr_def->Get_Name (), name) == 0) {
++					if (wwlib_case_compare (curr_def->Get_Name (), name) == 0) {
+ 						definition = curr_def;
+ 						// Add the definition to the hash table, so that it can be quickly accessed the next time it is needed.
+ 						if (!defs) {

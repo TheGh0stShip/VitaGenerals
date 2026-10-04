@@ -1,0 +1,164 @@
+--- a/Code/Libraries/Source/WWVegas/WWLib/wwstring.h
++++ b/Code/Libraries/Source/WWVegas/WWLib/wwstring.h
+@@ -43,10 +43,10 @@
+ 
+ #include "always.h"
+ #include "mutex.h"
+-#include "win.h"
++#include "WWStringPlatform.h"
+ #include <string.h>
+ #include <stdarg.h>
+-#include <tchar.h>
++
+ #include "trim.h"
+ #include "wwdebug.h"
+ #ifdef _UNIX
+@@ -122,7 +122,7 @@
+ 
+ 	void			Erase (int start_index, int char_count);
+ 	int _cdecl  Format (const TCHAR *format, ...);
+-	int _cdecl  Format_Args (const TCHAR *format, const va_list & arg_list );
++	int _cdecl  Format_Args (const TCHAR *format, va_list & arg_list );
+ 
+ 	// Trim leading and trailing whitespace characters (values <= 32)
+ 	void Trim(void);
+@@ -204,7 +204,7 @@
+ 	Uninitialised_Grow(len+1);
+ 	Store_Length(len);
+ 
+-	::memcpy (m_Buffer, string.m_Buffer, (len+1) * sizeof (TCHAR));		
++	::memmove (m_Buffer, string.m_Buffer, (len+1) * sizeof (TCHAR));		
+ 	return (*this);
+ 
+ }
+@@ -217,11 +217,11 @@
+ {
+ 	if (string != 0) {
+ 
+-		int len = _tcslen (string);
++		int len = strlen (string);
+ 		Uninitialised_Grow (len+1);
+ 		Store_Length (len);
+ 
+-		::memcpy (m_Buffer, string, (len + 1) * sizeof (TCHAR));		
++		::memmove (m_Buffer, string, (len + 1) * sizeof (TCHAR));		
+ 	}
+ 
+ 	return (*this);
+@@ -317,7 +317,7 @@
+ StringClass::StringClass (const TCHAR *string, bool hint_temporary)
+ 	:	m_Buffer (m_EmptyString)
+ {
+-	int len=string ? _tcsclen(string) : 0;
++	int len=string ? strlen(string) : 0;
+ 	if (hint_temporary || len>0) {
+ 		Get_String (len+1, hint_temporary);
+ 	}
+@@ -333,7 +333,7 @@
+ StringClass::StringClass (const WCHAR *string, bool hint_temporary)
+ 	:	m_Buffer (m_EmptyString)
+ {
+-	int len = string ? wcslen (string) : 0;
++	int len = string ? wwstring_detail::utf16_length (string) : 0;
+ 	if (hint_temporary || len > 0) {
+ 		Get_String (len + 1, hint_temporary);
+ 	}
+@@ -368,7 +368,7 @@
+ inline int
+ StringClass::Compare (const TCHAR *string) const
+ {
+-	return _tcscmp (m_Buffer, string);
++	return strcmp (m_Buffer, string);
+ }
+ 
+ ///////////////////////////////////////////////////////////////////
+@@ -377,7 +377,7 @@
+ inline int
+ StringClass::Compare_No_Case (const TCHAR *string) const
+ {
+-	return _tcsicmp (m_Buffer, string);
++	return strcasecmp (m_Buffer, string);
+ }
+ 
+ ///////////////////////////////////////////////////////////////////
+@@ -433,7 +433,7 @@
+ inline bool
+ StringClass::operator < (const TCHAR *string) const
+ {
+-	return (_tcscmp (m_Buffer, string) < 0);
++	return (strcmp (m_Buffer, string) < 0);
+ }
+ 
+ ///////////////////////////////////////////////////////////////////
+@@ -442,7 +442,7 @@
+ inline bool
+ StringClass::operator <= (const TCHAR *string) const
+ {
+-	return (_tcscmp (m_Buffer, string) <= 0);
++	return (strcmp (m_Buffer, string) <= 0);
+ }
+ 
+ ///////////////////////////////////////////////////////////////////
+@@ -451,7 +451,7 @@
+ inline bool
+ StringClass::operator > (const TCHAR *string) const
+ {
+-	return (_tcscmp (m_Buffer, string) > 0);
++	return (strcmp (m_Buffer, string) > 0);
+ }
+ 
+ ///////////////////////////////////////////////////////////////////
+@@ -460,7 +460,7 @@
+ inline bool
+ StringClass::operator >= (const TCHAR *string) const
+ {
+-	return (_tcscmp (m_Buffer, string) >= 0);
++	return (strcmp (m_Buffer, string) >= 0);
+ }
+ 
+ 
+@@ -507,19 +507,24 @@
+ 	WWASSERT (string != NULL);
+ 
+ 	int cur_len = Get_Length ();
+-	int src_len = _tcslen (string);
++	int src_len = strlen (string);
+ 	int new_len = cur_len + src_len;
++ const uintptr_t source_address=reinterpret_cast<uintptr_t>(string);
++ const uintptr_t buffer_address=reinterpret_cast<uintptr_t>(m_Buffer);
++ const bool internal=source_address>=buffer_address && source_address-buffer_address<=uintptr_t(cur_len);
++ const size_t offset=internal?size_t(source_address-buffer_address):0;
+ 
+ 	//
+ 	//	Make sure our buffer is large enough to hold the new string
+ 	//
+ 	Resize (new_len + 1);
++ if(internal) string=m_Buffer+offset;
+ 	Store_Length (new_len);
+ 
+ 	//
+ 	//	Copy the new string onto our the end of our existing buffer
+ 	//
+-	::memcpy (&m_Buffer[cur_len], string, (src_len + 1) * sizeof (TCHAR));
++	::memmove (&m_Buffer[cur_len], string, (src_len + 1) * sizeof (TCHAR));
+ 	return (*this);
+ }
+ 
+@@ -591,7 +596,7 @@
+ 		//
+ 		//	Copy the new string onto our the end of our existing buffer
+ 		//
+-		::memcpy (&m_Buffer[cur_len], (const TCHAR *)string, (src_len + 1) * sizeof (TCHAR));				
++		::memmove (&m_Buffer[cur_len], (const TCHAR *)string, (src_len + 1) * sizeof (TCHAR));				
+ 	}
+ 
+ 	return (*this);
+@@ -678,7 +683,7 @@
+ 		// we better manually get the string length.
+ 		//
+ 		if (length == 0) {
+-			length = _tcslen (m_Buffer);
++			length = strlen (m_Buffer);
+ 			((StringClass *)this)->Store_Length (length);
+ 		}
+ 	}

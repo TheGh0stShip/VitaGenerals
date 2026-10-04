@@ -21,6 +21,9 @@ jobs:
           build-parser/bin/python -m pip install --only-binary=:all: --require-hashes -r tools/parser-requirements.txt
       - name: Host and contract probes
         run: build-parser/bin/python tools/run_host_probes.py --build-dir build-ci-${{ matrix.sanitizer }} --sanitizer ${{ matrix.sanitizer }}
+      - name: Original engine cluster sanitizer probes
+        if: matrix.sanitizer == 'asan-ubsan'
+        run: build-parser/bin/python tools/run_engine_clusters.py --mode host --build-dir build-engine-clusters-host
       - name: Whitespace check
         run: git diff-tree --root --check HEAD -- . ':!LICENSE.md'
   arm-baseline:
@@ -42,6 +45,8 @@ jobs:
           cmake -S . -B build-arm-ci -DCMAKE_TOOLCHAIN_FILE="$VITASDK/share/vita.toolchain.cmake" -DCMAKE_BUILD_TYPE=Debug
           cmake --build build-arm-ci --parallel 2
           python3 tools/record_build_identity.py --build-dir build-arm-ci
+      - name: Original engine cluster ARM links
+        run: python3 tools/run_engine_clusters.py --mode vita --build-dir build-engine-clusters-arm --vita-sdk "$VITASDK"
       - name: Reproduce original-project inventory
         run: |
           python3 tools/fetch_source_baseline.py --directory build-source-ci

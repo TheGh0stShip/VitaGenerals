@@ -1,0 +1,99 @@
+--- a/Code/Libraries/Source/WWVegas/WWLib/random.cpp
++++ b/Code/Libraries/Source/WWVegas/WWLib/random.cpp
+@@ -44,7 +44,22 @@
+  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+ 
+ #include	"always.h"
+-#include	"random.h"
++#include	"RANDOM.H"
++#include <cstdint>
++#include <cstring>
++
++static int random_signed_bits(uint32_t bits)
++{
++	static_assert(sizeof(int) == sizeof(uint32_t), "Random state requires 32-bit int");
++	int value;
++	std::memcpy(&value, &bits, sizeof(value));
++	return value;
++}
++
++static uint32_t random_asr16(uint32_t bits)
++{
++	return (bits >> 16) | ((bits & UINT32_C(0x80000000)) ? UINT32_C(0xffff0000) : 0);
++}
+ 
+ // Timing tests for random these random number generators in seconds for
+ // 10000000 iterations. Testing done by Hector Yee, 6/20/01
+@@ -234,19 +249,19 @@
+ **	and thus prevents the algorithm from breaking down as a result.
+ */
+ int Random3Class::Mix1[20] = {
+-	0x0baa96887, 0x01e17d32c, 0x003bcdc3c, 0x00f33d1b2,
+-	0x076a6491d, 0x0c570d85d, 0x0e382b1e3, 0x078db4362,
+-	0x07439a9d4, 0x09cea8ac5, 0x089537c5c, 0x02588f55d,
+-	0x0415b5e1d, 0x0216e3d95, 0x085c662e7, 0x05e8ab368,
+-	0x03ea5cc8c, 0x0d26a0f74, 0x0f3a9222b, 0x048aad7e4
++	-1163302777, 0x01e17d32c, 0x003bcdc3c, 0x00f33d1b2,
++	0x076a6491d, -982460323, -477974045, 0x078db4362,
++	0x07439a9d4, -1662350651, -1991017380, 0x02588f55d,
++	0x0415b5e1d, 0x0216e3d95, -2050596121, 0x05e8ab368,
++	0x03ea5cc8c, -764801164, -207019477, 0x048aad7e4
+ };
+ 
+ int Random3Class::Mix2[20] = {
+-	0x04b0f3b58, 0x0e874f0c3, 0x06955c5a6, 0x055a7ca46,
+-	0x04d9a9d86, 0x0fe28a195, 0x0b1ca7865, 0x06b235751,
+-	0x09a997a61, 0x0aa6e95c8, 0x0aaa98ee1, 0x05af9154c,
+-	0x0fc8e2263, 0x0390f5e8c, 0x058ffd802, 0x0ac0a5eba,
+-	0x0ac4874f6, 0x0a9df0913, 0x086be4c74, 0x0ed2c123b
++	0x04b0f3b58, -394989373, 0x06955c5a6, 0x055a7ca46,
++	0x04d9a9d86, -30891627, -1312130971, 0x06b235751,
++	-1701217695, -1435593272, -1431728415, 0x05af9154c,
++	-57793949, 0x0390f5e8c, 0x058ffd802, -1408606534,
++	-1404537610, -1445000941, -2034348940, -315878853
+ };
+ 
+ 
+@@ -275,8 +290,8 @@
+  *   05/20/1997 JLB : Created.                                                                 * 
+  *=============================================================================================*/
+ Random3Class::Random3Class(unsigned seed1, unsigned seed2) :
+-	Seed(seed1),
+-	Index(seed2)
++	Seed(random_signed_bits(seed1)),
++	Index(random_signed_bits(seed2))
+ {
+ }	
+ 
+@@ -298,19 +313,20 @@
+  *=============================================================================================*/
+ int Random3Class::operator() (void)
+ {
+-	int loword = Seed;
+-	int hiword = Index++;
++	uint32_t loword = static_cast<uint32_t>(Seed);
++	uint32_t hiword = static_cast<uint32_t>(Index);
++	Index = random_signed_bits(hiword + UINT32_C(1));
+ 	for (int i = 0; i < 4; i++) {
+-		int hihold  = hiword;
+-		int temp    = hihold ^  Mix1[i];
+-		int itmpl   = temp   &  0xffff;
+-		int itmph   = temp   >> 16;
+-		temp    = itmpl * itmpl + ~(itmph * itmph);
+-		temp    = (temp >> 16) | (temp << 16);
+-		hiword  = loword ^ ((temp ^ Mix2[i]) + itmpl * itmph);
+-		loword  = hihold;
++		uint32_t hihold = hiword;
++		uint32_t temp = hihold ^ static_cast<uint32_t>(Mix1[i]);
++		uint32_t itmpl = temp & UINT32_C(0xffff);
++		uint32_t itmph = random_asr16(temp);
++		temp = itmpl * itmpl + ~(itmph * itmph);
++		temp = random_asr16(temp) | (temp << 16);
++		hiword = loword ^ ((temp ^ static_cast<uint32_t>(Mix2[i])) + itmpl * itmph);
++		loword = hihold;
+ 	}
+-	return(hiword);
++	return random_signed_bits(hiword);
+ }	
+ 
+ 

@@ -1,0 +1,36 @@
+--- a/Code/GameEngine/Include/Common/PerfTimer.h
++++ b/Code/GameEngine/Include/Common/PerfTimer.h
+@@ -27,6 +27,7 @@
+ // July 2002
+ 
+ #pragma once
++#include <cstdint>
+ 
+ #ifndef __PERFTIMER_H__
+ #define __PERFTIMER_H__
+@@ -66,22 +67,11 @@
+ void GetPrecisionTimerTicksPerSec(Int64* t);
+ 
+ //-------------------------------------------------------------------------------------------------
++std::int64_t platformPrecisionTimerTicks();
++std::int64_t platformPrecisionTimerFrequency();
+ __forceinline void GetPrecisionTimer(Int64* t)
+ {
+-#ifdef USE_QPF
+-	QueryPerformanceCounter((LARGE_INTEGER*)t);
+-#else
+-	// CPUID is needed to force serialization of any previous instructions. 
+-	__asm 
+-	{
+-		// for now, I am commenting this out. It throws the timings off a bit more (up to .001%) jkmcd
+-		//		CPUID
+-		RDTSC
+-		MOV ECX,[t]
+-		MOV [ECX], EAX
+-		MOV [ECX+4], EDX
+-	}
+-#endif
++    *t = platformPrecisionTimerTicks();
+ }
+ #endif
+ 

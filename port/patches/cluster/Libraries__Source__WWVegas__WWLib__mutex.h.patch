@@ -1,0 +1,64 @@
+--- a/Code/Libraries/Source/WWVegas/WWLib/mutex.h
++++ b/Code/Libraries/Source/WWVegas/WWLib/mutex.h
+@@ -1,3 +1,4 @@
++#include <cstdint>
+ /*
+ **	Command & Conquer Generals Zero Hour(tm)
+ **	Copyright 2025 Electronic Arts Inc.
+@@ -117,7 +118,9 @@
+ 
+ class FastCriticalSectionClass
+ {
+-	unsigned Flag;
++	alignas(4) std::uint32_t Flag;
++	FastCriticalSectionClass(const FastCriticalSectionClass&) = delete;
++	FastCriticalSectionClass& operator=(const FastCriticalSectionClass&) = delete;
+ 
+ public:
+ 	// Name can (and usually should) be NULL. Use name only if you wish to create a globally unique mutex
+@@ -129,41 +132,14 @@
+ 	public:
+ 		__forceinline LockClass(FastCriticalSectionClass& critical_section) : cs(critical_section)
+ 		{
+-		  unsigned& nFlag=cs.Flag;
+-
+-		  #define ts_lock _emit 0xF0
+-		  assert(((unsigned)&nFlag % 4) == 0);
+-
+-      // I'm terribly sorry for these emits in here but
+-      // VC won't inline any functions that have labels in them...
+-
+-      // Had to remove the emits back to normal
+-      // ASM statements because sometimes the jump
+-      // would be 1 byte off....
+-      
+-		  __asm mov ebx, [nFlag]
+-		  __asm ts_lock
+-		  __asm bts dword ptr [ebx], 0
+-		  __asm jnc BitSet
+-      //__asm _emit 0x73
+-      //__asm _emit 0x0f
+-
+-		  The_Bit_Was_Previously_Set_So_Try_Again:
+-		    ThreadClass::Switch_Thread();
+-		  __asm mov ebx, [nFlag]
+-		  __asm ts_lock
+-		  __asm bts dword ptr [ebx], 0
+-		  __asm jc  The_Bit_Was_Previously_Set_So_Try_Again
+-      //_asm _emit 0x72
+-      //_asm _emit 0xf1
+-
+-      BitSet:
+-        ;
++            while ((__atomic_fetch_or(&cs.Flag, std::uint32_t(1), __ATOMIC_ACQUIRE) & 1u) != 0) {
++                ThreadClass::Switch_Thread();
++            }
+ 		}
+ 
+ 		~LockClass()
+ 		{
+-      cs.Flag=0;
++      __atomic_store_n(&cs.Flag, std::uint32_t(0), __ATOMIC_RELEASE);
+ 		}
+     
+ 	private:

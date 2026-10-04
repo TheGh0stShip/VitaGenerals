@@ -1,0 +1,83 @@
+--- a/Code/GameEngine/Include/Common/CriticalSection.h
++++ b/Code/GameEngine/Include/Common/CriticalSection.h
+@@ -31,6 +31,12 @@
+ #ifndef __CRITICALSECTION_H__
+ #define __CRITICALSECTION_H__
+ 
++#if defined(GENERALS_PLATFORM_VITA)
++#include <psp2/kernel/threadmgr/lw_mutex.h>
++#else
++#include <mutex>
++#endif
++#include <cstdlib>
+ #include "Common/PerfTimer.h"
+ 
+ #ifdef PERF_TIMERS
+@@ -39,7 +45,14 @@
+ 
+ class CriticalSection
+ {
+-	CRITICAL_SECTION m_windowsCriticalSection;
++	#if defined(GENERALS_PLATFORM_VITA)
++	SceKernelLwMutexWork m_nativeCriticalSection;
++	#else
++	std::recursive_mutex m_nativeCriticalSection;
++	#endif
++	CriticalSection(const CriticalSection&) = delete;
++	CriticalSection& operator=(const CriticalSection&) = delete;
++	static void requireSuccess(int result) { if (result < 0) std::abort(); }
+ 
+ 	public:
+ 		CriticalSection()
+@@ -47,7 +60,11 @@
+ 			#ifdef PERF_TIMERS
+ 			AutoPerfGather a(TheCritSecPerfGather);
+ 			#endif
+-			InitializeCriticalSection( &m_windowsCriticalSection );
++			#if defined(GENERALS_PLATFORM_VITA)
++			requireSuccess(sceKernelCreateLwMutex(&m_nativeCriticalSection, "GeneralsCriticalSection", SCE_KERNEL_MUTEX_ATTR_RECURSIVE, 0, nullptr));
++			#else
++			
++			#endif
+ 		}
+ 
+ 		virtual ~CriticalSection()
+@@ -55,7 +72,11 @@
+ 			#ifdef PERF_TIMERS
+ 			AutoPerfGather a(TheCritSecPerfGather);
+ 			#endif
+-			DeleteCriticalSection( &m_windowsCriticalSection );
++			#if defined(GENERALS_PLATFORM_VITA)
++			requireSuccess(sceKernelDeleteLwMutex(&m_nativeCriticalSection));
++			#else
++			
++			#endif
+ 		}
+ 
+ 	public:	// Use these when entering/exiting a critical section.
+@@ -64,7 +85,11 @@
+ 			#ifdef PERF_TIMERS
+ 			AutoPerfGather a(TheCritSecPerfGather);
+ 			#endif
+-			EnterCriticalSection( &m_windowsCriticalSection );
++			#if defined(GENERALS_PLATFORM_VITA)
++			requireSuccess(sceKernelLockLwMutex(&m_nativeCriticalSection, 1, nullptr));
++			#else
++			m_nativeCriticalSection.lock();
++			#endif
+ 		}
+ 		
+ 		void exit( void )
+@@ -72,7 +97,11 @@
+ 			#ifdef PERF_TIMERS
+ 			AutoPerfGather a(TheCritSecPerfGather);
+ 			#endif
+-			LeaveCriticalSection( &m_windowsCriticalSection );
++			#if defined(GENERALS_PLATFORM_VITA)
++			requireSuccess(sceKernelUnlockLwMutex(&m_nativeCriticalSection, 1));
++			#else
++			m_nativeCriticalSection.unlock();
++			#endif
+ 		}
+ };
+ 

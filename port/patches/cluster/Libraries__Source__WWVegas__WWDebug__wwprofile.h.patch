@@ -1,0 +1,53 @@
+--- a/Code/Libraries/Source/WWVegas/WWDebug/wwprofile.h
++++ b/Code/Libraries/Source/WWVegas/WWDebug/wwprofile.h
+@@ -44,11 +44,9 @@
+ #define WWPROFILE_H
+ 
+ #include "wwstring.h"
+-
+-#ifdef _UNIX
+-typedef signed long long __int64;
+-typedef signed long long _int64;
+-#endif
++#include <stdint.h>
++
++
+ 
+ // enable profiling by default in debug mode.
+ #ifdef WWDEBUG
+@@ -98,7 +96,7 @@
+ 	const char *					Name;
+ 	int								TotalCalls;
+ 	float								TotalTime;
+-	__int64							StartTime;
++	int64_t							StartTime;
+ 	int								RecursionCounter;
+ 	unsigned						ProfileStringID;
+ 
+@@ -231,7 +229,7 @@
+ 	static	WWProfileHierachyNodeClass *	CurrentNode;
+ 	static	WWProfileHierachyNodeClass *	CurrentRootNode;
+ 	static	int									FrameCounter;
+-	static	__int64								ResetTime;
++	static	int64_t								ResetTime;
+ 	static	bool									IsProfileEnabled;
+ 
+ 	friend	class		WWProfileInOrderIterator;
+@@ -281,7 +279,7 @@
+ 	~WWTimeItClass( void );
+ private:
+ 	const char * Name;
+-	__int64	Time;
++	int64_t	Time;
+ };
+ 
+ #ifdef ENABLE_WWPROFILE
+@@ -302,7 +300,7 @@
+ 	~WWMeasureItClass( void );
+ 
+ private:
+-	__int64	Time;
++	int64_t	Time;
+ 	float *  PResult;
+ };
+ 

@@ -1,0 +1,11 @@
+--- a/Code/Libraries/Source/WWVegas/WWLib/slnode.cpp
++++ b/Code/Libraries/Source/WWVegas/WWLib/slnode.cpp
+@@ -34,7 +34,7 @@
+  * Functions:                                                                                  *
+  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+ 
+-#include "slnode.h"
++#include "SLNODE.H"
+ 
+ 
+ 

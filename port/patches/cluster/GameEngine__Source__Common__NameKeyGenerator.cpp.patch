@@ -1,0 +1,10 @@
+--- a/Code/GameEngine/Source/Common/NameKeyGenerator.cpp
++++ b/Code/GameEngine/Source/Common/NameKeyGenerator.cpp
+@@ -29,6 +29,7 @@
+ ///////////////////////////////////////////////////////////////////////////////////////////////////
+ 
+ #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
++#include "Common/NameKeyGenerator.h"
+ 
+ // Public Data ////////////////////////////////////////////////////////////////////////////////////
+ NameKeyGenerator *TheNameKeyGenerator = NULL;  ///< name key gen. singleton

@@ -1,0 +1,172 @@
+--- a/Code/Libraries/Source/WWVegas/WWLib/wwstring.cpp
++++ b/Code/Libraries/Source/WWVegas/WWLib/wwstring.cpp
+@@ -35,10 +35,13 @@
+  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+ 
+ #include "wwstring.h"
+-#include "win.h"
++#include <stdint.h>
++
+ #include "wwmemlog.h"
+ #include "mutex.h"
+ #include <stdio.h>
++#include <vector>
++#include <climits>
+ 
+ 
+ ///////////////////////////////////////////////////////////////////
+@@ -78,7 +81,7 @@
+ 	//
+ 	//	Should we attempt to use a temp buffer for this string?
+ 	//
+-	if (is_temp && length <= MAX_TEMP_LEN && ReservedMask!=ALL_TEMP_STRINGS_USED_MASK) {
++	if (is_temp && length <= MAX_TEMP_LEN) {
+ 
+ 		//
+ 		//	Make sure no one else is requesting a temp pointer
+@@ -102,9 +105,9 @@
+ 				//
+ 				//	Grab this unused buffer for our string
+ 				//
+-				unsigned temp_string=reinterpret_cast<unsigned>(m_TempStrings);
++				uintptr_t temp_string=reinterpret_cast<uintptr_t>(m_TempStrings);
+ 				temp_string+=MAX_TEMP_BYTES*MAX_TEMP_STRING;
+-				temp_string&=~(MAX_TEMP_BYTES*MAX_TEMP_STRING-1);
++				temp_string&=~uintptr_t(MAX_TEMP_BYTES*MAX_TEMP_STRING-1);
+ 				temp_string+=index*MAX_TEMP_BYTES;
+ 				temp_string+=sizeof(_HEADER);	// The buffer contains header as well, and it needs to be at the start
+ 				string=reinterpret_cast<char*>(temp_string);
+@@ -147,7 +150,7 @@
+ 		// string.
+ 		//
+ 		TCHAR *new_buffer = Allocate_Buffer (new_len);
+-		_tcscpy (new_buffer, m_Buffer);
++		strcpy (new_buffer, m_Buffer);
+ 
+ 		//
+ 		//	Switch to the new buffer
+@@ -197,8 +200,8 @@
+ {
+ 	if (m_Buffer != m_EmptyString) {
+ 
+-		unsigned buffer_base=reinterpret_cast<unsigned>(m_Buffer-sizeof (StringClass::_HEADER));
+-		unsigned temp_base=reinterpret_cast<unsigned>(m_TempStrings+MAX_TEMP_BYTES*MAX_TEMP_STRING);
++		uintptr_t buffer_base=reinterpret_cast<uintptr_t>(m_Buffer-sizeof (StringClass::_HEADER));
++		uintptr_t temp_base=reinterpret_cast<uintptr_t>(m_TempStrings+MAX_TEMP_BYTES*MAX_TEMP_STRING);
+ 
+ 		if ((buffer_base>>11)==(temp_base>>11)) {
+ 			m_Buffer[0] = 0;
+@@ -238,29 +241,18 @@
+ //
+ ///////////////////////////////////////////////////////////////////
+ int _cdecl
+-StringClass::Format_Args (const TCHAR *format, const va_list & arg_list )
+-{
+-	//
+-	// Make a guess at the maximum length of the resulting string
+-	//
+-	TCHAR temp_buffer[512] = { 0 };
+-	int retval = 0;
+-
+-	//
+-	//	Format the string
+-	//
+-	#ifdef _UNICODE
+-		retval = _vsnwprintf (temp_buffer, 512, format, arg_list);
+-	#else
+-		retval = _vsnprintf (temp_buffer, 512, format, arg_list);
+-	#endif
+-	
+-	//
+-	//	Copy the string into our buffer
+-	//	
+-	(*this) = temp_buffer;
+-
+-	return retval;
++StringClass::Format_Args (const TCHAR *format, va_list & arg_list )
++{
++ if (!format) return -1;
++ va_list count_args;va_copy(count_args,arg_list);
++ const int required=vsnprintf(NULL,0,format,count_args);va_end(count_args);
++ if (required<0 || required==INT_MAX) return -1;
++ std::vector<char> buffer(size_t(required)+1);
++ va_list output_args;va_copy(output_args,arg_list);
++ const int written=vsnprintf(buffer.data(),buffer.size(),format,output_args);va_end(output_args);
++ if (written!=required) return -1;
++ (*this)=buffer.data();
++ return written;
+ }
+ 
+ 
+@@ -272,31 +264,9 @@
+ int _cdecl
+ StringClass::Format (const TCHAR *format, ...)
+ {
+-	va_list arg_list;
+-	va_start (arg_list, format);
+-
+-	//
+-	// Make a guess at the maximum length of the resulting string
+-	//
+-	TCHAR temp_buffer[512] = { 0 };
+-	int retval = 0;
+-
+-	//
+-	//	Format the string
+-	//
+-	#ifdef _UNICODE
+-		retval = _vsnwprintf (temp_buffer, 512, format, arg_list);
+-	#else
+-		retval = _vsnprintf (temp_buffer, 512, format, arg_list);
+-	#endif
+-	
+-	//
+-	//	Copy the string into our buffer
+-	//	
+-	(*this) = temp_buffer;
+-
+-	va_end (arg_list);
+-	return retval;
++ va_list args;va_start(args,format);
++ const int result=Format_Args(format,args);
++ va_end(args);return result;
+ }
+ 
+ 
+@@ -318,25 +288,14 @@
+ ///////////////////////////////////////////////////////////////////
+ bool StringClass::Copy_Wide (const WCHAR *source)
+ {
+-	if (source != NULL) {
+-
+-		int  length;
+-		BOOL unmapped;
+-			
+-		length = WideCharToMultiByte (CP_ACP, 0 , source, -1, NULL, 0, NULL, &unmapped);
+-		if (length > 0) {
+-
+-			// Convert.
+-			WideCharToMultiByte (CP_ACP, 0, source, -1, Get_Buffer (length), length, NULL, NULL);
+-
+-			// Update length.
+-			Store_Length (length - 1);
+-		}
+-
+-		// Were all characters successfully mapped?
+-		return (!unmapped);
+-	}
+-
+-	// Failure.
+-	return (false);
++ if (!source) return false;
++ bool unmapped=false;
++ const int length=wwstring_detail::utf16_to_ansi(source,NULL,0,&unmapped);
++ if (length<=0) return false;
++ std::vector<char> converted(static_cast<size_t>(length));
++ bool copied_unmapped=false;
++ const int copied=wwstring_detail::utf16_to_ansi(source,converted.data(),length,&copied_unmapped);
++ if (copied!=length) return false;
++ (*this)=converted.data();
++ return !(unmapped||copied_unmapped);
+ }
+\ No newline at end of file

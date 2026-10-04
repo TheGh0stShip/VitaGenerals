@@ -1,0 +1,11 @@
+--- a/Code/Libraries/Source/WWVegas/WWSaveLoad/saveload.h
++++ b/Code/Libraries/Source/WWVegas/WWSaveLoad/saveload.h
+@@ -46,7 +46,7 @@
+ #include "always.h"
+ #include "pointerremap.h"
+ #include "bittype.h"
+-#include "slist.h"
++#include "../WWLib/SLIST.H"
+ 
+ class RefCountClass;
+ class SaveLoadSubSystemClass;

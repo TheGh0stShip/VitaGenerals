@@ -1,0 +1,35 @@
+--- a/Code/Libraries/Source/WWVegas/WWSaveLoad/parameter.cpp
++++ b/Code/Libraries/Source/WWVegas/WWSaveLoad/parameter.cpp
+@@ -38,6 +38,14 @@
+ 
+ 
+ #include "parameter.h"
++
++#if defined(GENERALS_PLATFORM_VITA)
++#include <strings.h>
++static int wwlib_case_compare(const char* a, const char* b) { return ::strcasecmp(a,b); }
++#else
++#include <string.h>
++static int wwlib_case_compare(const char* a, const char* b) { return ::stricmp(a,b); }
++#endif
+ #include "parametertypes.h"
+ #include "simpleparameter.h"
+ #include "wwstring.h"
+@@ -1980,7 +1988,7 @@
+ 		for (int index = 0; (index < count1) && retval; index ++) {
+ 			StringClass &filename1 = (*m_FilenameList)[index];
+ 			StringClass &filename2 = (*src.m_FilenameList)[index];
+-			retval &= (::stricmp (filename1, filename2) == 0);
++			retval &= (wwlib_case_compare (filename1, filename2) == 0);
+ 		}
+ 	}
+ 
+@@ -2124,7 +2132,7 @@
+ 	for (int index = 0; (index < count1) && retval; index ++) {
+ 		StringClass &string1 = list1[index];
+ 		StringClass &string2 = list2[index];
+-		retval &= (::stricmp (string1, string2) == 0);
++		retval &= (wwlib_case_compare (string1, string2) == 0);
+ 	}
+ 
+ 	return retval;

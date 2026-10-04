@@ -1,0 +1,18 @@
+--- a/wwlib/realcrc.h
++++ b/wwlib/realcrc.h
+@@ -40,10 +40,12 @@
+ #ifndef REALCRC_H
+ #define REALCRC_H
+ 
++#include <stdint.h>
+ 
+-unsigned long	CRC_Memory( const unsigned char *data, unsigned long length, unsigned long crc = 0 );
+-unsigned long	CRC_String( const char *string, unsigned long crc = 0 );
+-unsigned long	CRC_Stringi( const char *string, unsigned long crc = 0 );
++
++uint32_t	CRC_Memory( const unsigned char *data, uint32_t length, uint32_t crc = 0 );
++uint32_t	CRC_String( const char *string, uint32_t crc = 0 );
++uint32_t	CRC_Stringi( const char *string, uint32_t crc = 0 );
+ 
+ 
+ #endif

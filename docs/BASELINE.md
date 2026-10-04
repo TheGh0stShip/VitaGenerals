@@ -1,14 +1,14 @@
 # Original-source baseline ledger
 
 The complete native Vita/PSTV port remains the objective. Phase 0 is incomplete:
-one original checksum module links; the game engine, platform replacements,
+original dependency clusters link; the game engine, remaining platform replacements,
 package and physical acceptance remain open.
 
 ## Provenance and deterministic staging
 
 EA baseline: `0a05454d8574207440a5fb15241b98ad0b435590`. The supplied archive
 matched all 6,076 tracked upstream files byte-for-byte. Two WWLib checksum
-files are retained verbatim in `vendor/ea`, with their original notices and
+files and the additional cluster inputs are retained verbatim in `vendor/ea`, with their original notices and
 per-file hashes. No retail files or implementation from another port were copied.
 
 The build stages declared originals in a temporary tree, verifies copied input

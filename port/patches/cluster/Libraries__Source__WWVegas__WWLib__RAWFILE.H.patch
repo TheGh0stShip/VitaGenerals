@@ -1,0 +1,32 @@
+--- a/Code/Libraries/Source/WWVegas/WWLib/RAWFILE.H
++++ b/Code/Libraries/Source/WWVegas/WWLib/RAWFILE.H
+@@ -48,9 +48,9 @@
+ 
+ // #include	"win.h"
+ 
+-#ifdef _UNIX
++#ifdef GENERALS_WWLIB_STDIO
+ #include <stdio.h>
+-#include "osdep.h"
++// Unix FILE* backend uses standard declarations below.
+   #define	NULL_HANDLE	 	NULL	
+   #define	HANDLE_TYPE		FILE*	
+ #else
+@@ -58,7 +58,7 @@
+   #define	HANDLE_TYPE		HANDLE
+ #endif
+ 
+-#include	"wwfile.h"
++#include "WWFILE.H"
+ #include "wwstring.h"
+ 
+ 
+@@ -141,7 +141,7 @@
+ 		/*
+ 		**	This is the low level DOS handle. A -1 indicates an empty condition.
+ 		*/
+-		#ifdef _UNIX
++		#ifdef GENERALS_WWLIB_STDIO
+ 			FILE*  Handle;
+ 		#else
+ 			void * Handle;

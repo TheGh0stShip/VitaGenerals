@@ -1,0 +1,139 @@
+--- a/Code/Libraries/Source/WWVegas/WWMath/matrix3d.cpp
++++ b/Code/Libraries/Source/WWVegas/WWMath/matrix3d.cpp
+@@ -58,6 +58,15 @@
+ #include "matrix3d.h"
+ 
+ #include <math.h>
++#include <cmath>
++#include <fenv.h>
++#if defined(__SSE2__)
++#include <xmmintrin.h>
++#endif
++#if defined(__FAST_MATH__)
++#error Exact determinant requires strict floating-point arithmetic
++#endif
++#include <limits>
+ #include <assert.h>
+ #include <stdlib.h>
+ //#include <stdio.h>
+@@ -65,7 +74,7 @@
+ #include "matrix3.h"
+ #include "matrix4.h"
+ #include "quat.h"
+-#include "D3dx8math.h"
++
+ 
+ // some static matrices which are sometimes useful
+ const Matrix3D Matrix3D::Identity
+@@ -511,31 +520,88 @@
+  * HISTORY:                                                                                    *
+  *   8/7/98     GTH : Created.                                                                 *
+  *=============================================================================================*/
++namespace {
++// Six triple products produce at most twelve binary64 expansion terms.
++// Binary32 factors bound magnitude below 2^384 and smallest quantum at 2^-447;
++// six terms and their exact sums stay within normal binary64 range.
++double affine_determinant(const Matrix3D &matrix)
++{
++ const int indices[6][3]={{0,1,2},{1,2,0},{2,0,1},{2,1,0},{1,0,2},{0,2,1}};
++ double expansion[16]={}; int length=0;
++ for (int term=0;term<6;++term) {
++  const double product=double(matrix[0][indices[term][0]])*matrix[1][indices[term][1]];
++  const double factor=matrix[2][indices[term][2]];
++  const double high=product*factor;
++  // Dekker split avoids dependence on the SDK non-fused fma provider.
++  const double product_split=134217729.0*product;
++  const double product_high=product_split-(product_split-product);
++  const double product_low=product-product_high;
++  const double factor_split=134217729.0*factor;
++  const double factor_high=factor_split-(factor_split-factor);
++  const double factor_low=factor-factor_high;
++  const double low=product_low*factor_low-
++      (((high-product_high*factor_high)-product_low*factor_high)-product_high*factor_low);
++  const double parts[2]={term<3?low:-low,term<3?high:-high};
++  for (int part=0;part<2;++part) {
++   double next[16]={}; int next_length=0; double carry=parts[part];
++   for (int entry=0;entry<length;++entry) {
++    const double value=expansion[entry];
++    const double sum=carry+value;
++    const double value_virtual=sum-carry;
++    const double carry_virtual=sum-value_virtual;
++    const double error=(carry-carry_virtual)+(value-value_virtual);
++    if (error!=0.0) next[next_length++]=error;
++    carry=sum;
++   }
++   if (carry!=0.0) next[next_length++]=carry;
++   length=next_length;
++   for (int entry=0;entry<length;++entry) expansion[entry]=next[entry];
++  }
++ }
++ double determinant=0.0;
++ for (int entry=0;entry<length;++entry) determinant+=expansion[entry];
++ return determinant;
++}
++}
++
+ void Matrix3D::Get_Inverse(Matrix3D & inv) const
+ {
+-	// TODO: Implement the general purpose inverse function here (once we need it :-)
+-	//Get_Orthogonal_Inverse(inv);
+-
+-	Matrix4x4	mat4(*this);
+-	Matrix4x4	mat4Inv;
+-
+-	float det;
+-	D3DXMatrixInverse((D3DXMATRIX *)&mat4Inv, &det, (D3DXMATRIX*)&mat4);
+-
+-	inv.Row[0][0]=mat4Inv[0][0];
+-	inv.Row[0][1]=mat4Inv[0][1];
+-	inv.Row[0][2]=mat4Inv[0][2];
+-	inv.Row[0][3]=mat4Inv[0][3];
+-
+-	inv.Row[1][0]=mat4Inv[1][0];
+-	inv.Row[1][1]=mat4Inv[1][1];
+-	inv.Row[1][2]=mat4Inv[1][2];
+-	inv.Row[1][3]=mat4Inv[1][3];
+-
+-	inv.Row[2][0]=mat4Inv[2][0];
+-	inv.Row[2][1]=mat4Inv[2][1];
+-	inv.Row[2][2]=mat4Inv[2][2];
+-	inv.Row[2][3]=mat4Inv[2][3];
++ // Legacy callers require a result; never continue with uninitialized output.
++ if (!Try_Get_Inverse(inv)) abort();
++}
++
++bool Matrix3D::Try_Get_Inverse(Matrix3D & inv) const
++{
++ if (fegetround()!=FE_TONEAREST) return false;
++#if defined(GENERALS_PLATFORM_VITA) && defined(__arm__)
++ unsigned status; __asm__ volatile("vmrs %0, fpscr" : "=r"(status));
++ if ((status & 0x01000000u)!=0) return false; // VFP flush-to-zero
++#elif defined(__SSE2__)
++ if ((_mm_getcsr() & 0x8040u)!=0) return false; // Host FTZ/DAZ
++#endif
++ for (int r=0;r<3;++r) for (int c=0;c<4;++c)
++  if (!std::isfinite(Row[r][c])) return false;
++ const double a=Row[0][0], b=Row[0][1], c=Row[0][2];
++ const double d=Row[1][0], e=Row[1][1], f=Row[1][2];
++ const double g=Row[2][0], h=Row[2][1], i=Row[2][2];
++ const double A=e*i-f*h, B=f*g-d*i, C=d*h-e*g;
++ const double determinant=affine_determinant(*this);
++ if (determinant==0.0) return false;
++ const double reciprocal=1.0/determinant;
++ double output[3][4]={
++  {A*reciprocal,(c*h-b*i)*reciprocal,(b*f-c*e)*reciprocal,0},
++  {B*reciprocal,(a*i-c*g)*reciprocal,(c*d-a*f)*reciprocal,0},
++  {C*reciprocal,(b*g-a*h)*reciprocal,(a*e-b*d)*reciprocal,0}};
++ for (int r=0;r<3;++r)
++  output[r][3]=-(output[r][0]*Row[0][3]+output[r][1]*Row[1][3]+output[r][2]*Row[2][3]);
++ Matrix3D result(false);
++ for (int r=0;r<3;++r) for (int c=0;c<4;++c) {
++  const double value=output[r][c];
++  if (!std::isfinite(value) || std::fabs(value)>std::numeric_limits<float>::max()) return false;
++  result[r][c]=static_cast<float>(value);
++ }
++ inv=result;
++ return true;
+ }
+ 
+ /*********************************************************************************************** 

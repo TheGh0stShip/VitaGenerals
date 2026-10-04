@@ -1,0 +1,11 @@
+--- a/Code/Libraries/Source/WWVegas/WWDebug/wwdebug.h
++++ b/Code/Libraries/Source/WWVegas/WWDebug/wwdebug.h
+@@ -105,7 +105,7 @@
+ ** WWDEBUG_SAY(("dir = %f\n",dir));
+ */
+ 
+-#include "..\..\..\..\gameengine\include\common\debug.h"
++#include "../../../../GameEngine/Include/Common/Debug.h"
+ 
+ #ifdef DEBUG_LOGGING
+ #define WWDEBUG_SAY(x)							DEBUG_LOG(x)

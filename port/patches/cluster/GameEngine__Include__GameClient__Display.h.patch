@@ -1,0 +1,10 @@
+--- a/Code/GameEngine/Include/GameClient/Display.h
++++ b/Code/GameEngine/Include/GameClient/Display.h
+@@ -27,6 +27,7 @@
+ // Author: Michael S. Booth, March 2001
+ 
+ #pragma once
++#include "Common/StaticGameLODDefinition.h"
+ 
+ #ifndef _GAME_DISPLAY_H_
+ #define _GAME_DISPLAY_H_

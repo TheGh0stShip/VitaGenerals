@@ -1,0 +1,344 @@
+--- a/Code/GameEngine/Source/Common/System/GameMemory.cpp
++++ b/Code/GameEngine/Source/Common/System/GameMemory.cpp
+@@ -1,3 +1,8 @@
++#include "allocator-wall-bytes.h"
++#include <climits>
++#include <cstddef>
++#include <cstdint>
++#include "MemoryBacking.h"
+ /*
+ **	Command & Conquer Generals Zero Hour(tm)
+ **	Copyright 2025 Electronic Arts Inc.
+@@ -205,7 +210,17 @@
+ 
+ /// @todo srj -- make this work for 8
+ #define MEM_BOUND_ALIGNMENT 4
+-
++constexpr Int MEM_BLOCK_ALIGNMENT = alignof(std::max_align_t);
++static_assert((MEM_BLOCK_ALIGNMENT & (MEM_BLOCK_ALIGNMENT - 1)) == 0, "Power-of-two allocator alignment");
++static Int roundUpBlockAlignment(Int bytes) {
++    if (bytes < 0 || bytes > INT_MAX - (MEM_BLOCK_ALIGNMENT - 1)) throw ERROR_OUT_OF_MEMORY;
++    return (bytes + MEM_BLOCK_ALIGNMENT - 1) & ~(MEM_BLOCK_ALIGNMENT - 1);
++}
++
++static Int checkedAllocationSize(size_t bytes) {
++    if (bytes > static_cast<size_t>(INT_MAX)) throw ERROR_OUT_OF_MEMORY;
++    return static_cast<Int>(bytes);
++}
+ static Int roundUpMemBound(Int i);
+ static void *sysAllocateDoNotZero(Int numBytes);
+ static void sysFree(void* p);
+@@ -224,6 +239,7 @@
+ /** round up to the nearest multiple of MEM_BOUND_ALIGNMENT */
+ static Int roundUpMemBound(Int i)
+ {
++	if (i < 0 || i > INT_MAX - (MEM_BOUND_ALIGNMENT - 1)) throw ERROR_OUT_OF_MEMORY;
+ 	return (i + (MEM_BOUND_ALIGNMENT-1)) & ~(MEM_BOUND_ALIGNMENT-1);
+ }
+ 
+@@ -237,7 +253,7 @@
+ */
+ static void* sysAllocateDoNotZero(Int numBytes)
+ {
+-	void* p = ::GlobalAlloc(GMEM_FIXED, numBytes);
++	void* p = memory_backing::allocate(static_cast<size_t>(numBytes));
+ 	if (!p)
+ 		throw ERROR_OUT_OF_MEMORY;
+ #ifdef MEMORYPOOL_DEBUG
+@@ -273,7 +289,7 @@
+ 			theTotalSystemAllocationInBytes -= ::GlobalSize(p);
+ 		}
+ #endif
+-		::GlobalFree(p);
++		memory_backing::release(p);
+ 	}
+ }
+ 
+@@ -426,6 +442,7 @@
+ 
+ private:
+ 
++	static Int userDataOffset();
+ 	void* getUserDataNoDbg();	
+ #ifdef MEMORYPOOL_BOUNDINGWALL
+ 	void debugFillInWalls();	
+@@ -534,13 +551,17 @@
+ 	return a ptr to the user-data area of the block (ie, the part the enduser can deal with).
+ 	this call does NO debug verification and is for internal use of class MemoryPoolSingleBlock only.
+ */
++inline Int MemoryPoolSingleBlock::userDataOffset()
++{
++    Int offset = sizeof(MemoryPoolSingleBlock);
++#ifdef MEMORYPOOL_BOUNDINGWALL
++    offset += WALLSIZE;
++#endif
++    return ::roundUpBlockAlignment(offset);
++}
+ inline void* MemoryPoolSingleBlock::getUserDataNoDbg()
+ {
+-	char* p = ((char*)this) + sizeof(MemoryPoolSingleBlock);
+-	#ifdef MEMORYPOOL_BOUNDINGWALL
+-	p += WALLSIZE;
+-	#endif
+-	return (void*)p;
++    return static_cast<char*>(static_cast<void*>(this)) + userDataOffset();
+ }
+ 
+ /**
+@@ -560,13 +581,15 @@
+ 	given a desired logical block size, calculate the physical size needed for each
+ 	MemoryPoolSingleBlock (including overhead, etc.)
+ */
+-inline /*static*/ Int MemoryPoolSingleBlock::calcRawBlockSize(Int logicalSize) 
+-{ 
+-	Int s = ::roundUpMemBound(logicalSize) + sizeof(MemoryPoolSingleBlock);
+-	#ifdef MEMORYPOOL_BOUNDINGWALL
+-	s += WALLSIZE*2;
+-	#endif
+-	return s;
++inline /*static*/ Int MemoryPoolSingleBlock::calcRawBlockSize(Int logicalSize)
++{
++    const Int rounded = ::roundUpMemBound(logicalSize);
++    Int overhead = userDataOffset();
++#ifdef MEMORYPOOL_BOUNDINGWALL
++    overhead += WALLSIZE;
++#endif
++    if (rounded > INT_MAX - overhead) throw ERROR_OUT_OF_MEMORY;
++    return ::roundUpBlockAlignment(overhead + rounded);
+ }
+ 
+ /**
+@@ -908,10 +931,7 @@
+ 	DEBUG_ASSERTCRASH(pUserData, ("null pUserData"));
+ 	if (!pUserData)
+ 		return NULL;
+-	char* p = ((char*)pUserData) - sizeof(MemoryPoolSingleBlock);
+-	#ifdef MEMORYPOOL_BOUNDINGWALL
+-	p -= WALLSIZE;
+-	#endif
++	char* p = static_cast<char*>(pUserData) - userDataOffset();
+ 	MemoryPoolSingleBlock *block = (MemoryPoolSingleBlock *)p;
+ // yes, verify the block in this case for plain debug mode (not intense-verify mode)
+ #ifdef MEMORYPOOL_DEBUG
+@@ -1080,12 +1100,13 @@
+ 	USE_PERF_TIMER(MemoryPoolDebugging)
+ 
+ #ifdef MEMORYPOOL_BOUNDINGWALL
+-	Int *p = (Int*)(((char*)getUserDataNoDbg()) - WALLSIZE);
+-	for (Int i = 0; i < WALLCOUNT; i++, p++)
+-	{
+-		if (*p != m_wallPattern+i)
+-		{
+-			DEBUG_CRASH(("memory underrun for block \"%s\" (expected %08x, got %08x)\n",m_debugLiteralTagString,m_wallPattern+i,*p));
++	const char* p = ((char*)getUserDataNoDbg()) - WALLSIZE;
++	for (Int i = 0; i < WALLCOUNT; i++, p += sizeof(Int))
++	{
++		const Int actual = allocator_detail::read_wall_word(p);
++		if (actual != m_wallPattern+i)
++		{
++			DEBUG_CRASH(("memory underrun for block \"%s\" (expected %08x, got %08x)\n",m_debugLiteralTagString,m_wallPattern+i,actual));
+ 			return true;
+ 		}
+ 	}
+@@ -1105,12 +1126,13 @@
+ 	USE_PERF_TIMER(MemoryPoolDebugging)
+ 
+ #ifdef MEMORYPOOL_BOUNDINGWALL
+-	Int *p = (Int*)(((char*)getUserDataNoDbg()) + m_logicalSize);
+-	for (Int i = 0; i < WALLCOUNT; i++, p++)
+-	{
+-		if (*p != m_wallPattern-i)
+-		{
+-			DEBUG_CRASH(("memory overrun for block \"%s\" (expected %08x, got %08x)\n",m_debugLiteralTagString,m_wallPattern+i,*p));
++	const char* p = ((char*)getUserDataNoDbg()) + m_logicalSize;
++	for (Int i = 0; i < WALLCOUNT; i++, p += sizeof(Int))
++	{
++		const Int actual = allocator_detail::read_wall_word(p);
++		if (actual != m_wallPattern-i)
++		{
++			DEBUG_CRASH(("memory overrun for block \"%s\" (expected %08x, got %08x)\n",m_debugLiteralTagString,m_wallPattern-i,actual));
+ 			return true;
+ 		}
+ 	}
+@@ -1126,16 +1148,16 @@
+ */
+ void MemoryPoolSingleBlock::debugFillInWalls()
+ {
+-	Int *p;
++	char* p;
+ 	Int i;
+ 
+-	p = (Int*)(((char*)getUserDataNoDbg()) - WALLSIZE);
+-	for (i = 0; i < WALLCOUNT; i++)
+-		*p++ = m_wallPattern+i;
+-
+-	p = (Int*)(((char*)getUserDataNoDbg()) + m_logicalSize);
+-	for (i = 0; i < WALLCOUNT; i++)
+-		*p++ = m_wallPattern-i;
++	p = ((char*)getUserDataNoDbg()) - WALLSIZE;
++	for (i = 0; i < WALLCOUNT; i++, p += sizeof(Int))
++		allocator_detail::write_wall_word(p, m_wallPattern+i);
++
++	p = ((char*)getUserDataNoDbg()) + m_logicalSize;
++	for (i = 0; i < WALLCOUNT; i++, p += sizeof(Int))
++		allocator_detail::write_wall_word(p, m_wallPattern-i);
+ 
+ 	#ifdef MEMORYPOOL_INTENSE_VERIFY
+ 	debugVerifyBlock();
+@@ -1186,6 +1208,7 @@
+ 	m_usedBlocksInBlob = 0;
+ 
+ 	Int rawBlockSize = MemoryPoolSingleBlock::calcRawBlockSize(m_owningPool->getAllocationSize());
++	if (m_totalBlocksInBlob < 0 || m_totalBlocksInBlob > INT_MAX / rawBlockSize) throw ERROR_OUT_OF_MEMORY;
+ 	m_blockData = (char *)::sysAllocateDoNotZero(rawBlockSize * m_totalBlocksInBlob);	// throws on failure
+ 
+ 	// set up the list of free blocks in the blob (namely, all of 'em)
+@@ -1559,7 +1582,7 @@
+ {
+ 	DEBUG_ASSERTCRASH(allocationCount > 0 && allocationCount%MEM_BOUND_ALIGNMENT==0, ("bad allocationCount (must be >0 and evenly divisible by %d)",MEM_BOUND_ALIGNMENT));
+ 
+-	MemoryPoolBlob* blob = new (::sysAllocateDoNotZero(sizeof MemoryPoolBlob)) MemoryPoolBlob;	// will throw on failure
++	MemoryPoolBlob* blob = new (::sysAllocateDoNotZero(sizeof(MemoryPoolBlob))) MemoryPoolBlob;	// will throw on failure
+ 
+ 	blob->initBlob(this, allocationCount);	// will throw on failure
+ 
+@@ -1635,7 +1658,8 @@
+ 	{
+ 		// hmm... the current 'free' blob has nothing available. look and see if there
+ 		// are any other existing blobs with freespace.
+-		for (MemoryPoolBlob *blob = m_firstBlob; blob != NULL; blob = blob->getNextInList()) 
++		MemoryPoolBlob *blob = m_firstBlob;
++		for (; blob != NULL; blob = blob->getNextInList()) 
+ 		{
+ 			if (blob->hasAnyFreeBlocks())
+ 			 	break;
+@@ -2161,6 +2185,7 @@
+ */
+ void *DynamicMemoryAllocator::allocateBytesDoNotZeroImplementation(Int numBytes DECLARE_LITERALSTRING_ARG2)
+ {
++	if (numBytes < 0) throw ERROR_OUT_OF_MEMORY;
+ 	ScopedCriticalSection scopedCriticalSection(TheDmaCriticalSection);
+ 
+ 	void *result = NULL;
+@@ -2248,7 +2273,7 @@
+ 
+ #if defined(_DEBUG) || defined(_INTERNAL)
+   // check alignment
+-  if (unsigned(result)&3)
++  if (reinterpret_cast<std::uintptr_t>(result) & (MEM_BLOCK_ALIGNMENT - 1))
+     throw ERROR_OUT_OF_MEMORY;
+ #endif
+ 
+@@ -2660,7 +2685,7 @@
+ 		throw ERROR_OUT_OF_MEMORY;
+ 	}
+ 
+-	pool = new (::sysAllocateDoNotZero(sizeof MemoryPool)) MemoryPool;	// will throw on failure
++	pool = new (::sysAllocateDoNotZero(sizeof(MemoryPool))) MemoryPool;	// will throw on failure
+ 	pool->init(this, poolName, allocationSize, initialAllocationCount, overflowAllocationCount);	// will throw on failure
+ 
+ 	pool->addToList(&m_firstPoolInFactory);
+@@ -2715,7 +2740,7 @@
+ {
+ 	DynamicMemoryAllocator *dma;
+ 
+-	dma = new (::sysAllocateDoNotZero(sizeof DynamicMemoryAllocator)) DynamicMemoryAllocator;	// will throw on failure
++	dma = new (::sysAllocateDoNotZero(sizeof(DynamicMemoryAllocator))) DynamicMemoryAllocator;	// will throw on failure
+ 	dma->init(this, numSubPools, pParms);	// will throw on failure
+ 
+ 	dma->addToList(&m_firstDmaInFactory);
+@@ -3253,7 +3278,7 @@
+ 	++theLinkTester;
+ 	preMainInitMemoryManager();
+ 	DEBUG_ASSERTCRASH(TheDynamicMemoryAllocator != NULL, ("must init memory manager before calling global operator new"));
+-	return TheDynamicMemoryAllocator->allocateBytes(__n, "STL_"); 
++	return TheDynamicMemoryAllocator->allocateBytes(checkedAllocationSize(__n), "STL_"); 
+ }
+ 
+ //-----------------------------------------------------------------------------
+@@ -3274,7 +3299,7 @@
+ 	++theLinkTester;
+ 	preMainInitMemoryManager();
+ 	DEBUG_ASSERTCRASH(TheDynamicMemoryAllocator != NULL, ("must init memory manager before calling global operator new"));
+-	return TheDynamicMemoryAllocator->allocateBytes(size, "global operator new");
++	return TheDynamicMemoryAllocator->allocateBytes(checkedAllocationSize(size), "global operator new");
+ }
+ 
+ //-----------------------------------------------------------------------------
+@@ -3286,14 +3311,14 @@
+ 	++theLinkTester;
+ 	preMainInitMemoryManager();
+ 	DEBUG_ASSERTCRASH(TheDynamicMemoryAllocator != NULL, ("must init memory manager before calling global operator new"));
+-	return TheDynamicMemoryAllocator->allocateBytes(size, "global operator new[]");
++	return TheDynamicMemoryAllocator->allocateBytes(checkedAllocationSize(size), "global operator new[]");
+ }
+  
+ //-----------------------------------------------------------------------------
+ /**
+ 	overload for global operator delete; send requests to TheDynamicMemoryAllocator.
+ */
+-void operator delete(void *p)
++void operator delete(void *p) noexcept
+ {
+ 	++theLinkTester;
+ 	preMainInitMemoryManager();
+@@ -3305,7 +3330,7 @@
+ /**
+ 	overload for global operator delete[]; send requests to TheDynamicMemoryAllocator.
+ */
+-void operator delete[](void *p)
++void operator delete[](void *p) noexcept
+ {
+ 	++theLinkTester;
+ 	preMainInitMemoryManager();
+@@ -3323,9 +3348,9 @@
+ 	preMainInitMemoryManager();
+ 	DEBUG_ASSERTCRASH(TheDynamicMemoryAllocator != NULL, ("must init memory manager before calling global operator new"));
+ #ifdef MEMORYPOOL_DEBUG
+-	return TheDynamicMemoryAllocator->allocateBytesImplementation(size, fname);
++	return TheDynamicMemoryAllocator->allocateBytesImplementation(checkedAllocationSize(size), fname);
+ #else
+-	return TheDynamicMemoryAllocator->allocateBytesImplementation(size);
++	return TheDynamicMemoryAllocator->allocateBytesImplementation(checkedAllocationSize(size));
+ #endif
+ }
+ 
+@@ -3351,9 +3376,9 @@
+ 	preMainInitMemoryManager();
+ 	DEBUG_ASSERTCRASH(TheDynamicMemoryAllocator != NULL, ("must init memory manager before calling global operator new"));
+ #ifdef MEMORYPOOL_DEBUG
+-	return TheDynamicMemoryAllocator->allocateBytesImplementation(size, fname);
++	return TheDynamicMemoryAllocator->allocateBytesImplementation(checkedAllocationSize(size), fname);
+ #else
+-	return TheDynamicMemoryAllocator->allocateBytesImplementation(size);
++	return TheDynamicMemoryAllocator->allocateBytesImplementation(checkedAllocationSize(size));
+ #endif
+ }
+ 
+@@ -3422,7 +3447,7 @@
+ 		Int numSubPools;
+ 		const PoolInitRec *pParms;
+ 		userMemoryManagerGetDmaParms(&numSubPools, &pParms);
+-		TheMemoryPoolFactory = new (::sysAllocateDoNotZero(sizeof MemoryPoolFactory)) MemoryPoolFactory;	// will throw on failure
++		TheMemoryPoolFactory = new (::sysAllocateDoNotZero(sizeof(MemoryPoolFactory))) MemoryPoolFactory;	// will throw on failure
+ 		TheMemoryPoolFactory->init();	// will throw on failure
+ 		TheDynamicMemoryAllocator = TheMemoryPoolFactory->createDynamicMemoryAllocator(numSubPools, pParms);	// will throw on failure
+ 		userMemoryManagerInitPools();
+@@ -3450,7 +3475,7 @@
+ 	linktest = new char[8];
+ 	delete [] linktest;
+ 
+-	linktest = new char("",1);
++	linktest = new ("",1) char;
+ 	delete linktest;
+ 
+ #ifdef MEMORYPOOL_OVERRIDE_MALLOC
+@@ -3497,7 +3522,7 @@
+ 		Int numSubPools;
+ 		const PoolInitRec *pParms;
+ 		userMemoryManagerGetDmaParms(&numSubPools, &pParms);
+-		TheMemoryPoolFactory = new (::sysAllocateDoNotZero(sizeof MemoryPoolFactory)) MemoryPoolFactory;	// will throw on failure
++		TheMemoryPoolFactory = new (::sysAllocateDoNotZero(sizeof(MemoryPoolFactory))) MemoryPoolFactory;	// will throw on failure
+ 		TheMemoryPoolFactory->init();	// will throw on failure
+ 
+ 		TheDynamicMemoryAllocator = TheMemoryPoolFactory->createDynamicMemoryAllocator(numSubPools, pParms);	// will throw on failure

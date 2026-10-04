@@ -1,0 +1,15 @@
+--- a/Code/Libraries/Source/WWVegas/WWMath/ode.h
++++ b/Code/Libraries/Source/WWVegas/WWMath/ode.h
+@@ -43,9 +43,9 @@
+ #ifndef ODE_H
+ #define ODE_H
+ 
+-#include "always.h"
+-#include "vector.h"
+-#include "wwdebug.h"
++#include "../WWLib/always.h"
++#include "../WWLib/Vector.H"
++#include "../WWDebug/wwdebug.h"
+ 
+ 
+ /*

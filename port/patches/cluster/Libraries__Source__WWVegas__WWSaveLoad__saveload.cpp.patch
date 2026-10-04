@@ -1,0 +1,12 @@
+--- a/Code/Libraries/Source/WWVegas/WWSaveLoad/saveload.cpp
++++ b/Code/Libraries/Source/WWVegas/WWSaveLoad/saveload.cpp
+@@ -46,7 +46,9 @@
+ #include "wwprofile.h"
+ 
+ #pragma warning(disable:4201) // warning C4201: nonstandard extension used : nameless struct/union
++#if !defined(GENERALS_PLATFORM_VITA)
+ #include <windows.h>
++#endif
+ #include "systimer.h"
+ 
+ 

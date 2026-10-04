@@ -1,0 +1,15 @@
+--- a/Code/Libraries/Source/WWVegas/WWLib/simplevec.h
++++ b/Code/Libraries/Source/WWVegas/WWLib/simplevec.h
+@@ -254,6 +254,12 @@
+ */
+ template <class T> class SimpleDynVecClass : public SimpleVecClass<T>
+ {
++protected:
++    using SimpleVecClass<T>::Vector;
++    using SimpleVecClass<T>::VectorMax;
++public:
++    using SimpleVecClass<T>::Length;
++    using SimpleVecClass<T>::Uninitialised_Grow;
+ public:
+ 
+ 	SimpleDynVecClass(int size = 0);

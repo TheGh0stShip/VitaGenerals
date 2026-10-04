@@ -27,7 +27,8 @@ class StagingTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'original source hash'): stage(self.root,self.out)
         self.assertFalse(self.out.exists())
     def test_patch_mutation_fails_before_writes(self):
-        (self.root/'port/patches/realcrc-width.patch').write_text('changed')
+        manifest=json.loads((self.root/'vendor/ea/manifest.json').read_text())
+        (self.root/manifest['patches'][0]['path']).write_text('changed')
         with self.assertRaisesRegex(ValueError,'patch hash'): stage(self.root,self.out)
         self.assertFalse(self.out.exists())
     def test_result_hash_is_enforced(self):

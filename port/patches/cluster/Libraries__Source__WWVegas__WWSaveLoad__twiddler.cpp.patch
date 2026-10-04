@@ -1,0 +1,17 @@
+--- a/Code/Libraries/Source/WWVegas/WWSaveLoad/twiddler.cpp
++++ b/Code/Libraries/Source/WWVegas/WWSaveLoad/twiddler.cpp
+@@ -36,11 +36,13 @@
+ 
+ 
+ #include "twiddler.h"
+-#include "random.h"
++#include "RANDOM.H"
+ #include "saveloadids.h"
+ #include "simpledefinitionfactory.h"
+ #include "persistfactory.h"
++#if !defined(GENERALS_PLATFORM_VITA)
+ #include "win.h"
++#endif
+ #include "wwhack.h"
+ #include "systimer.h"
+ 

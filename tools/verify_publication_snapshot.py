@@ -26,15 +26,20 @@ def main():
         environment=os.environ.copy()
         # Host checks must not silently consume the caller's cross toolchain.
         environment.pop('CMAKE_TOOLCHAIN_FILE',None)
-        checks=[('host_contracts',[sys.executable,'tools/run_host_probes.py','--build-dir','build-publication-host','--sanitizer','asan-ubsan'])]
+        checks=[('host_contracts',[sys.executable,'tools/run_host_probes.py','--build-dir','build-publication-host','--sanitizer','asan-ubsan']),
+                ('host_engine_clusters',[sys.executable,'tools/run_engine_clusters.py','--mode','host',
+                                         '--build-dir','build-publication-clusters-host'])]
         if a.vita_sdk:
             sdk=a.vita_sdk.resolve();environment['VITASDK']=str(sdk)
             checks += [('arm_configure',['cmake','-S','.','-B','build-publication-arm','-DCMAKE_BUILD_TYPE=Debug',
                                         '-DCMAKE_TOOLCHAIN_FILE='+str(sdk/'share/vita.toolchain.cmake')]),
                        ('arm_build',['cmake','--build','build-publication-arm','--parallel','2']),
-                       ('arm_identity',['python3','tools/record_build_identity.py','--build-dir','build-publication-arm'])]
+                       ('arm_identity',['python3','tools/record_build_identity.py','--build-dir','build-publication-arm']),
+                       ('arm_engine_clusters',[sys.executable,'tools/run_engine_clusters.py','--mode','vita',
+                                               '--build-dir','build-publication-clusters-arm','--vita-sdk',str(sdk)])]
         for name,command in checks:
-            completed=subprocess.run(command,cwd=snapshot,env=environment,capture_output=True,timeout=240)
+            completed=subprocess.run(command,cwd=snapshot,env=environment,capture_output=True,
+                                     timeout=900 if name.endswith('engine_clusters') else 240)
             (receipts/(name+'.log')).write_bytes(completed.stdout+completed.stderr)
             result['checks'].append({'name':name,'exit':completed.returncode})
             (receipts/'receipt.json').write_text(json.dumps(result,indent=2)+'\n')

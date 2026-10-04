@@ -4,6 +4,246 @@
   "upstream_commit": "0a05454d8574207440a5fb15241b98ad0b435590",
   "files": [
     {
+      "path": "Code/GameEngine/Include/Common/AsciiString.h",
+      "upstream_path": "GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h",
+      "sha256": "8a3def23dc81ae33f254a6c869ab03a636a8de99f0620a3721f2c022f31e2423",
+      "staged_sha256": "59ff4caf8dc8756cc854c8c011ed96028ae5a2af313b93f33614489624567025"
+    },
+    {
+      "path": "Code/GameEngine/Include/Common/CriticalSection.h",
+      "upstream_path": "GeneralsMD/Code/GameEngine/Include/Common/CriticalSection.h",
+      "sha256": "b7ba7681458cd32f7e101030ef51f44aae2559ec3b07f2cc27c4597832c1c2d6",
+      "staged_sha256": "9ff6d86ae905b5e682c044ff4e0ff062c1de2091cac3ad724bf3bed41ccf7eef"
+    },
+    {
+      "path": "Code/GameEngine/Include/Common/Debug.h",
+      "upstream_path": "GeneralsMD/Code/GameEngine/Include/Common/Debug.h",
+      "sha256": "b7165751950f5a0230a7e5874a4370e201ec7e6de167082f1272f1cba16a0a44",
+      "staged_sha256": "373a4a45e935ea4f9398479244ef192a1f9058ce289c63c392b7376c9d5d18fa"
+    },
+    {
+      "path": "Code/GameEngine/Include/Common/GameLOD.h",
+      "upstream_path": "GeneralsMD/Code/GameEngine/Include/Common/GameLOD.h",
+      "sha256": "1cdf6c8e12b5df7bfc917484fed079b5f94589c21362e48bc50e49d18ccb7e24",
+      "staged_sha256": "bc31b227fde6d0ccaa73e07be48b0ed0630d0201391831410a72ad4125500301"
+    },
+    {
+      "path": "Code/GameEngine/Include/Common/GameMemory.h",
+      "upstream_path": "GeneralsMD/Code/GameEngine/Include/Common/GameMemory.h",
+      "sha256": "d4dc96bce8896a305f58f7dd380dd3db20dbfc23aeaacb3dadede55a10adfc54",
+      "staged_sha256": "fd45a86c6c77673c1817151b360f7d2653c90f302a15dd70a70c5c6676a7b2ab"
+    },
+    {
+      "path": "Code/GameEngine/Include/Common/GlobalData.h",
+      "upstream_path": "GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h",
+      "sha256": "980ea412abcf737586d63bd8f333f8a5bb6ab657ef7e744e0ecb1f865a5388de",
+      "staged_sha256": "fc449529028dc6783be3565ea21003aa1778a8989bee7c05c26c6629898ef3bc"
+    },
+    {
+      "path": "Code/GameEngine/Include/Common/NameKeyGenerator.h",
+      "upstream_path": "GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h",
+      "sha256": "748a9e92afba5f771407fadcd639095f6d5767a6c3ecb9fc8dbe3f8e42d5019e",
+      "staged_sha256": "d24200e6ff939139a1e541aa26acc524e5bb4c0c8e9954278d90bfd0e0c91f8f"
+    },
+    {
+      "path": "Code/GameEngine/Include/Common/PerfTimer.h",
+      "upstream_path": "GeneralsMD/Code/GameEngine/Include/Common/PerfTimer.h",
+      "sha256": "7dc875decfc3d0bf6641da8d54bd3ed04bf9b91fef21912a164ecce0c9add9c7",
+      "staged_sha256": "3533e41a6bdf068b22b5a819480479428b5f5183708c32ea7dd56a11a62e69be"
+    },
+    {
+      "path": "Code/GameEngine/Include/Common/Science.h",
+      "upstream_path": "GeneralsMD/Code/GameEngine/Include/Common/Science.h",
+      "sha256": "191ff14a0a981b87929943ab50f99f16bfdd6a383284c53fa5b314dadc91e140",
+      "staged_sha256": "d9dbaf241c6cb69ea3f116e4af0cf41e2391390046cc62c618c06754b83e3bb1"
+    },
+    {
+      "path": "Code/GameEngine/Include/Common/StackDump.h",
+      "upstream_path": "GeneralsMD/Code/GameEngine/Include/Common/StackDump.h",
+      "sha256": "de7180c45f3accefa194c577f46839a425921ea208d6c7881369d0d5c8ebe5a8",
+      "staged_sha256": "9f30c60c4bccc2c93bb664bd891880f4cdfb9f0ad1d2d29ac2f8f0bfd904c3c4"
+    },
+    {
+      "path": "Code/GameEngine/Include/Common/UnicodeString.h",
+      "upstream_path": "GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h",
+      "sha256": "37922c072bc9fb336e9b1aed3a80c37a85a0a75f6d18adb791b071cfc8a2cc66",
+      "staged_sha256": "79eaff2db949363292960f84580a178682617fb714def18b24a38fcbec5cd326"
+    },
+    {
+      "path": "Code/GameEngine/Include/GameClient/CommandXlat.h",
+      "upstream_path": "GeneralsMD/Code/GameEngine/Include/GameClient/CommandXlat.h",
+      "sha256": "e3740428ac61de1f7ed5a3709766b8777bba2a6f21af5df5785b041d771281fe",
+      "staged_sha256": "31e5db364931c4ddf5c82f27b8480adaf1a24348840a5cf3c765eaf1b7d3e451"
+    },
+    {
+      "path": "Code/GameEngine/Include/GameClient/Display.h",
+      "upstream_path": "GeneralsMD/Code/GameEngine/Include/GameClient/Display.h",
+      "sha256": "566d0a53b9dac8e1c6c7f73860a0329e4bd8c91282fb526671b478893039e916",
+      "staged_sha256": "7b2095883df0bfda7bb51bb06cd49cfe131c8cd37469731e270755458f67062f"
+    },
+    {
+      "path": "Code/GameEngine/Include/GameClient/TerrainVisual.h",
+      "upstream_path": "GeneralsMD/Code/GameEngine/Include/GameClient/TerrainVisual.h",
+      "sha256": "a70e279c10bcdb8c688796d55fcf8edc15d60aa0bce04e5300326e3897765c41",
+      "staged_sha256": "8e4e5d5c69c2dc20b4cc3d9d2b7da700203132a91a3ade4ec09cc97238bf0fe4"
+    },
+    {
+      "path": "Code/GameEngine/Include/GameClient/View.h",
+      "upstream_path": "GeneralsMD/Code/GameEngine/Include/GameClient/View.h",
+      "sha256": "1b2cac6fd973c3faebe8087a0ceaab652b31ff953755f93d33e1133a48ed1f01",
+      "staged_sha256": "6a54222d0a5887ea628162dc32ebebddec1a15417e55c806d8929394c254fc08"
+    },
+    {
+      "path": "Code/GameEngine/Include/GameLogic/AI.h",
+      "upstream_path": "GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h",
+      "sha256": "11ffb6de7e62411d6d2830e8373032050fbdca49ff5c31d548ba9f1dd2db376e",
+      "staged_sha256": "d0c1592d90fc964e3d09b3cf6fd2ec041de2bb6e938de49f2b115cb2e9120ac4"
+    },
+    {
+      "path": "Code/GameEngine/Include/GameLogic/Module/BodyModule.h",
+      "upstream_path": "GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BodyModule.h",
+      "sha256": "07da25f9dbbe581717c1cf90dfad5a239a3783c63ddddb6f2a636f5bf04fc371",
+      "staged_sha256": "0662e7e045989fa23b1e3234d777418e7f4ec3fb8cfcfe1afdb0485fe2522cb4"
+    },
+    {
+      "path": "Code/GameEngine/Include/Precompiled/PreRTS.h",
+      "upstream_path": "GeneralsMD/Code/GameEngine/Include/Precompiled/PreRTS.h",
+      "sha256": "3650e1b162e774a66e57dfdcd14e330efe2d1b3c0e3768e01f76adfcc75e5711",
+      "staged_sha256": "83a668e8c71ec36408a80598029b27c907ef26a29ba91d955c6dff2172de2cc9"
+    },
+    {
+      "path": "Code/GameEngine/Source/Common/NameKeyGenerator.cpp",
+      "upstream_path": "GeneralsMD/Code/GameEngine/Source/Common/NameKeyGenerator.cpp",
+      "sha256": "f38c3c9ab4eef4fb7abb88782fb00bfefe39dd57164506588c71edae4064a0b9",
+      "staged_sha256": "0756278a5f949e82089cc2105fd900dcc988365a0fdc8f4f0e6514b6f80d8693"
+    },
+    {
+      "path": "GameEngine/Source/Common/System/AsciiString.cpp",
+      "upstream_path": "GeneralsMD/Code/GameEngine/Source/Common/System/AsciiString.cpp",
+      "sha256": "57ecc49ed5ea90d9ea02ff604519bbeaf1dced54c655d2344c46f7eef324f798",
+      "staged_sha256": "8bb464e2f36c7c7a8d4e3ecbf4fe3a0e5fab1f4d3b93e0218804806fdf30fc0d"
+    },
+    {
+      "path": "Code/GameEngine/Source/Common/System/GameMemory.cpp",
+      "upstream_path": "GeneralsMD/Code/GameEngine/Source/Common/System/GameMemory.cpp",
+      "sha256": "622322d004b049951b24443f3b373dc9b866f7f2e37bda1635d0779ec33793df",
+      "staged_sha256": "b395d1a9fd029f29de5c8c19f17f9b2c098a3b57682b89ec46be5dd83f2d5e2a"
+    },
+    {
+      "path": "Code/GameEngine/Source/Common/System/MemoryInit.cpp",
+      "upstream_path": "GeneralsMD/Code/GameEngine/Source/Common/System/MemoryInit.cpp",
+      "sha256": "38b163c1a1b621263527619dcb1bcc4ee5ca3a63b3adae6fb25227abdbfcefbc",
+      "staged_sha256": "5ab7abb0ab134bb6c536aa43405927cb48d742522efa8f5ee1b516a2a07b09f5"
+    },
+    {
+      "path": "Code/Libraries/Include/Lib/BaseType.h",
+      "upstream_path": "GeneralsMD/Code/Libraries/Include/Lib/BaseType.h",
+      "sha256": "d19d53e93022dd91bf68b365e129f7958d4b539cab7dbcff71e703bc332ef8dd",
+      "staged_sha256": "e08c333c464474d797e46a7d5f5f6999105108adfa45a8ee3495aaf255ba2de0"
+    },
+    {
+      "path": "Code/Libraries/Source/WWVegas/WWDebug/wwdebug.h",
+      "upstream_path": "GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug/wwdebug.h",
+      "sha256": "b313a1e02c21f53b400dd2ebbff992b2b1d179a6564ac37f42920fdf63e97d66",
+      "staged_sha256": "482a3be24c8ec52c53d1ad24a94d7b84c231c8e237e9194348feee3b2b9b421b"
+    },
+    {
+      "path": "Code/Libraries/Source/WWVegas/WWDebug/wwprofile.h",
+      "upstream_path": "GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug/wwprofile.h",
+      "sha256": "78ebbf36ee69ab908ec08b863788040a6952f0e2e57c2f0643f6de76146a387d",
+      "staged_sha256": "77f96fcf1eaae14928b329dae354ab574319ffb501cda66021da103a845204b1"
+    },
+    {
+      "path": "Code/Libraries/Source/WWVegas/WWLib/RAWFILE.H",
+      "upstream_path": "GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/RAWFILE.H",
+      "sha256": "d3ee492077201980822d5bc1715702d42def8b0e3982b354de690591078e970e",
+      "staged_sha256": "f1612670e3c803f69d131be9e9283bc5164445fecb6742928f106ed32f92ca06"
+    },
+    {
+      "path": "Code/Libraries/Source/WWVegas/WWLib/SLIST.H",
+      "upstream_path": "GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/SLIST.H",
+      "sha256": "db6ce32665e0c1f4d5d3754e54e4c8cb51a597ae1a4d5fb187d578ec9ad442a0",
+      "staged_sha256": "9ff80ec8c04d24aae88e2db62d46ecb22de0a6b2bf2dd2da503cf5c69773a4f0"
+    },
+    {
+      "path": "Code/Libraries/Source/WWVegas/WWLib/Vector.H",
+      "upstream_path": "GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/Vector.H",
+      "sha256": "449b56b10ddec16b943005c33969abf724d47fff33f00877ac8432960ea996fe",
+      "staged_sha256": "126f60eda3d6c112a0f43836abb8b6bad52366928aedb638fc8b628b2b44881f"
+    },
+    {
+      "path": "wwlib/always.h",
+      "upstream_path": "GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/always.h",
+      "sha256": "ce457fe9482267df6460c5c94010df7fecff25ef1d46f2fe1d456857c9092157",
+      "staged_sha256": "318d2668f55de9330cd5e50a1a3a33c5891f675b84771e05f279ebb861243b85"
+    },
+    {
+      "path": "Code/Libraries/Source/WWVegas/WWLib/bufffile.h",
+      "upstream_path": "GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/bufffile.h",
+      "sha256": "70b19a7ba9010b511c7faaa16b314546afbde4bf4979edfd0b953fb7551fea3b",
+      "staged_sha256": "4b5612a635aaf7e6f2c0924b400a528cdecd627eeecc238890c6a6ecade2b6e5"
+    },
+    {
+      "path": "Code/Libraries/Source/WWVegas/WWLib/chunkio.cpp",
+      "upstream_path": "GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/chunkio.cpp",
+      "sha256": "519da911a18957a7995b34a661f6288a70764eb7527c857186a4c78b0b4f44ba",
+      "staged_sha256": "d1244b502ccf75f2221c854c27764fb0098f35ede7eca594c0956d0d5271378e"
+    },
+    {
+      "path": "Code/Libraries/Source/WWVegas/WWLib/chunkio.h",
+      "upstream_path": "GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/chunkio.h",
+      "sha256": "56a93da1a6c3c8c78c0d060add37edabd7dc4150540a39c619f93143a8b99ed9",
+      "staged_sha256": "2e9a637517ce7f384fda41259b3321ec53121b70f36a25e7d701594a84008366"
+    },
+    {
+      "path": "Code/Libraries/Source/WWVegas/WWLib/ffactory.cpp",
+      "upstream_path": "GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/ffactory.cpp",
+      "sha256": "03e8555e31645383ca6dc8b78c3a65386a3106336996d58841acd7744c8244fd",
+      "staged_sha256": "3702d487046b90511e6aedaa90a3ee64d80217f13005240821b4cc60e6fc51bc"
+    },
+    {
+      "path": "Code/Libraries/Source/WWVegas/WWLib/ffactory.h",
+      "upstream_path": "GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/ffactory.h",
+      "sha256": "a206d67e7b73029a2d9baf1bc520da10cab6cfafbd0344e05d5072acb552f65d",
+      "staged_sha256": "37828035b47bb9c8428c8ceac7f4638db2835b6ecf1bf044b7e88a83aec77473"
+    },
+    {
+      "path": "Code/Libraries/Source/WWVegas/WWLib/mempool.h",
+      "upstream_path": "GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/mempool.h",
+      "sha256": "469f63e03e432c83614568642e01a70219000c0dcc09b87002758a0df302eed5",
+      "staged_sha256": "15418b8b3d742d9a4b262bd5a6168771a2f6871dc1e220d7899c640f05b1fc77"
+    },
+    {
+      "path": "Code/Libraries/Source/WWVegas/WWLib/multilist.h",
+      "upstream_path": "GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/multilist.h",
+      "sha256": "ab42496e7a0fd3178f7b0999aef0690ad1c096b7a7bca66ef429d1599085838a",
+      "staged_sha256": "6a8965418974970c937e1379c8c5e7a752586a4b0c4c3115577b3d4b5ec1acdc"
+    },
+    {
+      "path": "Code/Libraries/Source/WWVegas/WWLib/mutex.cpp",
+      "upstream_path": "GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/mutex.cpp",
+      "sha256": "beb38591554023b9039e18f32b4d82cff0643de937ae348c9942cb3d46690422",
+      "staged_sha256": "51636744866fc68f56b041c2d7a46644fe06d84159491e57c3f67689501946f2"
+    },
+    {
+      "path": "Code/Libraries/Source/WWVegas/WWLib/mutex.h",
+      "upstream_path": "GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/mutex.h",
+      "sha256": "11dddf443bcaca7ebbe242db9f47d5f6e777bd0c32a709091e7d19356ff11b9b",
+      "staged_sha256": "bb302938a89a17ca7cf4a5a028310af3d56612d851b503dc4622afe45bc280da"
+    },
+    {
+      "path": "Code/Libraries/Source/WWVegas/WWLib/random.cpp",
+      "upstream_path": "GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/random.cpp",
+      "sha256": "2afbc44a5cf3297193953293f26b70cf9fcd319b8fa4ca85b2d4f73e0b3d3038",
+      "staged_sha256": "f000d790191397099bcebfb474607171239033962bcb1ae663fd9c86e0d6b0a4"
+    },
+    {
+      "path": "Code/Libraries/Source/WWVegas/WWLib/rawfile.cpp",
+      "upstream_path": "GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/rawfile.cpp",
+      "sha256": "e3cb7f9e7da94b473f938fe39d52c7b34ca201d63cdda03b3929ccfae7c8cc34",
+      "staged_sha256": "716605b4d0e82ecf34fd954cfa100e625097cf10c4971ff8edb4ee025d072a39"
+    },
+    {
       "path": "wwlib/realcrc.cpp",
       "upstream_path": "GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/realcrc.cpp",
       "sha256": "a55070e0569f6e9afca6839fb71ae9888a75adf55678957156483013d0d08fa2",
@@ -16,10 +256,106 @@
       "staged_sha256": "2cc4f66793946eb02a949ed0ea50e65db532e3aea07c5e8c0f6082f573551322"
     },
     {
-      "path": "GameEngine/Source/Common/System/AsciiString.cpp",
-      "upstream_path": "GeneralsMD/Code/GameEngine/Source/Common/System/AsciiString.cpp",
-      "sha256": "57ecc49ed5ea90d9ea02ff604519bbeaf1dced54c655d2344c46f7eef324f798",
-      "staged_sha256": "7593669053b69433b54e93b1c6be724805e972cd691f4ea6458a08861ecd755f"
+      "path": "Code/Libraries/Source/WWVegas/WWLib/refcount.h",
+      "upstream_path": "GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/refcount.h",
+      "sha256": "5014d07a0f2448317fe4632c994d4ad534ad8e9cd556aae3d30b5568d22afcef",
+      "staged_sha256": "30f2105f1a67f2db08a6cdf7aaef4e90dd7063ba8fad1b8098142b85cb20e97e"
+    },
+    {
+      "path": "Code/Libraries/Source/WWVegas/WWLib/simplevec.h",
+      "upstream_path": "GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/simplevec.h",
+      "sha256": "509f3f5d90121b1682abfcf139b5e10510543818ab3b751e534f39ef73939cc3",
+      "staged_sha256": "a218ce3bb595da9d04de28092ee4cdef56140fce00b781a603055d146cef1246"
+    },
+    {
+      "path": "Code/Libraries/Source/WWVegas/WWLib/slnode.cpp",
+      "upstream_path": "GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/slnode.cpp",
+      "sha256": "43b192d9cc89fd20dd1f124eca19e8060cc94a807e305f3895f31431cf231343",
+      "staged_sha256": "976e16733b8be8f7a76ce39d771b338c0e7844d846f51b016dab31f668705413"
+    },
+    {
+      "path": "Code/Libraries/Source/WWVegas/WWLib/systimer.cpp",
+      "upstream_path": "GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/systimer.cpp",
+      "sha256": "aaf38013359e29e2f16a6ac64550a16ce1d75743ac044417f7cc3ed7197e4b40",
+      "staged_sha256": "8ad655576338acca38ea0ed97eaeee8a669bb342ed8e83cab99f3936b2b2a52c"
+    },
+    {
+      "path": "Code/Libraries/Source/WWVegas/WWLib/systimer.h",
+      "upstream_path": "GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/systimer.h",
+      "sha256": "99f675e16bdf393587b17bceb7a722cb11f246376b426fde55de6a4d2ee10b6d",
+      "staged_sha256": "1294b6d94e849a0a92dc664c7294e1f6cb2fcd719a69c2be9c9baa11fee3b36e"
+    },
+    {
+      "path": "Code/Libraries/Source/WWVegas/WWLib/thread.h",
+      "upstream_path": "GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/thread.h",
+      "sha256": "ba7fe3b9c0f2aad796a9ff3fd1f8bcf33cfa13eb6c73b75b913eb1d08820b072",
+      "staged_sha256": "fea9a5b6aa1eb154e3c8f851094ceb3b0be57c8e768e80df7bbf2ebe60f99bcc"
+    },
+    {
+      "path": "Code/Libraries/Source/WWVegas/WWLib/wwstring.cpp",
+      "upstream_path": "GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/wwstring.cpp",
+      "sha256": "ec83d8838586748e071db0223e0bf71804d8d14585f89313240ecd8d41bd0618",
+      "staged_sha256": "4cb230551542bac11c47ee11a459a6788072a3c223c25a201b34ab13de9370e4"
+    },
+    {
+      "path": "Code/Libraries/Source/WWVegas/WWLib/wwstring.h",
+      "upstream_path": "GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/wwstring.h",
+      "sha256": "bae9c5df479c151c0f9d59806ca66147c812f67fd1d1997364b55351247ca058",
+      "staged_sha256": "f0b50f6f95efd20a2f6d55bed088c178d96fe8cb272ae38d56f666b8add7b612"
+    },
+    {
+      "path": "Code/Libraries/Source/WWVegas/WWMath/curve.h",
+      "upstream_path": "GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/curve.h",
+      "sha256": "daa3fc5fb6e87871f944256e3cf06cda43a6c6858066f51d66b713470efe1a1c",
+      "staged_sha256": "18dd1cca3ef5ea314ab8881ba0d31700780b3aa34adf7fb10b39681a13336b38"
+    },
+    {
+      "path": "Code/Libraries/Source/WWVegas/WWMath/lookuptable.cpp",
+      "upstream_path": "GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/lookuptable.cpp",
+      "sha256": "35f176b7bdb0c797940972c028932e098d8278995c527c0c145791149a591a43",
+      "staged_sha256": "07d47865d5360c89c7aa738ed5b2bdb138eaf0069d92bae0b1879f8dac898f4b"
+    },
+    {
+      "path": "Code/Libraries/Source/WWVegas/WWMath/matrix3d.cpp",
+      "upstream_path": "GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/matrix3d.cpp",
+      "sha256": "2651a4f55b11edfde991ae766107f786f01f3b704728b032c953adb70b1cd7d2",
+      "staged_sha256": "7845b0378035780e74f56e8ace73d7d91bc102754ffc0a0d343b6cbceb61804a"
+    },
+    {
+      "path": "Code/Libraries/Source/WWVegas/WWMath/matrix3d.h",
+      "upstream_path": "GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/matrix3d.h",
+      "sha256": "36a90e9641e56df3602450548e462bb45ed8673c7855b30c7c91b839104a99c5",
+      "staged_sha256": "0f80051f5043df41063aa439c9416211b4295e5e82a0b623abc2613236711d1c"
+    },
+    {
+      "path": "Code/Libraries/Source/WWVegas/WWMath/ode.h",
+      "upstream_path": "GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/ode.h",
+      "sha256": "9c0d352053af208727bb0ef605b836cdf1167965ae0917fe2f19aeb1af11b597",
+      "staged_sha256": "56c750d72fdb8c1bec0a77a701bce6121fa378cbcfaa226bc1d5aec54ceaf1d1"
+    },
+    {
+      "path": "Code/Libraries/Source/WWVegas/WWMath/v3_rnd.h",
+      "upstream_path": "GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/v3_rnd.h",
+      "sha256": "dc464a5caf8efde2c7f680f868559b4d5f71793d3220cc59cf5d842c456882a3",
+      "staged_sha256": "905b708889f05268efd34989bf35284bf9e5d7c3c5aab7e5e34cdbf3548cf928"
+    },
+    {
+      "path": "Code/Libraries/Source/WWVegas/WWMath/vehiclecurve.h",
+      "upstream_path": "GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/vehiclecurve.h",
+      "sha256": "3dcf8b036e0602f1bc405020d3ce3e43827bae1dcc363b6728610b0bedf4e72a",
+      "staged_sha256": "2cc1a41013b62f23fd40f4dd5813ccf97b4da4be2975a7294e3c5cf7590c72eb"
+    },
+    {
+      "path": "Code/Libraries/Source/WWVegas/WWMath/vp.cpp",
+      "upstream_path": "GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/vp.cpp",
+      "sha256": "8b99d1265bd72dcdfce3eddd15253528b5b9b21f1891705cc80ef7786728939b",
+      "staged_sha256": "526b588101fad43b4a94183fdd7be955de15ac4b4e5b7599e4668d1a5e71adbd"
+    },
+    {
+      "path": "Code/Libraries/Source/WWVegas/WWMath/wwmath.cpp",
+      "upstream_path": "GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/wwmath.cpp",
+      "sha256": "255a7abf79f3f7a065fbead95e01534a18ea1a87eef486b2d403b7cc89d02891",
+      "staged_sha256": "3132c17cece22cdbe452b551b1b607e6132ece0a13ade22f837ed077d9c404b6"
     },
     {
       "path": "wwmath/wwmath.h",
@@ -28,28 +364,346 @@
       "staged_sha256": "15313dc81520ef29dff0ff4621a325c764bac77d6d63246ebab7f1b7ec9be2e8"
     },
     {
-      "path": "wwlib/always.h",
-      "upstream_path": "GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/always.h",
-      "sha256": "ce457fe9482267df6460c5c94010df7fecff25ef1d46f2fe1d456857c9092157",
-      "staged_sha256": "ce457fe9482267df6460c5c94010df7fecff25ef1d46f2fe1d456857c9092157"
+      "path": "Code/Libraries/Source/WWVegas/WWSaveLoad/definitionfactorymgr.cpp",
+      "upstream_path": "GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad/definitionfactorymgr.cpp",
+      "sha256": "afdad9edb24d9d015a9d0f932a993022c08d417f19c28b53dc78dd189cbab0cd",
+      "staged_sha256": "fb1c8fe3a303dbc649fb62f25317a3de87a2db8ac317a94fb2d33c5bc2683675"
+    },
+    {
+      "path": "Code/Libraries/Source/WWVegas/WWSaveLoad/definitionmgr.cpp",
+      "upstream_path": "GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad/definitionmgr.cpp",
+      "sha256": "266c512882fdcff317bca1c28914566ddd11021e9464de2787e4004ce16e625b",
+      "staged_sha256": "d75c73480e7efdc5a2ee2338d0c46c74a60f955eb32d7d2024ccef724884831d"
+    },
+    {
+      "path": "Code/Libraries/Source/WWVegas/WWSaveLoad/definitionmgr.h",
+      "upstream_path": "GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad/definitionmgr.h",
+      "sha256": "07bd37f781dab0e6d4d2fde4ac5f47ef8dfeac58d73348dbc1e0aee1534a8a7e",
+      "staged_sha256": "77f2e3906385558131c4626783138e12a6fdbefbd07715cc32b64c0dbc4de2c4"
+    },
+    {
+      "path": "Code/Libraries/Source/WWVegas/WWSaveLoad/parameter.cpp",
+      "upstream_path": "GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad/parameter.cpp",
+      "sha256": "a6fb2609d0f71d18711bf5a8268bf3b1ad0b40ec23e4b1fb2a0e4874e343c75c",
+      "staged_sha256": "d6c40380abde49d33df4bf0388f588ddaf252878cde42dbf67b897c43210d778"
+    },
+    {
+      "path": "Code/Libraries/Source/WWVegas/WWSaveLoad/parameter.h",
+      "upstream_path": "GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad/parameter.h",
+      "sha256": "29277dff2bf294cb14fc474513a42de697e6784119a1faf2fbbdfbb01c8b3dc6",
+      "staged_sha256": "c3a85a12a23afe4f78ff1c5456cd7a2773c41170ea91d0d2eae7c843a356fa9a"
+    },
+    {
+      "path": "Code/Libraries/Source/WWVegas/WWSaveLoad/parameterlist.h",
+      "upstream_path": "GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad/parameterlist.h",
+      "sha256": "ba54595d0aa77eb9a80067ccfe1df23fbc5feaf4c4627fbfd91d95182d1dcb34",
+      "staged_sha256": "330e2f5adcf3e68e33fb7d251de5d780255925250913d3057858aff11cfb2220"
+    },
+    {
+      "path": "Code/Libraries/Source/WWVegas/WWSaveLoad/pointerremap.h",
+      "upstream_path": "GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad/pointerremap.h",
+      "sha256": "6dc9918f5ccac1bbb43a14375525bc15b8a36c5301ba4a7327e2771c0a0661f6",
+      "staged_sha256": "65911a575fae3d18b97d90bfa6316ed24c0bb2ac98cbdf49b0ad4e361c12174e"
+    },
+    {
+      "path": "Code/Libraries/Source/WWVegas/WWSaveLoad/saveload.cpp",
+      "upstream_path": "GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad/saveload.cpp",
+      "sha256": "320a8416b45357d6eae2be79a9fd4cef3c38956bcfcab97a53bbf4876778a316",
+      "staged_sha256": "31133c293e4385865981b950fd5ddad8025891a19df8726ec92434b185ff31ad"
+    },
+    {
+      "path": "Code/Libraries/Source/WWVegas/WWSaveLoad/saveload.h",
+      "upstream_path": "GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad/saveload.h",
+      "sha256": "cd3bdb8121eb6a97bca532ba9a04879b9aac208fc7018937f3a3ae06ec765571",
+      "staged_sha256": "acaeb43b43f1cb631e803ff46d6e8e0a930b6233d256cc9de14313e27c75bac8"
+    },
+    {
+      "path": "Code/Libraries/Source/WWVegas/WWSaveLoad/twiddler.cpp",
+      "upstream_path": "GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad/twiddler.cpp",
+      "sha256": "73e4c56cf4caf429461a7fef0507c69974805880ed14a6417fe7aa993a7c9871",
+      "staged_sha256": "ac5a618ac1c5f45779042db92a157551c0cd7a157ba58fd6243eba5de51508ae"
     }
   ],
   "patches": [
     {
-      "path": "port/patches/realcrc-width.patch",
-      "sha256": "4e4544e8435147120f62dcc113953f72636afe0f8e8ccd509e41d457176f32a7"
+      "path": "port/patches/cluster/GameEngine__Include__Common__AsciiString.h.patch",
+      "sha256": "be3e51cd97e7d0761ec1a152e8afbbfb19b90d6689008f22c6305eb41a4d4b66"
     },
     {
-      "path": "port/patches/ascii-inplace-overlap.patch",
-      "sha256": "f5145a60b01063a73944a6f1fee9afdeea3c8df6ae8b511b3b71e37928719df0"
+      "path": "port/patches/cluster/GameEngine__Include__Common__CriticalSection.h.patch",
+      "sha256": "d5c62e85788dbc26e7ef2c3d17aaadeb016a01125d9a452419600b6ff7ffdbb8"
     },
     {
-      "path": "port/patches/wwmath-validity-width.patch",
-      "sha256": "d35214a941fc0901e515aa9fdf15add435beb7a6a7ff7c349c5d58d36277a4b2"
+      "path": "port/patches/cluster/GameEngine__Include__Common__Debug.h.patch",
+      "sha256": "92558047adf53fe2f67de15d1acc953e82230b67ce74a036fb40d63f21f28fab"
     },
     {
-      "path": "port/patches/wwmath-int-conversion.patch",
-      "sha256": "2040c09810cc3970cab138039c2203bc09f9b36a300a00603c0c07c461ae7a15"
+      "path": "port/patches/cluster/GameEngine__Include__Common__GameLOD.h.patch",
+      "sha256": "81016262eb7420a98ad02034b9eb15e7ccdb2c0c1cb901ee47f6af3592d2eb8a"
+    },
+    {
+      "path": "port/patches/cluster/GameEngine__Include__Common__GameMemory.h.patch",
+      "sha256": "915b0fd1d378cec39e793b595a88c69b04e7996b18fbe898f69c7b105e12b78c"
+    },
+    {
+      "path": "port/patches/cluster/GameEngine__Include__Common__GlobalData.h.patch",
+      "sha256": "ed866b1938d3e792b976cf9ddb483b09313cc39ed6d948a8be9d901ee3f6e3a6"
+    },
+    {
+      "path": "port/patches/cluster/GameEngine__Include__Common__NameKeyGenerator.h.patch",
+      "sha256": "db1db3c7ca920b221d4fee56eb92ca8e3f0275618ae33ab89c7a36314ba8e379"
+    },
+    {
+      "path": "port/patches/cluster/GameEngine__Include__Common__PerfTimer.h.patch",
+      "sha256": "f59147987e52e03a37f61a0aeb702c76d28ac05536983c6975bbbe8c74f1f9fc"
+    },
+    {
+      "path": "port/patches/cluster/GameEngine__Include__Common__Science.h.patch",
+      "sha256": "abe69e042db83f32cbda38d28bb6c134dcb327c33a7bcaef9b7e61ec54023310"
+    },
+    {
+      "path": "port/patches/cluster/GameEngine__Include__Common__StackDump.h.patch",
+      "sha256": "83541c0fbf5712d801baa1b6bf9d15e3de0df3e77413fed7a3f4f6d76babc63c"
+    },
+    {
+      "path": "port/patches/cluster/GameEngine__Include__Common__UnicodeString.h.patch",
+      "sha256": "8994fb98d4fef5cc40c0b794269ea1c7cbc948775c02041697ca4a4dfbe7cbac"
+    },
+    {
+      "path": "port/patches/cluster/GameEngine__Include__GameClient__CommandXlat.h.patch",
+      "sha256": "97eab454faa6eee7e735adb31ace7cb3caf4cbd25de3c5d3b722ba4cf4c8ff81"
+    },
+    {
+      "path": "port/patches/cluster/GameEngine__Include__GameClient__Display.h.patch",
+      "sha256": "0c84cc6e7399f1f0960b6c2adcba76381d270e65aed864567ef3bf6b8a524c09"
+    },
+    {
+      "path": "port/patches/cluster/GameEngine__Include__GameClient__TerrainVisual.h.patch",
+      "sha256": "e868b1d7636cfbf78a7479a2cd04aecea0428de14da73b3784e7acb262df8741"
+    },
+    {
+      "path": "port/patches/cluster/GameEngine__Include__GameClient__View.h.patch",
+      "sha256": "fcbd7e94ea982be4e00d773fc3649ead5a276f9a6f5f79f8d3149c89b15b78af"
+    },
+    {
+      "path": "port/patches/cluster/GameEngine__Include__GameLogic__AI.h.patch",
+      "sha256": "0f02dd764977c57f74dac7211537aadc122783b347e8d69daa3e7d8c399b8818"
+    },
+    {
+      "path": "port/patches/cluster/GameEngine__Include__GameLogic__Module__BodyModule.h.patch",
+      "sha256": "a2021ab38d5b4f12796de9858b19360954af9cc35c81b72be3b90eea32dce8e5"
+    },
+    {
+      "path": "port/patches/cluster/GameEngine__Include__Precompiled__PreRTS.h.patch",
+      "sha256": "bc1587559c506354497ce855b8657b913af2fb629736570bc02a05dd6c9f2d58"
+    },
+    {
+      "path": "port/patches/cluster/GameEngine__Source__Common__NameKeyGenerator.cpp.patch",
+      "sha256": "b6324f5883ec45cbe5125b4c40e618f5b4779d2ded5ba40e5e31886745e7f1db"
+    },
+    {
+      "path": "port/patches/cluster/GameEngine__Source__Common__System__AsciiString.cpp.patch",
+      "sha256": "f81282751c79076e111e1883156acf7fb8b2718be96ab139ae4ff4d2a6274932"
+    },
+    {
+      "path": "port/patches/cluster/GameEngine__Source__Common__System__GameMemory.cpp.patch",
+      "sha256": "52900e562669e761e147225dea80a262e3620aa78992cb77cccd563b8bee70a5"
+    },
+    {
+      "path": "port/patches/cluster/GameEngine__Source__Common__System__MemoryInit.cpp.patch",
+      "sha256": "813a6192e12f8667e2e73a44c7ca4bd5b7ac5569815fb8418db57cee35980a50"
+    },
+    {
+      "path": "port/patches/cluster/Libraries__Include__Lib__BaseType.h.patch",
+      "sha256": "38f9582c815cad1c497664649ea0a7a93add49a7b015e9f74b33577a0aacfeb0"
+    },
+    {
+      "path": "port/patches/cluster/Libraries__Source__WWVegas__WWDebug__wwdebug.h.patch",
+      "sha256": "e63e292c3e172791599fd350a6dbece9fb897499377a9ebf398c6cab984705a2"
+    },
+    {
+      "path": "port/patches/cluster/Libraries__Source__WWVegas__WWDebug__wwprofile.h.patch",
+      "sha256": "4ee4a3684236042857d182fcfcd56dd5328f2c3fc121095f72ea4e5d7de1a98e"
+    },
+    {
+      "path": "port/patches/cluster/Libraries__Source__WWVegas__WWLib__RAWFILE.H.patch",
+      "sha256": "b98ce1e9e4b7a28aa46be60da8d9a7028936c8444dc9032f1997740b49fef9f9"
+    },
+    {
+      "path": "port/patches/cluster/Libraries__Source__WWVegas__WWLib__SLIST.H.patch",
+      "sha256": "81adc584478aabc3f259cb3eebc5b029c9158473e7a1ed65f304167dcb40478b"
+    },
+    {
+      "path": "port/patches/cluster/Libraries__Source__WWVegas__WWLib__Vector.H.patch",
+      "sha256": "2d949d21fac2d27e030b0bfc0832dc1038a4d85b19e2e1df080fe6276470069f"
+    },
+    {
+      "path": "port/patches/cluster/Libraries__Source__WWVegas__WWLib__always.h.patch",
+      "sha256": "5628c9d4eaf8a6ee2cff4c469dd12171025deea3c45a1652325730858748b0cd"
+    },
+    {
+      "path": "port/patches/cluster/Libraries__Source__WWVegas__WWLib__bufffile.h.patch",
+      "sha256": "dc34e8ae321fa27100d7c735e898a766eb31f0d6b0d018a378967b82adf92c3f"
+    },
+    {
+      "path": "port/patches/cluster/Libraries__Source__WWVegas__WWLib__chunkio.cpp.patch",
+      "sha256": "e50eba45e50bb45b4f14f6d031443a09fc4a0b52785dcaa37635bb57b79827fc"
+    },
+    {
+      "path": "port/patches/cluster/Libraries__Source__WWVegas__WWLib__chunkio.h.patch",
+      "sha256": "2e2316515a41177b5ca774e13fc393c46f6a03f7a3dde01e1043f361a78eeca9"
+    },
+    {
+      "path": "port/patches/cluster/Libraries__Source__WWVegas__WWLib__ffactory.cpp.patch",
+      "sha256": "6988d4266e874c8b03ce280bc3b7d7a117b17be4cf2b15a834e79e3cb046334e"
+    },
+    {
+      "path": "port/patches/cluster/Libraries__Source__WWVegas__WWLib__ffactory.h.patch",
+      "sha256": "a03f0bf62ba39784d6092eb99d0e2887e706666c9f0672c32a0340c4513f2e69"
+    },
+    {
+      "path": "port/patches/cluster/Libraries__Source__WWVegas__WWLib__mempool.h.patch",
+      "sha256": "b77fdaab6730d0cd8cf1a8639c3286e76cc9d2ac076f534a59afcea3809cbe9e"
+    },
+    {
+      "path": "port/patches/cluster/Libraries__Source__WWVegas__WWLib__multilist.h.patch",
+      "sha256": "ebf2f5675abcbe6553af710ae9512b46a3d21151995b1d927c66e9889a9ee0d5"
+    },
+    {
+      "path": "port/patches/cluster/Libraries__Source__WWVegas__WWLib__mutex.cpp.patch",
+      "sha256": "c68565531d11e4e4bd6e8c0a1bdffab0254921ac91da1d88844b0b16cfca4116"
+    },
+    {
+      "path": "port/patches/cluster/Libraries__Source__WWVegas__WWLib__mutex.h.patch",
+      "sha256": "8975b222d7330729bddddd07e3cf3764cbffdac7bc236115f8aaa189d301a2b0"
+    },
+    {
+      "path": "port/patches/cluster/Libraries__Source__WWVegas__WWLib__random.cpp.patch",
+      "sha256": "4753f6b6e41bcaf4d21ae191fe08f9855c34a1ed509ffdc8aad48689fea98b39"
+    },
+    {
+      "path": "port/patches/cluster/Libraries__Source__WWVegas__WWLib__rawfile.cpp.patch",
+      "sha256": "4b9869f6e27b66d4f154b1f22ee75a6cea8c46551030dc7b3ae11f3c230a25ef"
+    },
+    {
+      "path": "port/patches/cluster/Libraries__Source__WWVegas__WWLib__realcrc.cpp.patch",
+      "sha256": "3a5d45695c83acb919e82dca6bbdfb0de659ce2b09185a1fe87f220ecd76e5ca"
+    },
+    {
+      "path": "port/patches/cluster/Libraries__Source__WWVegas__WWLib__realcrc.h.patch",
+      "sha256": "d78416176283c6c2e418b9734015da21289c845233e73635dd9dec8bcffef9e3"
+    },
+    {
+      "path": "port/patches/cluster/Libraries__Source__WWVegas__WWLib__refcount.h.patch",
+      "sha256": "dd2a037924a7a756093ee20690688603dc6dfe52c3db8003a310cf566c999232"
+    },
+    {
+      "path": "port/patches/cluster/Libraries__Source__WWVegas__WWLib__simplevec.h.patch",
+      "sha256": "057398fe2a21079e608d1cf753ee95dc8fc9be138e5559bb632ac0f2dec98632"
+    },
+    {
+      "path": "port/patches/cluster/Libraries__Source__WWVegas__WWLib__slnode.cpp.patch",
+      "sha256": "39895c194520d71e0e69099e034fa2dae120d3730265327a6730f8dda4d51c62"
+    },
+    {
+      "path": "port/patches/cluster/Libraries__Source__WWVegas__WWLib__systimer.cpp.patch",
+      "sha256": "ac767b8b77f18349c6729df82563cbfa6aeee6ec7668e4f676f6c3a37717d690"
+    },
+    {
+      "path": "port/patches/cluster/Libraries__Source__WWVegas__WWLib__systimer.h.patch",
+      "sha256": "1dc839d0da8b353961fc42978ee8d931cc3c9a3e5e147e72138386df8bc1e724"
+    },
+    {
+      "path": "port/patches/cluster/Libraries__Source__WWVegas__WWLib__thread.h.patch",
+      "sha256": "2640f3134139545fc787d2fd01833139b48de293e04d6e0df9f629e03c780a3c"
+    },
+    {
+      "path": "port/patches/cluster/Libraries__Source__WWVegas__WWLib__wwstring.cpp.patch",
+      "sha256": "e738188b83acd9022eb2e2e50be39994b0b0922538f27686035b1b71bf81c757"
+    },
+    {
+      "path": "port/patches/cluster/Libraries__Source__WWVegas__WWLib__wwstring.h.patch",
+      "sha256": "b0d5ddbacdfd60a7ef1dd5974edbb77d21dddcfb8f9cb5ceec441644490b3520"
+    },
+    {
+      "path": "port/patches/cluster/Libraries__Source__WWVegas__WWMath__curve.h.patch",
+      "sha256": "8d3bff2302cc30d5d7ee2d9d97d5ac5d11ec12e5ab8eaf288b4941d753b94ab4"
+    },
+    {
+      "path": "port/patches/cluster/Libraries__Source__WWVegas__WWMath__lookuptable.cpp.patch",
+      "sha256": "3e46b0a9dd839060482239405d397ee33048d0c083f16d5b9e9bc2ba11b61e4e"
+    },
+    {
+      "path": "port/patches/cluster/Libraries__Source__WWVegas__WWMath__matrix3d.cpp.patch",
+      "sha256": "ea4cc3c1572caf03edf0c9d065b82d8638ec259142f70cb93d48cb7bc99531a6"
+    },
+    {
+      "path": "port/patches/cluster/Libraries__Source__WWVegas__WWMath__matrix3d.h.patch",
+      "sha256": "8ee28a80910f1bb3798c2657f38cbe1998401dac1ac0806f30af58d70037f0aa"
+    },
+    {
+      "path": "port/patches/cluster/Libraries__Source__WWVegas__WWMath__ode.h.patch",
+      "sha256": "66c67155174f22f41f97c255ef0cd3eec4747fb641708e1511f2232136c8f137"
+    },
+    {
+      "path": "port/patches/cluster/Libraries__Source__WWVegas__WWMath__v3_rnd.h.patch",
+      "sha256": "e41442f201c2c58940e26b92881a8748738b59ae549a87a0055b8ff83ded0efd"
+    },
+    {
+      "path": "port/patches/cluster/Libraries__Source__WWVegas__WWMath__vehiclecurve.h.patch",
+      "sha256": "c1fa34e0a0d948ba076f1f539ee638f43745b9c4cc45e97d75785582a362be4b"
+    },
+    {
+      "path": "port/patches/cluster/Libraries__Source__WWVegas__WWMath__vp.cpp.patch",
+      "sha256": "62eac67568727c6654532c132703788d2b098ddf59123e9efa186706476aa036"
+    },
+    {
+      "path": "port/patches/cluster/Libraries__Source__WWVegas__WWMath__wwmath.cpp.patch",
+      "sha256": "45b296d83e23e0372976d00381d2f116694bd6bb73e09350ca92b976f09257e0"
+    },
+    {
+      "path": "port/patches/cluster/Libraries__Source__WWVegas__WWMath__wwmath.h.patch",
+      "sha256": "39f02aa8fe9de9ce3fb4b57b36f79ff3ba144361a3548894d6311151c555f047"
+    },
+    {
+      "path": "port/patches/cluster/Libraries__Source__WWVegas__WWSaveLoad__definitionfactorymgr.cpp.patch",
+      "sha256": "7ee9915b793a3cc02b17394020a86541b0d3b60770c648d2d4fe6995c1bafd80"
+    },
+    {
+      "path": "port/patches/cluster/Libraries__Source__WWVegas__WWSaveLoad__definitionmgr.cpp.patch",
+      "sha256": "4c535cb0ce52224329c1abb1e18476e318f260132d396e0f1ddbe688598edab0"
+    },
+    {
+      "path": "port/patches/cluster/Libraries__Source__WWVegas__WWSaveLoad__definitionmgr.h.patch",
+      "sha256": "6778fb3e117fa64c0ea4bb01b0a64b0184f1f55bc32c4ccbf189aeae8524de2d"
+    },
+    {
+      "path": "port/patches/cluster/Libraries__Source__WWVegas__WWSaveLoad__parameter.cpp.patch",
+      "sha256": "c383883c3a6bd12e979ecfa37a543fc6ba40fceb341274c315cfa1256abac928"
+    },
+    {
+      "path": "port/patches/cluster/Libraries__Source__WWVegas__WWSaveLoad__parameter.h.patch",
+      "sha256": "4d0a9f73ff466846c0466c320d8fc0378195478a6f27f1e553c7c0a0a4cd3c66"
+    },
+    {
+      "path": "port/patches/cluster/Libraries__Source__WWVegas__WWSaveLoad__parameterlist.h.patch",
+      "sha256": "5c9fe76a71ee65a7879752939354f5b593c4a10c3ad52a38ac317f09df6c24d5"
+    },
+    {
+      "path": "port/patches/cluster/Libraries__Source__WWVegas__WWSaveLoad__pointerremap.h.patch",
+      "sha256": "ec23a32ebe82b66628d38568e0782a6f6cee6f85ba23e6cee7ecd427189539e4"
+    },
+    {
+      "path": "port/patches/cluster/Libraries__Source__WWVegas__WWSaveLoad__saveload.cpp.patch",
+      "sha256": "e23f2700b988645d7f0535fe754baad56ff7fcc04bf88fdc6d57466ff25f4c23"
+    },
+    {
+      "path": "port/patches/cluster/Libraries__Source__WWVegas__WWSaveLoad__saveload.h.patch",
+      "sha256": "2a2f5a145c14163ae1217ca7cdc29b86070530ded28b036f152890d28e7b1b12"
+    },
+    {
+      "path": "port/patches/cluster/Libraries__Source__WWVegas__WWSaveLoad__twiddler.cpp.patch",
+      "sha256": "08709689e53b4939a7737f70d68aeaa1083d969004bb1275a8f0df7458212366"
     }
   ]
 }

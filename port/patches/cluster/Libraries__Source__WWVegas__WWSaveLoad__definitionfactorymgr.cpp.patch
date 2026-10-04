@@ -1,0 +1,26 @@
+--- a/Code/Libraries/Source/WWVegas/WWSaveLoad/definitionfactorymgr.cpp
++++ b/Code/Libraries/Source/WWVegas/WWSaveLoad/definitionfactorymgr.cpp
+@@ -35,6 +35,14 @@
+  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+ 
+ #include "definitionfactorymgr.h"
++
++#if defined(GENERALS_PLATFORM_VITA)
++#include <strings.h>
++static int wwlib_case_compare(const char* a, const char* b) { return ::strcasecmp(a,b); }
++#else
++#include <string.h>
++static int wwlib_case_compare(const char* a, const char* b) { return ::stricmp(a,b); }
++#endif
+ #include "definitionfactory.h"
+ #include "wwdebug.h"
+ #include <string.h>
+@@ -99,7 +107,7 @@
+ 		//
+ 		//	Is this the factory we were looking for?
+ 		//
+-		if (::stricmp (curr_factory->Get_Name (), name) == 0) {
++		if (wwlib_case_compare (curr_factory->Get_Name (), name) == 0) {
+ 			factory = curr_factory;
+ 		}
+ 	}

@@ -13,8 +13,11 @@ semantics and original subsystem ownership. The target is 60 FPS; feasibility re
 decisions must follow measurements on the target hardware.
 
 No playable game or hardware-tested build is available yet. The current build
-covers BIGF header/directory validation, a staged original WWLib checksum module,
-source/retail inventory tooling and target ABI checks. There is no full engine build, renderer, launcher or game package.
+covers BIGF header/directory validation, original checksum and math-header probes,
+and [native allocator, math and file/save-provider clusters](docs/NATIVE_CLUSTERS.md),
+with host sanitizer tests and ARM ABI checks. Source/retail inventory tools
+retain unresolved findings. There is no full engine build, renderer, launcher
+or game package.
 
 The portable archive boundary module is new GPL-3.0-or-later code. EA's upstream
 license and additional terms are preserved in [LICENSE.md](LICENSE.md). This

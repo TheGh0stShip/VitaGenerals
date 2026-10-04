@@ -1,0 +1,11 @@
+--- a/Code/GameEngine/Include/Common/UnicodeString.h
++++ b/Code/GameEngine/Include/Common/UnicodeString.h
+@@ -44,6 +44,8 @@
+ ///////////////////////////////////////////////////////////////////////////////
+ 
+ #pragma once
++#include <cwchar>
++extern "C" int _wcsicmp(const wchar_t*, const wchar_t*);
+ 
+ #ifndef UNICODESTRING_H
+ #define UNICODESTRING_H

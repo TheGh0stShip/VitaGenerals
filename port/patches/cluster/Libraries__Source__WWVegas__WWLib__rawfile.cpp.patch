@@ -1,0 +1,378 @@
+--- a/Code/Libraries/Source/WWVegas/WWLib/rawfile.cpp
++++ b/Code/Libraries/Source/WWVegas/WWLib/rawfile.cpp
+@@ -53,17 +53,51 @@
+ 
+ 
+ #include	"always.h"
+-#include	"rawfile.h"
+-#include	<direct.h>
++#include "RAWFILE.H"
++#if !defined(GENERALS_WWLIB_STDIO)
++#include <direct.h>
++#endif
+ //#include	<share.h>
+ #include	<stddef.h>
+ #include	<stdio.h>
+ #include	<stdlib.h>
+ #include	<string.h>
++#if !defined(GENERALS_WWLIB_STDIO)
+ #include "win.h"
++#endif
+ #include	<limits.h>
+ #include	<errno.h>
+-#ifdef _UNIX
++#include <cctype>
++#if defined(GENERALS_WWLIB_STDIO)
++#include <unistd.h>
++#include <fcntl.h>
++#include <sys/stat.h>
++#include "packed-file-time.h"
++#if defined(__vita__)
++uint32_t native_raw_packed_time(FILE*);
++bool native_raw_set_packed_time(FILE*,uint32_t);
++static uint32_t raw_packed_time(FILE* file) {return native_raw_packed_time(file);}
++#else
++static uint32_t raw_packed_time(FILE* file)
++{
++ struct stat info;
++ if(fstat(fileno(file), &info) != 0) return 0;
++ uint32_t nanos=0;
++#if !defined(__vita__)
++ if(info.st_mtim.tv_nsec < 0 || info.st_mtim.tv_nsec >= 1000000000) return 0;
++ nanos=static_cast<uint32_t>(info.st_mtim.tv_nsec);
++#endif
++ uint32_t packed=0;
++ return generals_file_time::from_epoch(static_cast<int64_t>(info.st_mtime),nanos,packed) ? packed : 0;
++}
++
++#endif
++static int raw_file_error() { return errno; }
++#else
++static int raw_file_error() { return GetLastError(); }
++#endif
++
++#ifdef GENERALS_WWLIB_STDIO
+ #include <sys/types.h>
+ #include <sys/stat.h>
+ #endif
+@@ -319,12 +353,12 @@
+ 	/*
+ 	** If this is a UNIX build, fix the filename from the DOS-like name passed in
+ 	*/
+-	#ifdef _UNIX
++	#ifdef GENERALS_WWLIB_STDIO
+ 		for (int i=0; i<Filename.Get_Length(); i++)
+ 		{
+ 			if (Filename[i]=='\\')
+ 				Filename[i]='/';
+-			Filename[i]=tolower(Filename[i]);  // don't preserve case
++			Filename[i]=std::tolower(static_cast<unsigned char>(Filename[i]));  // don't preserve case
+ 		}
+ 	#endif
+ 
+@@ -415,8 +449,8 @@
+ 				break;
+ 
+ 			case READ:
+-				#ifdef _UNIX
+-					Handle = fopen(Filename, "r");
++				#ifdef GENERALS_WWLIB_STDIO
++					Handle = fopen(Filename, "rb");
+ 				#else
+ 					Handle = CreateFileA(Filename, GENERIC_READ, FILE_SHARE_READ,
+ 												NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+@@ -424,17 +458,24 @@
+ 				break;
+ 
+ 			case WRITE:
+-				#ifdef _UNIX
+-					Handle = fopen(Filename, "w");
++				#ifdef GENERALS_WWLIB_STDIO
++					Handle = fopen(Filename, "wb");
+ 				#else
+ 					Handle = CreateFileA(Filename, GENERIC_WRITE, 0,
+ 												NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+ 				#endif
+ 				break;
+ 
+-			case READ|WRITE:
+-				#ifdef _UNIX
+-					Handle = fopen(Filename, "w");
++			case READ|WRITE: {
++				#ifdef GENERALS_WWLIB_STDIO
++					// OPEN_ALWAYS preserves existing bytes and creates missing files.
++                    const int descriptor = open(Filename, O_RDWR | O_CREAT, 0666);
++                    Handle = descriptor < 0 ? NULL_HANDLE : fdopen(descriptor, "r+b");
++                    if (descriptor >= 0 && Handle == NULL_HANDLE) {
++                        const int saved_error = errno;
++                        close(descriptor);
++                        errno = saved_error;
++                    }
+ 				#else
+ 					// SKB 5/13/99 use OPEN_ALWAYS instead of CREATE_ALWAYS so that files
+ 					//					does not get destroyed.
+@@ -442,6 +483,7 @@
+ 												NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+ 				#endif
+ 				break;
++            }
+ 		}
+ 
+ 		/*
+@@ -459,7 +501,7 @@
+ 		if (Handle == NULL_HANDLE) {
+ 			return(false);
+ 
+-//			Error(GetLastError(), false, Filename);
++//			Error(raw_file_error(), false, Filename);
+ //			continue;
+ 		}
+ 		break;
+@@ -513,8 +555,8 @@
+ 	*/
+ 	for (;;) {
+ 
+-		#ifdef _UNIX
+-			Handle=fopen(Filename,"r");
++		#ifdef GENERALS_WWLIB_STDIO
++			Handle=fopen(Filename,"rb");
+ 		#else
+ 			Handle = CreateFileA(Filename, GENERIC_READ, FILE_SHARE_READ,
+ 											NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+@@ -530,13 +572,13 @@
+ 	**	Since the file could be opened, then close it and return that the file exists.
+ 	*/
+ 	int closeok;
+-	#ifdef _UNIX
+-		closeok=((fclose(Handle)==0)?TRUE:FALSE);
++	#ifdef GENERALS_WWLIB_STDIO
++		closeok=((fclose(Handle)==0)?true:false);
+ 	#else
+ 		closeok=CloseHandle(Handle);
+ 	#endif
+ 	if (! closeok) {
+-		Error(GetLastError(), false, Filename);
++		Error(raw_file_error(), false, Filename);
+ 	}
+ 	Handle = NULL_HANDLE;
+ 
+@@ -571,14 +613,14 @@
+ 		**	call the error routine.
+ 		*/
+ 		int closeok;
+-		#ifdef _UNIX
+-			closeok=(fclose(Handle)==0)?TRUE:FALSE;	
++		#ifdef GENERALS_WWLIB_STDIO
++			closeok=(fclose(Handle)==0)?true:false;	
+ 		#else
+ 			closeok=CloseHandle(Handle);
+ 		#endif
+ 
+ 		if (!closeok) {
+-			Error(GetLastError(), false, Filename);
++			Error(raw_file_error(), false, Filename);
+ 		}
+ 
+ 		/*
+@@ -644,13 +686,13 @@
+ 	while (size > 0) {
+ 		bytesread = 0;
+ 
+-		int readok=TRUE;
+-
+-		#ifdef _UNIX
+-			readok=TRUE;
++		int readok=true;
++
++		#ifdef GENERALS_WWLIB_STDIO
++			readok=true;
+ 			bytesread=fread(buffer,1,size,Handle);
+ 			if ((bytesread == 0)&&( ! feof(Handle)))
+-				readok=ferror(Handle);
++				readok=(ferror(Handle)==0);
+ 		#else
+ 			readok=ReadFile(Handle, buffer, size, &(unsigned long&)bytesread, NULL);
+ 		#endif
+@@ -659,12 +701,19 @@
+ 		if (! readok) {
+ 			size -= bytesread;
+ 			total += bytesread;
+-			Error(GetLastError(), true, Filename);
++			Error(raw_file_error(), true, Filename);
++#if defined(GENERALS_WWLIB_STDIO)
++			break; // An error callback may return; avoid an unbounded retry.
++#else
+ 			continue;
++#endif
+ 		}
+ 		size -= bytesread;
+ 		total += bytesread;
+ 		if (bytesread == 0) break;
++#if defined(GENERALS_WWLIB_STDIO)
++		buffer = static_cast<char*>(buffer) + bytesread;
++#endif
+ 	}
+ 	bytesread = total;
+ 
+@@ -712,17 +761,17 @@
+ 		opened = true;
+ 	}
+ 
+-   int writeok=TRUE;
+-   #ifdef _UNIX
++   int writeok=true;
++   #ifdef GENERALS_WWLIB_STDIO
+ 		byteswritten = fwrite(buffer, 1, size, Handle);
+ 		if (byteswritten != size)
+-			writeok = FALSE;
++			writeok = false;
+ 	#else
+ 		writeok=WriteFile(Handle, buffer, size, &(unsigned long&)byteswritten, NULL);
+ 	#endif
+ 
+ 	if (! writeok) {
+-		Error(GetLastError(), false, Filename);
++		Error(raw_file_error(), false, Filename);
+ 	}
+ 
+ 	/*
+@@ -855,18 +904,14 @@
+ 	*/
+ 	if (Is_Open()) {
+ 
+-      #ifdef _UNIX
+-			fpos_t curpos,startpos,endpos;
+-			fgetpos(Handle,&curpos);	
+-
+-			fseek(Handle,0,SEEK_SET);
+-			fgetpos(Handle,&startpos);	
+-
+-			fseek(Handle,0,SEEK_END);
+-			fgetpos(Handle,&endpos);	
+-
+-			size=endpos-startpos;
+-			fsetpos(Handle,&curpos);
++      #ifdef GENERALS_WWLIB_STDIO
++			long curpos = ftell(Handle);
++            if(curpos < 0 || fseek(Handle,0,SEEK_END) != 0) size = -1;
++            else {
++                long endpos = ftell(Handle);
++                size = endpos < 0 || endpos > INT_MAX ? -1 : static_cast<int>(endpos);
++                if(fseek(Handle,curpos,SEEK_SET) != 0) size = -1;
++            }
+ 		#else
+ 			size = GetFileSize(Handle, NULL);
+ 		#endif
+@@ -875,7 +920,7 @@
+ 		**	If there was in internal error, then call the error function.
+ 		*/
+ 		if (size == 0xFFFFFFFF) {
+-			Error(GetLastError(), false, Filename);
++			Error(raw_file_error(), false, Filename);
+ 		}
+ 
+ 	} else {
+@@ -986,14 +1031,14 @@
+ 		}
+ 
+ 		int deleteok;
+-		#ifdef _UNIX
+-			deleteok=(unlink(Filename)==0)?TRUE:FALSE;
++		#ifdef GENERALS_WWLIB_STDIO
++			deleteok=(unlink(Filename)==0)?true:false;
+ 		#else
+ 			deleteok=DeleteFile(Filename);
+ 		#endif
+ 
+ 		if (! deleteok) {
+-			Error(GetLastError(), false, Filename);
++			Error(raw_file_error(), false, Filename);
+ 			return(false);
+ 		}
+ 		break;
+@@ -1029,10 +1074,8 @@
+ 	// Ensure we will work properly if the file is not open
+ 	if (Is_Open()) {
+ 		// If file is open proceed normally
+-#ifdef _UNIX
+-		struct stat statbuf;
+-		lstat(Filename, &statbuf);
+-		retval = statbuf.st_mtime;
++#ifdef GENERALS_WWLIB_STDIO
++		retval = raw_packed_time(Handle);
+ #else
+ 		BY_HANDLE_FILE_INFORMATION info;
+ 
+@@ -1047,10 +1090,8 @@
+ 		// If file not open open it, if open succeeded proceed normally and then close to put
+ 		// everything back the way we found it.
+ 		if (Open()) {
+-#ifdef _UNIX
+-			struct stat statbuf;
+-			lstat(Filename, &statbuf);
+-			retval = statbuf.st_mtime;
++#ifdef GENERALS_WWLIB_STDIO
++			retval = raw_packed_time(Handle);
+ #else
+ 			BY_HANDLE_FILE_INFORMATION info;
+ 
+@@ -1087,9 +1128,26 @@
+  *=============================================================================================*/
+ bool RawFileClass::Set_Date_Time(unsigned long datetime)
+ {
+-#ifdef _UNIX
+-	assert(0);
+-	return(false);
++#ifdef GENERALS_WWLIB_STDIO
++ if(!Is_Open() || datetime > UINT32_MAX) return false;
++#if defined(__vita__)
++ return native_raw_set_packed_time(Handle,static_cast<uint32_t>(datetime));
++#else
++ int64_t seconds=0;
++ if(!generals_file_time::to_epoch(static_cast<uint32_t>(datetime),seconds)) return false;
++ const time_t converted=static_cast<time_t>(seconds);
++ if(static_cast<int64_t>(converted)!=seconds) return false;
++ struct stat info;
++ if(fstat(fileno(Handle),&info)!=0) return false;
++ struct timespec times[2];
++#if defined(__vita__)
++ times[0].tv_sec=0;times[0].tv_nsec=UTIME_OMIT;
++#else
++ times[0]=info.st_atim;
++#endif
++ times[1].tv_sec=converted;times[1].tv_nsec=0;
++ return futimens(fileno(Handle),times)==0;
++#endif
+ #else
+ 	if (RawFileClass::Is_Open()) {
+ 		BY_HANDLE_FILE_INFORMATION info;
+@@ -1179,8 +1237,9 @@
+ 		Error(EBADF, false, Filename);
+ 	}
+ 
+-   #ifdef _UNIX
+-      pos=fseek(Handle, pos, dir);
++   #ifdef GENERALS_WWLIB_STDIO
++      if (fseek(Handle, pos, dir) != 0) pos = -1;
++      else { long current = ftell(Handle); pos = current < 0 || current > INT_MAX ? -1 : static_cast<int>(current); }
+    #else
+ 		switch (dir) {
+ 			case SEEK_SET:
+@@ -1202,7 +1261,7 @@
+ 	**	If there was an error in the seek, then bail with an error condition.
+ 	*/
+ 	if (pos == 0xFFFFFFFF) {
+-		Error(GetLastError(), false, Filename);
++		Error(raw_file_error(), false, Filename);
+ 	}
+ 
+ 	/*
+@@ -1234,7 +1293,7 @@
+ 	Date = 0;
+ 	Time = 0;
+ 
+-	#ifdef _UNIX
++	#ifdef GENERALS_WWLIB_STDIO
+ 	  Handle = (FILE *)handle;
+ 	#else
+ 	  Handle = handle;

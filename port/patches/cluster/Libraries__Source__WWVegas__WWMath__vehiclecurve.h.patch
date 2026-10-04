@@ -1,0 +1,11 @@
+--- a/Code/Libraries/Source/WWVegas/WWMath/vehiclecurve.h
++++ b/Code/Libraries/Source/WWVegas/WWMath/vehiclecurve.h
+@@ -43,7 +43,7 @@
+ #define __VEHICLE_CURVE_H
+ 
+ #include "curve.h"
+-#include "vector.h"
++#include "../WWLib/Vector.H"
+ 
+ 
+ ////////////////////////////////////////////////////////////////////////////////////////////

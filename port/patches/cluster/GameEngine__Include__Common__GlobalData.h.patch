@@ -1,0 +1,22 @@
+--- a/Code/GameEngine/Include/Common/GlobalData.h
++++ b/Code/GameEngine/Include/Common/GlobalData.h
+@@ -28,6 +28,10 @@
+ ///////////////////////////////////////////////////////////////////////////////////////////////////
+ 
+ #pragma once
++#include "Common/_TerrainLODDefinition.h"
++#include "Common/BodyDamageTypeDefinition.h"
++#include "Common/AIDebugOptionsDefinition.h"
++
+ 
+ #ifndef _GLOBALDATA_H_
+ #define _GLOBALDATA_H_
+@@ -44,7 +48,7 @@
+ 
+ // FORWARD DECLARATIONS ///////////////////////////////////////////////////////////////////////////
+ struct FieldParse;
+-typedef enum _TerrainLOD;
++enum _TerrainLOD;
+ class GlobalData;
+ class INI;
+ class WeaponBonusSet;

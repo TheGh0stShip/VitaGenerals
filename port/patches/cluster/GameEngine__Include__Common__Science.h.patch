@@ -1,0 +1,22 @@
+--- a/Code/GameEngine/Include/Common/Science.h
++++ b/Code/GameEngine/Include/Common/Science.h
+@@ -33,6 +33,7 @@
+ #define __SCIENCE_H_
+ 
+ // INCLUDES ///////////////////////////////////////////////////////////////////////////////////////
++#include "Common/ScienceType.h"
+ #include "Common/Overridable.h"
+ #include "Common/NameKeyGenerator.h"
+ #include "Common/UnicodeString.h"
+@@ -40,10 +41,7 @@
+ class Player;
+ 
+ //-------------------------------------------------------------------------------------------------
+-enum ScienceType
+-{
+-	SCIENCE_INVALID = -1
+-};
++
+ 
+ //-------------------------------------------------------------------------------------------------
+ typedef std::vector<ScienceType> ScienceVec;

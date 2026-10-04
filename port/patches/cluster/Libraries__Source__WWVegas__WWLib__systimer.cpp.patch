@@ -1,0 +1,22 @@
+--- a/Code/Libraries/Source/WWVegas/WWLib/systimer.cpp
++++ b/Code/Libraries/Source/WWVegas/WWLib/systimer.cpp
+@@ -56,7 +56,9 @@
+ SysTimeClass::SysTimeClass(void)
+ {
+ 	//tell windows we need single ms precision.
++	#if !defined(GENERALS_PLATFORM_VITA)
+ 	timeBeginPeriod(1);
++#endif
+ }
+ 
+ /***********************************************************************************************
+@@ -76,7 +78,9 @@
+ SysTimeClass::~SysTimeClass(void)
+ {
+ 	//tell windows we need single ms precision.
++	#if !defined(GENERALS_PLATFORM_VITA)
+ 	timeEndPeriod(1);
++#endif
+ }
+ 
+ /***********************************************************************************************

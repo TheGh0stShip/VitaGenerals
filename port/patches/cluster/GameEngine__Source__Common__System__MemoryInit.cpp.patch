@@ -1,0 +1,53 @@
+--- a/Code/GameEngine/Source/Common/System/MemoryInit.cpp
++++ b/Code/GameEngine/Source/Common/System/MemoryInit.cpp
+@@ -1,3 +1,5 @@
++#include <strings.h>
++extern const char* platformMemoryPoolConfigPath();
+ /*
+ **	Command & Conquer Generals Zero Hour(tm)
+ **	Copyright 2025 Electronic Arts Inc.
+@@ -758,36 +760,24 @@
+ 	// aren't yet initialized properly! so rely ONLY on straight stdio stuff here.
+ 	// (not even AsciiString. thanks.)
+ 	
+-	// since we're called prior to main, the cur dir might not be what
+-	// we expect. so do it the hard way.
+-	char buf[_MAX_PATH];
+-	::GetModuleFileName(NULL, buf, sizeof(buf));
+-	char* pEnd = buf + strlen(buf);
+-	while (pEnd != buf) 
+-	{
+-		if (*pEnd == '\\') 
+-		{
+-			*pEnd = 0;
+-			break;
+-		}
+-		--pEnd;
+-	}
+-	strcat(buf, "\\Data\\INI\\MemoryPools.ini");
+-
+-	FILE* fp = fopen(buf, "r");
++	// The bootstrap provider must be available before engine allocation begins.
++	const char* path = platformMemoryPoolConfigPath();
++	if (!path) return;
++	char buf[260];
++	FILE* fp = fopen(path, "r");
+ 	if (fp)
+ 	{
+ 		char poolName[256];
+ 		int initial, overflow;
+-		while (fgets(buf, _MAX_PATH, fp))
++		while (fgets(buf, sizeof(buf), fp))
+ 		{
+ 			if (buf[0] == ';')
+ 				continue;
+-			if (sscanf(buf, "%s %d %d", poolName, &initial, &overflow ) == 3)
++			if (sscanf(buf, "%255s %d %d", poolName, &initial, &overflow ) == 3)
+ 			{
+ 				for (PoolSizeRec* p = sizes; p->name != NULL; ++p)
+ 				{
+-					if (stricmp(p->name, poolName) == 0)
++					if (strcasecmp(p->name, poolName) == 0)
+ 					{
+ 						// currently, these must be multiples of 4. so round up.
+ 						p->initial = roundUpMemBound(initial);

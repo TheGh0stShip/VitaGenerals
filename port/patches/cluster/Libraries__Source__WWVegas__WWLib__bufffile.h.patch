@@ -1,0 +1,11 @@
+--- a/Code/Libraries/Source/WWVegas/WWLib/bufffile.h
++++ b/Code/Libraries/Source/WWVegas/WWLib/bufffile.h
+@@ -45,7 +45,7 @@
+ #ifndef BUFFFILE_H
+ #define BUFFFILE_H
+ 
+-#include	"rawfile.h"
++#include "RAWFILE.H"
+ 
+ 
+ /*

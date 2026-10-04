@@ -16,7 +16,7 @@ The output contains `Code/`, the byte-preserved EA `LICENSE.md` and a private
 `receipt.json` with every staged file hash. The complete pristine Code fingerprint
 must match `tools/source-lock.json`. Declared patch inputs must match that tree
 and the vendored manifest. The existing zero-fuzz patch pipeline produces the
-two patched WWLib checksum files; they are mapped back to their original paths.
+70 declared patched files; they are mapped back to their original paths.
 Every final file is verified against original or declared patched bytes before
 promotion. License bytes must match the preserved project license.
 
@@ -24,9 +24,10 @@ promotion. License bytes must match the preserved project license.
 identity and staging counts. It is reproducible from the pinned source checkout;
 its full file receipt and source copies stay in ignored build directories.
 This is source-staging evidence, not an engine compilation, package or runtime
-acceptance result. The current CMake probes still select the small checksum and
-archive baselines; the complete staged tree is preparation for original engine
-build clusters, not an implicitly selected runtime graph.
+acceptance result. Root CMake probes select the checksum, math-header and
+archive baselines. The separate [native cluster build](NATIVE_CLUSTERS.md)
+selects explicit original allocator, math and file/save-provider sources;
+the complete tree is not an implicitly selected runtime graph.
 
 Staging output must be a subdirectory of an ignored project build tree. Dirty
 source inputs, symlinks, altered staged files, unexpected files, license or patch

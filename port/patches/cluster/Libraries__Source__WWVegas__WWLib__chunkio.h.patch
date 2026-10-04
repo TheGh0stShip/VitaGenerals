@@ -1,0 +1,45 @@
+--- a/Code/Libraries/Source/WWVegas/WWLib/chunkio.h
++++ b/Code/Libraries/Source/WWVegas/WWLib/chunkio.h
+@@ -50,7 +50,7 @@
+ #endif
+ 
+ #ifndef WWFILE_H
+-#include "wwfile.h"
++#include "WWFILE.H"
+ #endif
+ 
+ #ifndef IOSTRUCT_H
+@@ -88,6 +88,12 @@
+ 
+ **************************************************************************************/
+ 
++// Disk records retain original 32-bit fields on ILP32, LP64 and LLP64.
++#include <cstdint>
++#include <cstddef>
++#if __BYTE_ORDER__ != __ORDER_LITTLE_ENDIAN__
++#error Chunk IO requires explicit endian adapters on big-endian targets
++#endif
+ struct ChunkHeader
+ {
+ 	// Functions.
+@@ -106,8 +112,8 @@
+ 	// Chunk type and size.
+ 	// Note: MSB of ChunkSize is used to indicate whether this chunk
+ 	// contains other chunks or data.
+-	uint32 ChunkType;
+-	uint32 ChunkSize;
++	uint32_t ChunkType;
++	uint32_t ChunkSize;
+ };
+ 
+ struct MicroChunkHeader
+@@ -125,6 +131,9 @@
+ 	uint8	ChunkSize;
+ };
+ 
++static_assert(sizeof(ChunkHeader)==8, "Chunk disk header must be eight bytes");
++static_assert(offsetof(ChunkHeader,ChunkSize)==4, "Chunk size disk offset changed");
++static_assert(sizeof(MicroChunkHeader)==2, "Micro chunk disk header must be two bytes");
+ 
+ /**************************************************************************************
+ **

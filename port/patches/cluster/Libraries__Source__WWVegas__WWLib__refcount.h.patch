@@ -1,0 +1,11 @@
+--- a/Code/Libraries/Source/WWVegas/WWLib/refcount.h
++++ b/Code/Libraries/Source/WWVegas/WWLib/refcount.h
+@@ -45,7 +45,7 @@
+ #endif
+ 
+ #ifndef LISTNODE_H
+-#include "listnode.h"
++#include "LISTNODE.H"
+ #endif
+ 
+ class RefCountClass;
