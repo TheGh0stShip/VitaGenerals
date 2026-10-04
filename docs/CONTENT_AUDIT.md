@@ -78,3 +78,17 @@ units. Embedded NULs and unpaired surrogates remain visible for review. The
 module refuses native-layout unpack formats and does not use host wchar_t.
 These wire-value records do not establish runtime string behavior, dictionary
 capacity, property interpretation or serialization ABI compatibility.
+
+`tools/script_leaf_values.py` decodes raw action/false-action versions 1–2 and
+condition versions 1–4 using the original fixed-width parameter layout. It
+preserves numeric IDs, packed name-key candidates, signed integer values,
+float32 bits, coordinate bits and counted byte strings. Counts outside the
+original 12-slot parameter capacity, truncation, unsupported labels/versions
+and trailing bytes are diagnostic errors. Unknown parameter enum values retain
+the original non-coordinate wire layout without implying semantic support.
+
+The decoder leaves runtime name-key generation, template rematching, legacy
+parameter insertion/rewriting and template validation unresolved. Synthetic
+contracts cover both action routes, every known version, parameter capacity,
+all truncation points and raw value preservation. No original script objects
+are instantiated, and decoding does not prove referenced resources load.
