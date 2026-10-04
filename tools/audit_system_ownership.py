@@ -16,7 +16,8 @@ ROUTES = {'initSubsystem', 'addSubsystem', 'removeSubsystem', 'resetAll',
           'postProcessLoad', 'addSnapshotBlock'}
 SEEDS = ('SubsystemInterface', 'Snapshot')
 
-def analyze(data, engine):
+def analyze(data, engine, routes=None):
+    routes = ROUTES if routes is None else routes
     source = data.decode('latin1').encode('utf8')
     tree = engine.parse(source)
     classes, calls, recoveries = [], [], []
@@ -62,7 +63,7 @@ def analyze(data, engine):
         if node.type == 'call_expression':
             expression = text(node.child_by_field_name('function')) or ''
             last = re.search(r'([A-Za-z_]\w*)$', expression)
-            if last and last[1] in ROUTES:
+            if last and last[1] in routes:
                 args = node.child_by_field_name('arguments')
                 calls.append(dict(span(node), call=expression, route=last[1], arguments=text(args),
                                   argument_node_candidates=[text(c) for c in args.named_children if c.type != 'comment'] if args else [],

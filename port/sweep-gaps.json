@@ -10,7 +10,8 @@
     "runtime-providers.json",
     "engine-stage-baseline.json",
     "include-paths.json.gz",
-    "system-ownership.json.gz"
+    "system-ownership.json.gz",
+    "chunk-routes.json.gz"
   ],
   "findings": [
     {
@@ -118,6 +119,10 @@
         {
           "report": "system-ownership.json.gz",
           "pointer": "/summary/calls_with_own_parse_error"
+        },
+        {
+          "report": "chunk-routes.json.gz",
+          "pointer": "/summary/parse_recoveries"
         }
       ],
       "closure_evidence": "Reconcile recovered nodes with original macros, configuration-aware parsing and compiler evidence; review literal/empty/sole-return candidates without assuming stubs."
@@ -127,7 +132,7 @@
       "severity": "required",
       "kind": "evidence_gap",
       "status": "open",
-      "title": "Authored module sites do not establish target registration execution",
+      "title": "Authored registration sites do not establish target callback execution",
       "depends_on": [
         "ENGINE-BUILD",
         "PARSE-COVERAGE"
@@ -140,9 +145,13 @@
         {
           "report": "module-registrations.json",
           "pointer": "/summary/guarded_sites"
+        },
+        {
+          "report": "chunk-routes.json.gz",
+          "pointer": "/unknowns"
         }
       ],
-      "closure_evidence": "Join constructors, module data, interfaces and authored INI bindings to target selection and startup/object-construction traces."
+      "closure_evidence": "Join constructors, module data, interfaces, authored INI bindings and chunk callback registrations to target selection and startup/object-loading traces."
     },
     {
       "id": "SCRIPT-COMPATIBILITY",

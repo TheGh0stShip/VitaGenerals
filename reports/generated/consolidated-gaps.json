@@ -199,6 +199,11 @@
           "observed_value": 28,
           "pointer": "/summary/calls_with_own_parse_error",
           "report": "system-ownership.json.gz"
+        },
+        {
+          "observed_value": 14677,
+          "pointer": "/summary/parse_recoveries",
+          "report": "chunk-routes.json.gz"
         }
       ],
       "id": "PARSE-COVERAGE",
@@ -208,7 +213,7 @@
       "title": "Parser recoveries prevent a complete callable and guard denominator"
     },
     {
-      "closure_evidence": "Join constructors, module data, interfaces and authored INI bindings to target selection and startup/object-construction traces.",
+      "closure_evidence": "Join constructors, module data, interfaces, authored INI bindings and chunk callback registrations to target selection and startup/object-loading traces.",
       "depends_on": [
         "ENGINE-BUILD",
         "PARSE-COVERAGE"
@@ -223,13 +228,25 @@
           "observed_value": 6,
           "pointer": "/summary/guarded_sites",
           "report": "module-registrations.json"
+        },
+        {
+          "observed_value": [
+            "Call receiver, overload and preprocessing reachability unresolved",
+            "Dynamic parent labels and registration ordering need callback-specific analysis",
+            "Named read methods do not enumerate every asset loader",
+            "Parser recovery can omit calls; raw arguments and errors retained",
+            "Retail nested references, mount precedence and runtime ownership incomplete",
+            "Full engine build and physical Vita/PSTV correctness unproven"
+          ],
+          "pointer": "/unknowns",
+          "report": "chunk-routes.json.gz"
         }
       ],
       "id": "REGISTRATION",
       "kind": "evidence_gap",
       "severity": "required",
       "status": "open",
-      "title": "Authored module sites do not establish target registration execution"
+      "title": "Authored registration sites do not establish target callback execution"
     },
     {
       "closure_evidence": "Classify sentinels/obsolete values, retail use, load remapping, parameter semantics and original dispatch behavior; verify all game modes.",
@@ -430,9 +447,13 @@
     {
       "report": "system-ownership.json.gz",
       "sha256": "cc44a8e4cc88d79fb18212e40149608038a01bd6d47dadc5830017707c07f232"
+    },
+    {
+      "report": "chunk-routes.json.gz",
+      "sha256": "f5cb385a9cfc7052bbc759fa1ced368efd1ec801ea244c060252a007f0ed3bd1"
     }
   ],
-  "registry_sha256": "71536647f82d106e264dcf838c467712b7057561ad3d468651c462dddc3fa83f",
+  "registry_sha256": "ec0551a7eb2fcefff6ab9bb38878ca8766f5797683978af326cab31e60bb7e63",
   "schema": 1,
   "source_tree_sha256": "1fce818714d13f96eec45b6d40bb4854dfddce22a1ede336527443ad004cb8e6",
   "summary": {

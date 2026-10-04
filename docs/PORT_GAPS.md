@@ -1,6 +1,6 @@
 # Consolidated port gaps
 
-Generated from `port/sweep-gaps.json` and 10 pinned sweep reports. All findings
+Generated from `port/sweep-gaps.json` and 11 pinned sweep reports. All findings
 are open evidence gaps; counts do not represent unique defects or game completion.
 Repeated engine-build gaps from individual sweeps share one parent finding.
 Dependencies are joint closure prerequisites, not an exclusive work schedule.
@@ -13,7 +13,7 @@ registry decision. The nine current findings are not a complete defect census.
 | DEPENDENCIES: Original workspace dependencies and middleware providers are unresolved | blocking | None |
 | ENGINE-BUILD: Target selection covers a checksum probe rather than the original game engine | blocking | SOURCE-ROLES, DEPENDENCIES |
 | PARSE-COVERAGE: Parser recoveries prevent a complete callable and guard denominator | required | SOURCE-ROLES |
-| REGISTRATION: Authored module sites do not establish target registration execution | required | ENGINE-BUILD, PARSE-COVERAGE |
+| REGISTRATION: Authored registration sites do not establish target callback execution | required | ENGINE-BUILD, PARSE-COVERAGE |
 | SCRIPT-COMPATIBILITY: Script enum, template and dispatch mismatches need compatibility review | required | PARSE-COVERAGE |
 | INI-SEMANTICS: Top-level INI bindings do not cover field layout and content semantics | required | REGISTRATION |
 | GRAPHICS-CONTRACT: Graphics reference sites do not establish renderer equivalence | required | ENGINE-BUILD, PARSE-COVERAGE |
@@ -43,13 +43,13 @@ Evidence: [original-projects.json.gz](../reports/generated/original-projects.jso
 
 Reconcile recovered nodes with original macros, configuration-aware parsing and compiler evidence; review literal/empty/sole-return candidates without assuming stubs.
 
-Evidence: [source-structure.json.gz](../reports/generated/source-structure.json.gz) `/summary/files_with_parse_recoveries`, [source-structure.json.gz](../reports/generated/source-structure.json.gz) `/summary/parse_recoveries`, [source-structure.json.gz](../reports/generated/source-structure.json.gz) `/summary/returns_without_callable_owner`, [system-ownership.json.gz](../reports/generated/system-ownership.json.gz) `/summary/calls_with_own_parse_error`.
+Evidence: [source-structure.json.gz](../reports/generated/source-structure.json.gz) `/summary/files_with_parse_recoveries`, [source-structure.json.gz](../reports/generated/source-structure.json.gz) `/summary/parse_recoveries`, [source-structure.json.gz](../reports/generated/source-structure.json.gz) `/summary/returns_without_callable_owner`, [system-ownership.json.gz](../reports/generated/system-ownership.json.gz) `/summary/calls_with_own_parse_error`, [chunk-routes.json.gz](../reports/generated/chunk-routes.json.gz) `/summary/parse_recoveries`.
 
 ### REGISTRATION
 
-Join constructors, module data, interfaces and authored INI bindings to target selection and startup/object-construction traces.
+Join constructors, module data, interfaces, authored INI bindings and chunk callback registrations to target selection and startup/object-loading traces.
 
-Evidence: [module-registrations.json](../reports/generated/module-registrations.json) `/summary/registration_sites`, [module-registrations.json](../reports/generated/module-registrations.json) `/summary/guarded_sites`.
+Evidence: [module-registrations.json](../reports/generated/module-registrations.json) `/summary/registration_sites`, [module-registrations.json](../reports/generated/module-registrations.json) `/summary/guarded_sites`, [chunk-routes.json.gz](../reports/generated/chunk-routes.json.gz) `/unknowns`.
 
 ### SCRIPT-COMPATIBILITY
 
