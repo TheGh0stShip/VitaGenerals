@@ -8,7 +8,8 @@
     "renderer-boundary.json.gz",
     "source-structure.json.gz",
     "runtime-providers.json",
-    "engine-stage-baseline.json"
+    "engine-stage-baseline.json",
+    "include-paths.json.gz"
   ],
   "findings": [
     {
@@ -49,6 +50,10 @@
         {
           "report": "runtime-providers.json",
           "pointer": "/unknowns"
+        },
+        {
+          "report": "include-paths.json.gz",
+          "pointer": "/summary"
         }
       ],
       "closure_evidence": "Audit each missing project/provider, licensing and platform replacement contract; compile/link the selected original dependency graph."

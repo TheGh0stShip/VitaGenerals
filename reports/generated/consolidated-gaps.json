@@ -107,6 +107,21 @@
           ],
           "pointer": "/unknowns",
           "report": "runtime-providers.json"
+        },
+        {
+          "observed_value": {
+            "ambiguous_search_root_sites": 1685,
+            "backslash_sites": 190,
+            "files_scanned": 2961,
+            "include_sites": 17587,
+            "kinds": {
+              "angled": 1874,
+              "quoted": 15713
+            },
+            "relative_case_mismatch_sites": 463
+          },
+          "pointer": "/summary",
+          "report": "include-paths.json.gz"
         }
       ],
       "id": "DEPENDENCIES",
@@ -394,9 +409,13 @@
     {
       "report": "engine-stage-baseline.json",
       "sha256": "ce6a4a21595b38fc49064936cda5af5ac0dea3f344b1f57e3aecdca21efab161"
+    },
+    {
+      "report": "include-paths.json.gz",
+      "sha256": "4087a211513dee084bf182d5945478475f6a3296e4ef5596159b50efd2c98722"
     }
   ],
-  "registry_sha256": "bedefec35352121234afcf4477ad94ff0ebf2c304bff1e397def13844a3067d4",
+  "registry_sha256": "8721b65c483ac87545680b2c547c9e4271c3a8df9b4680cf9a98bf8a14396db3",
   "schema": 1,
   "source_tree_sha256": "1fce818714d13f96eec45b6d40bb4854dfddce22a1ede336527443ad004cb8e6",
   "summary": {

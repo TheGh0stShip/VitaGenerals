@@ -1,6 +1,6 @@
 # Consolidated port gaps
 
-Generated from `port/sweep-gaps.json` and 8 pinned sweep reports. All findings
+Generated from `port/sweep-gaps.json` and 9 pinned sweep reports. All findings
 are open evidence gaps; counts do not represent unique defects or game completion.
 Repeated engine-build gaps from individual sweeps share one parent finding.
 Dependencies are joint closure prerequisites, not an exclusive work schedule.
@@ -31,7 +31,7 @@ Evidence: [original-projects.json.gz](../reports/generated/original-projects.jso
 
 Audit each missing project/provider, licensing and platform replacement contract; compile/link the selected original dependency graph.
 
-Evidence: [original-projects.json.gz](../reports/generated/original-projects.json.gz) `/summary/missing_workspace_projects`, [runtime-providers.json](../reports/generated/runtime-providers.json) `/unknowns`.
+Evidence: [original-projects.json.gz](../reports/generated/original-projects.json.gz) `/summary/missing_workspace_projects`, [runtime-providers.json](../reports/generated/runtime-providers.json) `/unknowns`, [include-paths.json.gz](../reports/generated/include-paths.json.gz) `/summary`.
 
 ### ENGINE-BUILD
 
