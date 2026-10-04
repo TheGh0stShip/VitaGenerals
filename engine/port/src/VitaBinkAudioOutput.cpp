@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "VitaBinkAudioOutput.h"
 
+#include "VitaAudioOutputBuffers.h"
 #include "VitaBinkVideoDecoder.h"
 
 #include <algorithm>
-#include <array>
 #include <cstdint>
 
 #include <psp2/audioout.h>
@@ -86,7 +86,7 @@ void *VitaBinkAudioOutput::threadEntry(void *context)
 void VitaBinkAudioOutput::run()
 {
     m_running.store(true, std::memory_order_release);
-    std::array<std::int16_t, FramesPerBuffer * 2> output;
+    VitaAudioOutputBuffers<FramesPerBuffer * 2> buffers;
     bool started = false;
     while (!m_stop.load(std::memory_order_acquire)) {
         if (!m_decoder->presentationStarted()) {
@@ -109,6 +109,7 @@ void VitaBinkAudioOutput::run()
             continue;
         }
         started = true;
+        VitaAudioOutputBuffers<FramesPerBuffer * 2>::Block &output = buffers.next();
         const std::size_t copied = m_decoder->readAudioFrames(output.data(),
                                                                FramesPerBuffer);
         std::fill(output.begin() + copied * 2, output.end(), 0);

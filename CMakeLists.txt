@@ -88,8 +88,15 @@ if(CMAKE_CROSSCOMPILING)
       $<TARGET_FILE:big_header_test>
     VERBATIM)
 else()
+  add_executable(vita_audio_output_buffers_test
+    tests/vita_audio_output_buffers_test.cpp)
+  target_include_directories(vita_audio_output_buffers_test PRIVATE
+    engine/port/include)
+  target_compile_options(vita_audio_output_buffers_test PRIVATE
+    -Wall -Wextra -Werror)
   enable_testing()
   add_test(NAME big_header_boundary COMMAND big_header_test)
   add_test(NAME original_crc_boundary COMMAND original_crc_probe)
   add_test(NAME original_math_validity COMMAND original_math_validity_probe)
+  add_test(NAME vita_audio_output_buffers COMMAND vita_audio_output_buffers_test)
 endif()
