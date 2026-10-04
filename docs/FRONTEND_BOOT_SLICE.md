@@ -29,3 +29,29 @@ own `VideoPlayer`, `VideoStreamInterface`, `VideoBuffer`, `Display`, shell and
 main-menu state machines. Integration must preserve localized movie lookup,
 skip policy, logo hold timing, end-of-stream transition, focus loss, audio
 volume ownership and failure cleanup.
+
+The Vita adapter uses an explicit retail-data root and retains Zero Hour's lookup
+order: active mod, localized `Data/<language>/Movies`, then `Data/Movies`.
+Relative paths are normalized without permitting absolute paths or parent
+traversal. When container metadata lacks an exact frame count, the decoder uses
+duration and authored frame rate, then corrects the count at end of stream while
+retaining the final decoded frame. This lets the original `Display` owner enter
+its copyright hold or movie-complete branch instead of waiting for another frame.
+
+The Renegade Vita frontend history establishes several reusable requirements,
+not runtime proof for this title. Decoder packets must survive FFmpeg
+backpressure; presentation time starts only when decoded output can actually be
+presented; audio output starts with a bounded reserve of decoded samples; update
+work has a time budget; sustained lateness must still make visible progress; and
+movie upload/render code must restore graphics state and invalidate renderer
+texture caches. Skip input is edge-triggered and primed so a button held while a
+movie opens does not immediately dismiss it. Failures must release decoder,
+audio, texture and stream-list ownership while allowing the original startup
+state machine to continue.
+
+Those requirements came from retained physical failures as well as successful
+builds: early Renegade candidates showed sub-5-FPS movies, frame-drop starvation,
+large per-frame upload cost and audio starvation despite correct ARM links. Its
+WWUI dialogs, splash handling, menu music, campaign mode lifetime and outer
+session loop are title-specific. They do not replace Zero Hour's `Display`,
+`Shell`, `MainMenu.wnd`, shell-map simulation or first-input reveal behavior.

@@ -44,6 +44,19 @@ std::int64_t RescaleTimestamp(std::int64_t timestamp, AVRational timeBase)
     return av_rescale_q(timestamp, timeBase, AVRational{1, 1000000});
 }
 
+template <typename StateType>
+bool FinishStream(StateType *state)
+{
+    state->finished = true;
+    if (state->index < 0) {
+        state->hasFrame = false;
+        return false;
+    }
+    state->count = state->index + 1;
+    state->hasFrame = true;
+    return false;
+}
+
 AVPixelFormat OutputFormat(VitaBinkVideoDecoder::PixelFormat format)
 {
     switch (format) {
@@ -100,8 +113,9 @@ bool VitaBinkVideoDecoder::open(const char *path, std::int64_t clockMicroseconds
     m_state->clockOrigin = clockMicroseconds;
     m_state->count = video->nb_frames;
     if (m_state->count <= 0 && video->duration > 0 && video->avg_frame_rate.num > 0) {
-        m_state->count = av_rescale_q(video->duration, video->time_base,
-                                      av_inv_q(video->avg_frame_rate));
+        m_state->count = av_rescale_q_rnd(video->duration, video->time_base,
+            av_inv_q(video->avg_frame_rate), static_cast<AVRounding>(
+                AV_ROUND_UP | AV_ROUND_PASS_MINMAX));
     }
     return decodeNextFrame();
 }
@@ -137,31 +151,26 @@ bool VitaBinkVideoDecoder::decodeNextFrame()
             return true;
         }
         if (result == AVERROR_EOF) {
-            m_state->finished = true;
-            return false;
+            return FinishStream(m_state);
         }
         if (result != AVERROR(EAGAIN)) {
-            m_state->finished = true;
-            return false;
+            return FinishStream(m_state);
         }
         if (m_state->draining) {
-            m_state->finished = true;
-            return false;
+            return FinishStream(m_state);
         }
         av_packet_unref(m_state->packet);
         result = av_read_frame(m_state->format, m_state->packet);
         if (result < 0) {
             m_state->draining = true;
             if (avcodec_send_packet(m_state->decoder, NULL) < 0) {
-                m_state->finished = true;
-                return false;
+                return FinishStream(m_state);
             }
         } else if (m_state->packet->stream_index == m_state->stream) {
             result = avcodec_send_packet(m_state->decoder, m_state->packet);
             av_packet_unref(m_state->packet);
-            if (result < 0 && result != AVERROR(EAGAIN)) {
-                m_state->finished = true;
-                return false;
+            if (result < 0) {
+                return FinishStream(m_state);
             }
         }
     }

@@ -146,7 +146,22 @@ include(file-cluster-host.cmake)
 
 set(GENERALS_FFMPEG_PREFIX "" CACHE PATH
   "Pinned Vita FFmpeg Bink dependency installation")
+add_library(generals_retail_path STATIC port/src/GeneralsRetailPath.cpp)
+target_include_directories(generals_retail_path PUBLIC port/include)
+target_compile_options(generals_retail_path PRIVATE -Wall -Wextra -Werror)
+if(NOT CMAKE_CROSSCOMPILING)
+  target_compile_definitions(generals_retail_path PRIVATE GENERALS_RETAIL_ROOT="test-root")
+  add_executable(retail_path_probe tests/retail-path-probe.cpp)
+  target_link_libraries(retail_path_probe PRIVATE generals_retail_path)
+  target_compile_options(retail_path_probe PRIVATE -Wall -Wextra -Werror)
+  add_test(NAME retail_path_boundary COMMAND retail_path_probe)
+endif()
 if(CMAKE_CROSSCOMPILING AND NOT GENERALS_FFMPEG_PREFIX STREQUAL "")
+  set(GENERALS_RETAIL_ROOT "" CACHE STRING
+    "Vita path containing unchanged user-supplied Zero Hour retail data")
+  if(GENERALS_RETAIL_ROOT STREQUAL "")
+    message(FATAL_ERROR "The Bink provider requires an explicit retail-data root")
+  endif()
   foreach(VG_FFMPEG_LIBRARY avformat avcodec swscale swresample avutil)
     if(NOT EXISTS "${GENERALS_FFMPEG_PREFIX}/lib/lib${VG_FFMPEG_LIBRARY}.a")
       message(FATAL_ERROR "Incomplete Vita FFmpeg Bink dependency")
@@ -156,9 +171,35 @@ if(CMAKE_CROSSCOMPILING AND NOT GENERALS_FFMPEG_PREFIX STREQUAL "")
     port/src/VitaBinkVideoDecoder.cpp)
   target_include_directories(generals_bink_video_decoder PUBLIC
     port/include "${GENERALS_FFMPEG_PREFIX}/include")
-  target_compile_options(generals_bink_video_decoder PUBLIC
+  target_compile_options(generals_bink_video_decoder PRIVATE
     -mcpu=cortex-a9 -mthumb -mfpu=neon -mfloat-abi=hard
     -Wall -Wextra -Werror)
+  target_compile_definitions(generals_retail_path PRIVATE
+    GENERALS_RETAIL_ROOT="${GENERALS_RETAIL_ROOT}")
+  target_compile_options(generals_retail_path PRIVATE
+    -mcpu=cortex-a9 -mthumb -mfpu=neon -mfloat-abi=hard)
+  add_library(generals_bink_video_adapter STATIC
+    port/src/VitaBinkVideoPlayer.cpp)
+  target_include_directories(generals_bink_video_adapter PRIVATE
+    port/include
+    ${VG_ORIGINAL}/GameEngine/Include/Precompiled
+    ${VG_ORIGINAL}/GameEngine/Include
+    ${VG_ORIGINAL}/GameEngineDevice/Include
+    ${VG_ORIGINAL}/Libraries/Include
+    ${VG_ORIGINAL}/Libraries/Source/WWVegas
+    ${VG_ORIGINAL}/Libraries/Source/WWVegas/WWMath
+    ${VG_ORIGINAL}/Libraries/Source/WWVegas/WWLib)
+  target_compile_definitions(generals_bink_video_adapter PRIVATE
+    NDEBUG __cdecl= __forceinline=inline GENERALS_PLATFORM_VITA)
+  target_compile_options(generals_bink_video_adapter PRIVATE
+    -mcpu=cortex-a9 -mthumb -mfpu=neon -mfloat-abi=hard
+    -Wall -Wextra -Wno-error -fcheck-new -Wno-unknown-pragmas)
+  target_link_libraries(generals_bink_video_adapter PUBLIC
+    generals_bink_video_decoder generals_retail_path)
+  add_custom_command(TARGET generals_bink_video_adapter POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E env VITASDK=${VITASDK}
+      ${Python3_EXECUTABLE} ${VG_PROJECT_ROOT}/tools/check_vita_abi.py
+      $<TARGET_FILE:generals_bink_video_adapter> VERBATIM)
   add_executable(bink_decoder_link bink-decoder-link-entry.cpp)
   target_link_libraries(bink_decoder_link PRIVATE generals_bink_video_decoder
     "${GENERALS_FFMPEG_PREFIX}/lib/libavformat.a"
