@@ -4,6 +4,7 @@
 #include "Common/GlobalData.h"
 #include "Common/Registry.h"
 #include "GeneralsRetailPath.h"
+#include "VitaBinkAudioOutput.h"
 #include "VitaBinkVideoDecoder.h"
 
 #include <limits>
@@ -70,6 +71,12 @@ VideoStreamInterface *BinkVideoPlayer::createStream(VitaBinkVideoDecoder *decode
     BinkVideoStream *stream = NEW BinkVideoStream;
     if (stream == NULL) return NULL;
     stream->m_decoder = decoder;
+    stream->m_audioOutput = new (std::nothrow) VitaBinkAudioOutput(decoder);
+    if (stream->m_audioOutput != NULL && !stream->m_audioOutput->start()) {
+        delete stream->m_audioOutput;
+        stream->m_audioOutput = NULL;
+        decoder->disableAudioOutput();
+    }
     stream->m_next = m_firstStream;
     stream->m_player = this;
     m_firstStream = stream;
@@ -114,8 +121,12 @@ VideoStreamInterface *BinkVideoPlayer::open(AsciiString movieTitle)
 
 VideoStreamInterface *BinkVideoPlayer::load(AsciiString movieTitle) { return open(movieTitle); }
 
-BinkVideoStream::BinkVideoStream() : m_decoder(NULL) {}
-BinkVideoStream::~BinkVideoStream() { delete m_decoder; }
+BinkVideoStream::BinkVideoStream() : m_decoder(NULL), m_audioOutput(NULL) {}
+BinkVideoStream::~BinkVideoStream()
+{
+    delete m_audioOutput;
+    delete m_decoder;
+}
 void BinkVideoStream::update() {}
 Bool BinkVideoStream::isFrameReady()
 {

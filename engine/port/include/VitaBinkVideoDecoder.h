@@ -30,6 +30,13 @@ public:
                    unsigned x, unsigned y, PixelFormat format);
     bool seekFrame(std::int64_t frameIndex, std::int64_t clockMicroseconds);
 
+    bool hasAudio() const;
+    std::size_t queuedAudioFrames() const;
+    std::size_t readAudioFrames(std::int16_t *destination, std::size_t frames);
+    bool audioComplete() const;
+    bool enableAudioOutput();
+    void disableAudioOutput();
+
     bool isOpen() const;
     bool isFinished() const;
     int width() const;

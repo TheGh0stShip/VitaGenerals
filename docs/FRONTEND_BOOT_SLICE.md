@@ -38,6 +38,17 @@ duration and authored frame rate, then corrects the count at end of stream while
 retaining the final decoded frame. This lets the original `Display` owner enter
 its copyright hold or movie-complete branch instead of waiting for another frame.
 
+The stream now decodes Bink audio through FFmpeg, resamples it to the Vita's
+48 kHz stereo signed-16-bit format and feeds a dedicated Vita audio port. The
+output worker waits for six 1,024-frame buffers before starting, drains a short
+final buffer with hardware-required padding and stops before its decoder is
+destroyed. The decoded ring is bounded and applies backpressure rather than
+silently discarding samples. If no audio port can be opened, video remains
+usable and further audio is discarded without blocking the movie owner. ARM
+archive inspection and a final link against `SceAudio_stub` cover this boundary;
+audible output, clock synchronization and starvation behavior still require
+physical Vita/PSTV validation.
+
 The Renegade Vita frontend history establishes several reusable requirements,
 not runtime proof for this title. Decoder packets must survive FFmpeg
 backpressure; presentation time starts only when decoded output can actually be

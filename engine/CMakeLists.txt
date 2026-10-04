@@ -146,10 +146,10 @@ include(file-cluster-host.cmake)
 
 set(GENERALS_FFMPEG_PREFIX "" CACHE PATH
   "Pinned Vita FFmpeg Bink dependency installation")
-add_library(generals_retail_path STATIC port/src/GeneralsRetailPath.cpp)
-target_include_directories(generals_retail_path PUBLIC port/include)
-target_compile_options(generals_retail_path PRIVATE -Wall -Wextra -Werror)
 if(NOT CMAKE_CROSSCOMPILING)
+  add_library(generals_retail_path STATIC port/src/GeneralsRetailPath.cpp)
+  target_include_directories(generals_retail_path PUBLIC port/include)
+  target_compile_options(generals_retail_path PRIVATE -Wall -Wextra -Werror)
   target_compile_definitions(generals_retail_path PRIVATE GENERALS_RETAIL_ROOT="test-root")
   add_executable(retail_path_probe tests/retail-path-probe.cpp)
   target_link_libraries(retail_path_probe PRIVATE generals_retail_path)
@@ -162,22 +162,26 @@ if(CMAKE_CROSSCOMPILING AND NOT GENERALS_FFMPEG_PREFIX STREQUAL "")
   if(GENERALS_RETAIL_ROOT STREQUAL "")
     message(FATAL_ERROR "The Bink provider requires an explicit retail-data root")
   endif()
+  add_library(generals_retail_path STATIC port/src/GeneralsRetailPath.cpp)
+  target_include_directories(generals_retail_path PUBLIC port/include)
+  target_compile_definitions(generals_retail_path PRIVATE
+    GENERALS_RETAIL_ROOT="${GENERALS_RETAIL_ROOT}")
+  target_compile_options(generals_retail_path PRIVATE
+    -mcpu=cortex-a9 -mthumb -mfpu=neon -mfloat-abi=hard
+    -Wall -Wextra -Werror)
   foreach(VG_FFMPEG_LIBRARY avformat avcodec swscale swresample avutil)
     if(NOT EXISTS "${GENERALS_FFMPEG_PREFIX}/lib/lib${VG_FFMPEG_LIBRARY}.a")
       message(FATAL_ERROR "Incomplete Vita FFmpeg Bink dependency")
     endif()
   endforeach()
   add_library(generals_bink_video_decoder STATIC
-    port/src/VitaBinkVideoDecoder.cpp)
+    port/src/VitaBinkVideoDecoder.cpp
+    port/src/VitaBinkAudioOutput.cpp)
   target_include_directories(generals_bink_video_decoder PUBLIC
     port/include "${GENERALS_FFMPEG_PREFIX}/include")
   target_compile_options(generals_bink_video_decoder PRIVATE
     -mcpu=cortex-a9 -mthumb -mfpu=neon -mfloat-abi=hard
     -Wall -Wextra -Werror)
-  target_compile_definitions(generals_retail_path PRIVATE
-    GENERALS_RETAIL_ROOT="${GENERALS_RETAIL_ROOT}")
-  target_compile_options(generals_retail_path PRIVATE
-    -mcpu=cortex-a9 -mthumb -mfpu=neon -mfloat-abi=hard)
   add_library(generals_bink_video_adapter STATIC
     port/src/VitaBinkVideoPlayer.cpp)
   target_include_directories(generals_bink_video_adapter PRIVATE
@@ -207,7 +211,7 @@ if(CMAKE_CROSSCOMPILING AND NOT GENERALS_FFMPEG_PREFIX STREQUAL "")
     "${GENERALS_FFMPEG_PREFIX}/lib/libswscale.a"
     "${GENERALS_FFMPEG_PREFIX}/lib/libswresample.a"
     "${GENERALS_FFMPEG_PREFIX}/lib/libavutil.a"
-    pthread m SceLibKernel_stub)
+    pthread m SceAudio_stub SceLibKernel_stub)
   target_link_options(bink_decoder_link PRIVATE
     -Wl,-Map,${CMAKE_CURRENT_BINARY_DIR}/bink_decoder_link.map)
   add_custom_command(TARGET bink_decoder_link POST_BUILD

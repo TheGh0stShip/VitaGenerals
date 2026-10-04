@@ -9,6 +9,7 @@
 #include "GameClient/VideoPlayer.h"
 
 class VitaBinkVideoDecoder;
+class VitaBinkAudioOutput;
 class BinkVideoPlayer;
 
 class BinkVideoStream : public VideoStream
@@ -16,6 +17,7 @@ class BinkVideoStream : public VideoStream
     friend class BinkVideoPlayer;
 protected:
     VitaBinkVideoDecoder *m_decoder;
+    VitaBinkAudioOutput *m_audioOutput;
     BinkVideoStream();
     virtual ~BinkVideoStream();
 public:
