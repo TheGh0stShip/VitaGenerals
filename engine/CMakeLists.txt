@@ -173,6 +173,57 @@ else()
   add_test(NAME vita_texture_surface COMMAND vita_texture_surface)
 endif()
 
+if(NOT CMAKE_CROSSCOMPILING)
+  add_executable(vita_texture_upload
+    port/src/VitaW3DTextureUpload.cpp tests/vita-texture-upload-probe.cpp)
+  target_include_directories(vita_texture_upload PRIVATE
+    tests/gl-recorder port/include)
+  target_compile_options(vita_texture_upload PRIVATE -UNDEBUG
+    -Wall -Wextra -Werror -fsanitize=address,undefined -fno-omit-frame-pointer)
+  target_link_libraries(vita_texture_upload PRIVATE generals_w3d_texture_surface)
+  target_link_options(vita_texture_upload PRIVATE -fsanitize=address,undefined)
+  add_test(NAME vita_texture_upload COMMAND vita_texture_upload)
+endif()
+
+set(GENERALS_VITAGL_PREFIX "" CACHE PATH "Verified splash-free vitaGL installation")
+set(GENERALS_GRAPHICS_DEPENDENCY_PREFIX "${VITASDK}/arm-vita-eabi" CACHE PATH
+  "Explicit shader compiler and math dependency prefix")
+if(CMAKE_CROSSCOMPILING AND NOT GENERALS_VITAGL_PREFIX STREQUAL "")
+  foreach(VG_GRAPHICS_DEP vitashark SceShaccCgExt mathneon taihen_stub)
+    if(NOT EXISTS "${GENERALS_GRAPHICS_DEPENDENCY_PREFIX}/lib/lib${VG_GRAPHICS_DEP}.a")
+      message(FATAL_ERROR "Native texture upload requires ${VG_GRAPHICS_DEP} in the selected SDK")
+    endif()
+  endforeach()
+  if(NOT EXISTS "${GENERALS_GRAPHICS_DEPENDENCY_PREFIX}/include/vitashark.h")
+    message(FATAL_ERROR "Native texture upload requires the selected SDK vitashark header")
+  endif()
+  execute_process(COMMAND ${Python3_EXECUTABLE}
+    ${VG_PROJECT_ROOT}/tools/check_vitagl_no_splash.py --vita-sdk ${VITASDK}
+    ${GENERALS_VITAGL_PREFIX}/lib/libvitaGL.a RESULT_VARIABLE VG_SPLASH_RESULT)
+  if(NOT VG_SPLASH_RESULT EQUAL 0)
+    message(FATAL_ERROR "A verified splash-free vitaGL archive is required")
+  endif()
+  add_library(generals_w3d_texture_upload STATIC port/src/VitaW3DTextureUpload.cpp)
+  target_include_directories(generals_w3d_texture_upload PUBLIC port/include
+    ${GENERALS_VITAGL_PREFIX}/include ${GENERALS_GRAPHICS_DEPENDENCY_PREFIX}/include)
+  target_compile_options(generals_w3d_texture_upload PRIVATE
+    -mcpu=cortex-a9 -mthumb -mfpu=neon -mfloat-abi=hard -Wall -Wextra -Werror)
+  target_link_libraries(generals_w3d_texture_upload PUBLIC
+    ${GENERALS_VITAGL_PREFIX}/lib/libvitaGL.a
+    ${GENERALS_GRAPHICS_DEPENDENCY_PREFIX}/lib/libvitashark.a
+    ${GENERALS_GRAPHICS_DEPENDENCY_PREFIX}/lib/libSceShaccCgExt.a
+    SceShaccCg_stub ${GENERALS_GRAPHICS_DEPENDENCY_PREFIX}/lib/libtaihen_stub.a SceGxm_stub SceDisplay_stub SceSysmem_stub
+    SceSysmodule_stub SceAppMgr_stub SceKernelDmacMgr_stub SceCommonDialog_stub
+    ${GENERALS_GRAPHICS_DEPENDENCY_PREFIX}/lib/libmathneon.a SceLibKernel_stub m)
+  add_executable(vita_texture_upload_link vita-texture-upload-link-entry.cpp)
+  target_link_libraries(vita_texture_upload_link PRIVATE generals_w3d_texture_upload)
+  add_custom_command(TARGET vita_texture_upload_link POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E env VITASDK=${VITASDK}
+      ${Python3_EXECUTABLE} ${VG_PROJECT_ROOT}/tools/check_vita_abi.py
+      $<TARGET_FILE:generals_w3d_texture_upload>
+      $<TARGET_FILE:vita_texture_upload_link> VERBATIM)
+endif()
+
 include(wwmath-cluster.cmake)
 
 include(file-cluster-host.cmake)
@@ -188,6 +239,21 @@ if(NOT CMAKE_CROSSCOMPILING)
   target_link_libraries(retail_path_probe PRIVATE generals_retail_path)
   target_compile_options(retail_path_probe PRIVATE -Wall -Wextra -Werror)
   add_test(NAME retail_path_boundary COMMAND retail_path_probe)
+endif()
+if(NOT CMAKE_CROSSCOMPILING AND NOT GENERALS_FFMPEG_PREFIX STREQUAL "")
+  add_executable(bink_output_color tests/bink-output-color-probe.cpp)
+  target_include_directories(bink_output_color PRIVATE port/include
+    ${GENERALS_FFMPEG_PREFIX}/include)
+  target_compile_options(bink_output_color PRIVATE -UNDEBUG
+    -fsanitize=address,undefined -fno-omit-frame-pointer)
+  target_link_options(bink_output_color PRIVATE -fsanitize=address,undefined)
+  target_link_libraries(bink_output_color PRIVATE
+    ${GENERALS_FFMPEG_PREFIX}/lib/libavformat.a
+    ${GENERALS_FFMPEG_PREFIX}/lib/libavcodec.a
+    ${GENERALS_FFMPEG_PREFIX}/lib/libswscale.a
+    ${GENERALS_FFMPEG_PREFIX}/lib/libswresample.a
+    ${GENERALS_FFMPEG_PREFIX}/lib/libavutil.a pthread m)
+  add_test(NAME bink_output_color COMMAND bink_output_color)
 endif()
 if(CMAKE_CROSSCOMPILING AND NOT GENERALS_FFMPEG_PREFIX STREQUAL "")
   set(GENERALS_RETAIL_ROOT "" CACHE STRING

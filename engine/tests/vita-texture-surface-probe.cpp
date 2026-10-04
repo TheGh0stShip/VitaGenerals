@@ -13,11 +13,13 @@ struct UploadRecord {
   D3DFORMAT format;
   uint8_t first;
   bool fail;
+  unsigned releases;
 };
 
 struct ReentrantRecord {
   IDirect3DTexture8 *texture;
   unsigned calls;
+  unsigned releases;
 };
 
 static HRESULT RecordUpload(void *opaque, uint32_t *native_texture, UINT width,
@@ -46,6 +48,18 @@ static HRESULT ReleaseTextureDuringUpload(void *opaque, uint32_t *native_texture
   return D3D_OK;
 }
 
+static void RecordRelease(void *opaque, uint32_t native_texture) {
+  UploadRecord *record = static_cast<UploadRecord *>(opaque);
+  assert(native_texture == 0x1234U);
+  ++record->releases;
+}
+
+static void ReentrantRelease(void *opaque, uint32_t native_texture) {
+  ReentrantRecord *record = static_cast<ReentrantRecord *>(opaque);
+  assert(native_texture == 7U);
+  ++record->releases;
+}
+
 static UINT BytesPerPixel(D3DFORMAT format) {
   if (format == D3DFMT_X8R8G8B8) return 4U;
   if (format == D3DFMT_R8G8B8) return 3U;
@@ -55,7 +69,8 @@ static UINT BytesPerPixel(D3DFORMAT format) {
 static void Exercise(D3DFORMAT format) {
   UploadRecord record = {};
   IDirect3DTexture8 *texture =
-      GeneralsVitaCreateTexture(5U, 3U, format, 16U, RecordUpload, &record);
+      GeneralsVitaCreateTexture(5U, 3U, format, 16U, RecordUpload, &record,
+                               RecordRelease);
   assert(texture != NULL);
   assert(texture->GetLevelCount() == 1U);
 
@@ -105,13 +120,16 @@ static void Exercise(D3DFORMAT format) {
   assert(surface->LockRect(&locked, NULL, D3DLOCK_READONLY) == D3D_OK);
   assert(surface->UnlockRect() == D3D_OK);
 
+  assert(record.releases == 0U);
   assert(texture->Release() == 0U);
+  assert(record.releases == 1U);
   D3DSURFACE_DESC retained = {};
   assert(surface->GetDesc(&retained) == D3D_OK);
   assert(surface->LockRect(&locked, NULL, 0U) == D3D_OK);
   assert(surface->UnlockRect() == D3D_OK);
   assert(record.calls == 3U);
   assert(surface->Release() == 0U);
+  assert(record.releases == 1U);
 }
 
 static void ExerciseLockedOwnerRelease() {
@@ -132,7 +150,8 @@ static void ExerciseLockedOwnerRelease() {
 static void ExerciseReentrantUpload() {
   ReentrantRecord record = {};
   record.texture = GeneralsVitaCreateTexture(
-      4U, 4U, D3DFMT_X8R8G8B8, 16U, ReleaseTextureDuringUpload, &record);
+      4U, 4U, D3DFMT_X8R8G8B8, 16U, ReleaseTextureDuringUpload, &record,
+      ReentrantRelease);
   assert(record.texture != NULL);
   IDirect3DSurface8 *surface = NULL;
   assert(record.texture->GetSurfaceLevel(0U, &surface) == D3D_OK);
@@ -140,6 +159,7 @@ static void ExerciseReentrantUpload() {
   assert(surface->LockRect(&locked, NULL, 0U) == D3D_OK);
   assert(surface->UnlockRect() == D3D_OK);
   assert(record.calls == 1U && record.texture == NULL);
+  assert(record.releases == 1U);
   assert(surface->Release() == 0U);
 }
 

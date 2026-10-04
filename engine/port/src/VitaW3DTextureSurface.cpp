@@ -141,7 +141,8 @@ HRESULT IDirect3DSurface8::UploadOwner() {
 
 IDirect3DTexture8::IDirect3DTexture8(UINT width, UINT height, D3DFORMAT format,
                                      GeneralsVitaTextureUpload upload,
-                                     void *upload_context)
+                                     void *upload_context,
+                                     GeneralsVitaTextureRelease release)
     : width_(width),
       height_(height),
       format_(format),
@@ -149,9 +150,14 @@ IDirect3DTexture8::IDirect3DTexture8(UINT width, UINT height, D3DFORMAT format,
       surface_(NULL),
       upload_(upload),
       upload_context_(upload_context),
-      native_texture_(0U) {}
+      native_texture_(0U),
+      release_(release) {}
 
 IDirect3DTexture8::~IDirect3DTexture8() {
+  if (native_texture_ != 0U && release_ != NULL) {
+    release_(upload_context_, native_texture_);
+    native_texture_ = 0U;
+  }
   if (surface_ != NULL) {
     surface_->owner_ = NULL;
     surface_->Release();
@@ -199,9 +205,10 @@ HRESULT IDirect3DTexture8::UnlockRect(UINT level) {
 
 IDirect3DTexture8 *GeneralsVitaCreateTexture(
     UINT width, UINT height, D3DFORMAT format, UINT pitch_alignment,
-    GeneralsVitaTextureUpload upload, void *upload_context) {
+    GeneralsVitaTextureUpload upload, void *upload_context,
+    GeneralsVitaTextureRelease release) {
   IDirect3DTexture8 *texture = new (std::nothrow)
-      IDirect3DTexture8(width, height, format, upload, upload_context);
+      IDirect3DTexture8(width, height, format, upload, upload_context, release);
   if (texture == NULL) return NULL;
   texture->surface_ =
       new (std::nothrow) IDirect3DSurface8(width, height, format,

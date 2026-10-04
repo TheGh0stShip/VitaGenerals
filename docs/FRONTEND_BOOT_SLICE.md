@@ -43,9 +43,15 @@ callback while preserving padded row pitch; read-only locks do not upload.
 The boundary retains surfaces independently of their texture owner and rejects
 invalid sizes, alignments, rectangles, nested locks and unsupported flags.
 Host sanitizer tests cover the four original movie formats and failure/lifetime
-paths, while ARM builds verify the provider archive and linked probe ABI. The
-vitaGL upload callback, original `DX8Wrapper` factory connection and indexed
-`Render2D` draw remain required before decoded frames can reach the display.
+paths, while ARM builds verify the provider archive and linked probe ABI. The native vitaGL callback converts these surfaces to RGBA, restores texture
+binding and unpack alignment, invalidates the supplied renderer cache and
+releases the GPU texture with its owner. Host tests exercise colors, failure
+cleanup and the combined surface/upload lifetime. The optional native target
+uses `GENERALS_VITAGL_PREFIX` and an explicit
+`GENERALS_GRAPHICS_DEPENDENCY_PREFIX`, checks splash suppression and links a
+probe with the real graphics dependencies. Original `DX8Wrapper` factory
+connection and indexed `Render2D` drawing remain required before movie frames
+can reach the display.
 
 The Renegade Vita provider is a reviewed implementation reference for FFmpeg
 decode scheduling, Vita audio output and texture upload. Zero Hour retains its

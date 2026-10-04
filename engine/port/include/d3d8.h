@@ -57,6 +57,8 @@ typedef HRESULT (*GeneralsVitaTextureUpload)(
     void *context, uint32_t *native_texture, UINT width, UINT height,
     D3DFORMAT format, const void *pixels, UINT pitch);
 
+typedef void (*GeneralsVitaTextureRelease)(void *context, uint32_t native_texture);
+
 // Upload callbacks receive the complete logical surface on every writable
 // unlock. The pitch may include padding beyond width * bytes-per-pixel.
 
@@ -75,7 +77,8 @@ struct IDirect3DSurface8 {
  private:
   friend struct IDirect3DTexture8;
   friend IDirect3DTexture8 *GeneralsVitaCreateTexture(
-      UINT, UINT, D3DFORMAT, UINT, GeneralsVitaTextureUpload, void *);
+      UINT, UINT, D3DFORMAT, UINT, GeneralsVitaTextureUpload, void *,
+      GeneralsVitaTextureRelease);
   IDirect3DSurface8(UINT width, UINT height, D3DFORMAT format,
                    UINT pitch_alignment);
   ~IDirect3DSurface8();
@@ -106,10 +109,12 @@ struct IDirect3DTexture8 {
 
  private:
   friend IDirect3DTexture8 *GeneralsVitaCreateTexture(
-      UINT, UINT, D3DFORMAT, UINT, GeneralsVitaTextureUpload, void *);
+      UINT, UINT, D3DFORMAT, UINT, GeneralsVitaTextureUpload, void *,
+      GeneralsVitaTextureRelease);
   friend struct IDirect3DSurface8;
   IDirect3DTexture8(UINT width, UINT height, D3DFORMAT format,
-                    GeneralsVitaTextureUpload upload, void *upload_context);
+                    GeneralsVitaTextureUpload upload, void *upload_context,
+                    GeneralsVitaTextureRelease release);
   ~IDirect3DTexture8();
 
   UINT width_;
@@ -120,11 +125,13 @@ struct IDirect3DTexture8 {
   GeneralsVitaTextureUpload upload_;
   void *upload_context_;
   uint32_t native_texture_;
+  GeneralsVitaTextureRelease release_;
 };
 
 IDirect3DTexture8 *GeneralsVitaCreateTexture(
     UINT width, UINT height, D3DFORMAT format, UINT pitch_alignment,
-    GeneralsVitaTextureUpload upload, void *upload_context);
+    GeneralsVitaTextureUpload upload, void *upload_context,
+    GeneralsVitaTextureRelease release = NULL);
 
 static_assert(sizeof(HRESULT) == 4, "DX8 HRESULT must remain 32-bit");
 static_assert(sizeof(DWORD) == 4, "DX8 DWORD must remain 32-bit");

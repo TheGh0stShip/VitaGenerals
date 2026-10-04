@@ -145,7 +145,7 @@ AVPixelFormat OutputFormat(VitaBinkVideoDecoder::PixelFormat format)
 {
     switch (format) {
         case VitaBinkVideoDecoder::PixelB8G8R8X8: return AV_PIX_FMT_BGRA;
-        case VitaBinkVideoDecoder::PixelR8G8B8: return AV_PIX_FMT_RGB24;
+        case VitaBinkVideoDecoder::PixelR8G8B8: return AV_PIX_FMT_BGR24;
         case VitaBinkVideoDecoder::PixelR5G6B5: return AV_PIX_FMT_RGB565LE;
         case VitaBinkVideoDecoder::PixelX1R5G5B5: return AV_PIX_FMT_RGB555LE;
     }
