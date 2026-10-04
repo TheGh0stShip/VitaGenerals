@@ -143,6 +143,38 @@ endif()
 include(wwmath-cluster.cmake)
 
 include(file-cluster-host.cmake)
+
+set(GENERALS_FFMPEG_PREFIX "" CACHE PATH
+  "Pinned Vita FFmpeg Bink dependency installation")
+if(CMAKE_CROSSCOMPILING AND NOT GENERALS_FFMPEG_PREFIX STREQUAL "")
+  foreach(VG_FFMPEG_LIBRARY avformat avcodec swscale swresample avutil)
+    if(NOT EXISTS "${GENERALS_FFMPEG_PREFIX}/lib/lib${VG_FFMPEG_LIBRARY}.a")
+      message(FATAL_ERROR "Incomplete Vita FFmpeg Bink dependency")
+    endif()
+  endforeach()
+  add_library(generals_bink_video_decoder STATIC
+    port/src/VitaBinkVideoDecoder.cpp)
+  target_include_directories(generals_bink_video_decoder PUBLIC
+    port/include "${GENERALS_FFMPEG_PREFIX}/include")
+  target_compile_options(generals_bink_video_decoder PUBLIC
+    -mcpu=cortex-a9 -mthumb -mfpu=neon -mfloat-abi=hard
+    -Wall -Wextra -Werror)
+  add_executable(bink_decoder_link bink-decoder-link-entry.cpp)
+  target_link_libraries(bink_decoder_link PRIVATE generals_bink_video_decoder
+    "${GENERALS_FFMPEG_PREFIX}/lib/libavformat.a"
+    "${GENERALS_FFMPEG_PREFIX}/lib/libavcodec.a"
+    "${GENERALS_FFMPEG_PREFIX}/lib/libswscale.a"
+    "${GENERALS_FFMPEG_PREFIX}/lib/libswresample.a"
+    "${GENERALS_FFMPEG_PREFIX}/lib/libavutil.a"
+    pthread m SceLibKernel_stub)
+  target_link_options(bink_decoder_link PRIVATE
+    -Wl,-Map,${CMAKE_CURRENT_BINARY_DIR}/bink_decoder_link.map)
+  add_custom_command(TARGET bink_decoder_link POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E env VITASDK=${VITASDK}
+      ${Python3_EXECUTABLE} ${VG_PROJECT_ROOT}/tools/check_vita_abi.py
+      $<TARGET_FILE:generals_bink_video_decoder> $<TARGET_FILE:bink_decoder_link>
+    VERBATIM)
+endif()
 foreach(VG_CLUSTER generals_allocator_cluster generals_file_cluster generals_wwmath generals_wwmath_providers)
   if(TARGET ${VG_CLUSTER})
     add_dependencies(${VG_CLUSTER} verify_engine_stage)
