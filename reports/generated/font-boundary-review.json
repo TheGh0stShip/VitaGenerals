@@ -1,0 +1,190 @@
+{
+  "complete": false,
+  "gaps": [
+    "Shared main-font alternate pointer can be overwritten on later load; correlate aliasing and reference acquisition before claiming imbalance.",
+    "Self alternate-font identity is possible from matching cache requests; delegation avoids immediate self-recursion, but reference lifetime needs explicit route analysis.",
+    "Destructor buffer scalar/array mismatch is a source finding, not a validated target failure or approved production patch.",
+    "Full engine teardown order versus retained font/render references remains unresolved.",
+    "AAPCS pool size conversions, allocation alignment, and SDK linkage remain prerequisites.",
+    "WCHAR/include selection for each build configuration unresolved.",
+    "GDI substitution metrics cannot be proven equivalent by choosing another font rasterizer.",
+    "Font licensing and distribution source for target remain undecided.",
+    "Texture surface upload/format and allocation bounds require original ownership integration.",
+    "Supplementary codepoints and surrogate handling require explicit original semantics review.",
+    "Creation and glyph APIs have unchecked failure paths; reachable failures not demonstrated.",
+    "No production font replacement, engine link, VPK, or physical device evidence."
+  ],
+  "glyph_contracts": [
+    {
+      "claim": "Fixed 96 DPI before point-size conversion.",
+      "line": 1527
+    },
+    {
+      "claim": "Generals requests substitute Arial, with distinct width and overhang behavior.",
+      "line": 1519
+    },
+    {
+      "claim": "Generals width derives from logical pixel height with float to int conversion.",
+      "line": 1533
+    },
+    {
+      "claim": "Overlap derives from height, clamped to zero through four.",
+      "line": 1535
+    },
+    {
+      "claim": "Glyph storage uses white RGB nibble channels and high alpha nibble.",
+      "line": 1438
+    },
+    {
+      "claim": "Character spacing differs from stored width.",
+      "line": 1297
+    },
+    {
+      "claim": "Source 24-bit bitmap scanlines align to four bytes.",
+      "line": 1380
+    },
+    {
+      "claim": "Rasterization consumes one WCHAR at a time, not a shaped string.",
+      "line": 1362
+    },
+    {
+      "claim": "Unicode cache bounds remain 16-bit despite host wchar_t width.",
+      "line": 1723
+    }
+  ],
+  "glyph_source": "Libraries/Source/WWVegas/WW3D2/render2dsentence.cpp",
+  "glyph_source_sha256": "98a83a4cb01d2130092f9276bd7eb4629dbcbf7f99fdffb6055d318cdb3b531b",
+  "ownership_contracts": [
+    "RefCountClass starts with one reference; NEW_REF maps to scalar W3DNEW, with debug ownership wrapper in some configurations.",
+    "Get_FontChars cache hit increments caller reference; new font adds a list reference before return.",
+    "Release_All_FontChars drops list references and removes list elements.",
+    "W3DFontLibrary stores main font pointer in GameFont::fontData and obtained alternate font pointer on shared FontCharsClass.",
+    "releaseFontData releases alternate reference first, then main reference, then clears fontData.",
+    "Render2DSentenceClass uses REF_PTR_SET for font and REF_PTR_RELEASE in destruction. REF_PTR_SET retains source before releasing destination.",
+    "W3DMPO_GLUE defines scalar operator new/delete with lazy per-class pools; no array operator overload appears in this macro.",
+    "FontCharsBuffer allocation is scalar W3DNEW; destructor uses delete[]. Both pooled and unpooled branches need review.",
+    "GlobalFont library deletion calls releaseFontData before deleting GameFont list element."
+  ],
+  "runtime_verified": false,
+  "schema": 1,
+  "scope": "Reviewed original font platform and ownership boundaries; partial source review, not a complete font caller census",
+  "selected_windows_calls": [
+    {
+      "byte_offset": 38080,
+      "line": 1515,
+      "name": "GetDC"
+    },
+    {
+      "byte_offset": 40130,
+      "line": 1585,
+      "name": "ReleaseDC"
+    },
+    {
+      "byte_offset": 38914,
+      "line": 1545,
+      "name": "CreateFont"
+    },
+    {
+      "byte_offset": 38428,
+      "line": 1528,
+      "name": "MulDiv"
+    },
+    {
+      "byte_offset": 39782,
+      "line": 1570,
+      "name": "CreateDIBSection"
+    },
+    {
+      "byte_offset": 40050,
+      "line": 1580,
+      "name": "CreateCompatibleDC"
+    },
+    {
+      "byte_offset": 40259,
+      "line": 1590,
+      "name": "SelectObject"
+    },
+    {
+      "byte_offset": 40316,
+      "line": 1591,
+      "name": "SelectObject"
+    },
+    {
+      "byte_offset": 41063,
+      "line": 1622,
+      "name": "SelectObject"
+    },
+    {
+      "byte_offset": 41265,
+      "line": 1632,
+      "name": "SelectObject"
+    },
+    {
+      "byte_offset": 40350,
+      "line": 1592,
+      "name": "SetBkColor"
+    },
+    {
+      "byte_offset": 40388,
+      "line": 1593,
+      "name": "SetTextColor"
+    },
+    {
+      "byte_offset": 40516,
+      "line": 1599,
+      "name": "GetTextMetrics"
+    },
+    {
+      "byte_offset": 41102,
+      "line": 1623,
+      "name": "DeleteObject"
+    },
+    {
+      "byte_offset": 41306,
+      "line": 1633,
+      "name": "DeleteObject"
+    },
+    {
+      "byte_offset": 41420,
+      "line": 1641,
+      "name": "DeleteDC"
+    },
+    {
+      "byte_offset": 34474,
+      "line": 1362,
+      "name": "ExtTextOutW"
+    },
+    {
+      "byte_offset": 34624,
+      "line": 1368,
+      "name": "GetTextExtentPoint32W"
+    }
+  ],
+  "sources": [
+    {
+      "path": "Libraries/Source/WWVegas/WWLib/always.h",
+      "sha256": "ce457fe9482267df6460c5c94010df7fecff25ef1d46f2fe1d456857c9092157"
+    },
+    {
+      "path": "Libraries/Source/WWVegas/WWLib/refcount.h",
+      "sha256": "5014d07a0f2448317fe4632c994d4ad534ad8e9cd556aae3d30b5568d22afcef"
+    },
+    {
+      "path": "Libraries/Source/WWVegas/WW3D2/assetmgr.cpp",
+      "sha256": "745b01ca485e3982f5ebce535e379948ee2c2aa8bccbaa377f024aea13962570"
+    },
+    {
+      "path": "Libraries/Source/WWVegas/WW3D2/render2dsentence.cpp",
+      "sha256": "98a83a4cb01d2130092f9276bd7eb4629dbcbf7f99fdffb6055d318cdb3b531b"
+    },
+    {
+      "path": "GameEngineDevice/Source/W3DDevice/GameClient/GUI/W3DGameFont.cpp",
+      "sha256": "2ac677dfd6a8dc8c633ab775ee31e11408ef0acd541a8c1d21d820c857827179"
+    },
+    {
+      "path": "GameEngine/Source/GameClient/GUI/GameFont.cpp",
+      "sha256": "41cbe9bba282ffeef9cbefdd287c44a6a14d94c116e835ad742839bfb2dfa727"
+    }
+  ],
+  "upstream_commit": "0a05454d8574207440a5fb15241b98ad0b435590"
+}
