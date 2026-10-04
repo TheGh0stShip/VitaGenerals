@@ -45,3 +45,5 @@ jobs:
           cmp reports/generated/script-dispatch.json build-arm-ci/script-dispatch.json
           python3 tools/audit_ini_dispatch.py --source build-source-ci/GeneralsMD/Code --output build-arm-ci/ini-dispatch.json
           cmp reports/generated/ini-dispatch.json build-arm-ci/ini-dispatch.json
+          python3 tools/audit_renderer_boundary.py --source build-source-ci/GeneralsMD/Code --output build-arm-ci/renderer-boundary.json.gz
+          cmp reports/generated/renderer-boundary.json.gz build-arm-ci/renderer-boundary.json.gz
