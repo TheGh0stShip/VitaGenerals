@@ -8,7 +8,7 @@ import tempfile
 import unittest
 from unittest.mock import patch
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'tools'))
-from stage_engine_tree import stage,sha,fingerprint
+from stage_engine_tree import stage,sha,fingerprint,verify_build_stage
 
 class EngineStaging(unittest.TestCase):
     def setUp(self):
@@ -21,6 +21,9 @@ class EngineStaging(unittest.TestCase):
             target=self.source/row['upstream_path'].removeprefix('GeneralsMD/Code/');target.parent.mkdir(parents=True,exist_ok=True)
             shutil.copyfile(self.root/'vendor/ea'/row['path'],target)
         (self.source/'extra.cpp').write_text('int original_extra;\n')
+        (self.source/'order').mkdir()
+        (self.source/'order/a.cpp').write_text('int nested;\n')
+        (self.source/'order.cpp').write_text('int sibling;\n')
         (self.root/'LICENSE.md').write_text('license fixture\n');shutil.copyfile(self.root/'LICENSE.md',self.source.parent.parent/'LICENSE.md')
         rows=[[p.relative_to(self.source).as_posix(),sha(p)] for p in sorted(self.source.rglob('*')) if p.is_file()]
         (self.root/'tools').mkdir();(self.root/'tools/source-lock.json').write_text(json.dumps({'upstream_commit':self.manifest['upstream_commit'],'tree_sha256':fingerprint(rows)}))
@@ -29,7 +32,7 @@ class EngineStaging(unittest.TestCase):
     def test_complete_stage_and_idempotence(self):
         original={p:sha(p) for p in self.source.rglob('*') if p.is_file()}
         receipt=stage(self.root,self.source,self.output)
-        self.assertEqual(receipt['source_files'],len(self.manifest['files'])+1);self.assertFalse(receipt['engine_build_established'])
+        self.assertEqual(receipt['source_files'],len(self.manifest['files'])+3);self.assertFalse(receipt['engine_build_established'])
         for row in self.manifest['files']:
             p=self.output/'Code'/row['upstream_path'].removeprefix('GeneralsMD/Code/')
             self.assertEqual(sha(p),row['staged_sha256'])
@@ -41,6 +44,34 @@ class EngineStaging(unittest.TestCase):
         (self.source/'extra.cpp').write_text('changed')
         with self.assertRaises(ValueError):stage(self.root,self.source,self.output)
         self.assertFalse(self.output.exists())
+    def test_consumer_verifies_current_stage(self):
+        receipt=stage(self.root,self.source,self.output)
+        self.assertEqual(verify_build_stage(self.root,self.output),receipt)
+    def test_consumer_rejects_stale_metadata(self):
+        stage(self.root,self.source,self.output)
+        lock=self.root/'tools/source-lock.json';lock.write_text(lock.read_text()+'\n')
+        with self.assertRaisesRegex(ValueError,'current source and patch pins'):
+            verify_build_stage(self.root,self.output)
+    def test_consumer_rejects_resigned_incomplete_stage(self):
+        receipt=stage(self.root,self.source,self.output)
+        (self.output/'Code/extra.cpp').unlink()
+        receipt['files']=[row for row in receipt['files'] if row['path']!='Code/extra.cpp']
+        receipt['source_files']-=1
+        receipt['staged_tree_sha256']=fingerprint([[row['path'],row['sha256']] for row in receipt['files']])
+        (self.output/'receipt.json').write_text(json.dumps(receipt))
+        with self.assertRaisesRegex(ValueError,'complete pinned original tree'):
+            verify_build_stage(self.root,self.output)
+    def test_consumer_rejects_resigned_patch_mutation(self):
+        receipt=stage(self.root,self.source,self.output)
+        row=self.manifest['files'][0]
+        name='Code/'+row['upstream_path'].removeprefix('GeneralsMD/Code/')
+        target=self.output/name;target.write_bytes(target.read_bytes()+b'\n')
+        for entry in receipt['files']:
+            if entry['path']==name:entry['sha256']=sha(target)
+        receipt['staged_tree_sha256']=fingerprint([[entry['path'],entry['sha256']] for entry in receipt['files']])
+        (self.output/'receipt.json').write_text(json.dumps(receipt))
+        with self.assertRaisesRegex(ValueError,'mismatched staged patch target'):
+            verify_build_stage(self.root,self.output)
     def test_dirty_stage_preserved(self):
         stage(self.root,self.source,self.output);target=self.output/'Code/extra.cpp';target.write_text('local edits')
         with self.assertRaises(ValueError):stage(self.root,self.source,self.output)

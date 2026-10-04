@@ -30,6 +30,46 @@ def verify_existing(output):
     if actual!=expected:raise ValueError('existing stage is modified or has unexpected files')
     return receipt
 
+def verify_build_stage(root, output):
+    """Verify a consumer's stage against current pins, including original coverage."""
+    root=Path(root).resolve();output=Path(output).resolve()
+    receipt=verify_existing(output)
+    lock_path=root/'tools/source-lock.json';manifest_path=root/'vendor/ea/manifest.json'
+    lock=json.loads(lock_path.read_text());manifest=json.loads(manifest_path.read_text())
+    identities={'schema':1,'evidence_class':'complete_source_staging_only',
+                'upstream_commit':lock['upstream_commit'],
+                'source_tree_sha256':lock['tree_sha256'],
+                'source_lock_sha256':sha(lock_path),'patch_manifest_sha256':sha(manifest_path),
+                'patches':manifest['patches'],'patched_files':len(manifest['files'])}
+    if manifest['upstream_commit']!=lock['upstream_commit']:
+        raise ValueError('patch/source pins differ')
+    if any(receipt.get(key)!=value for key,value in identities.items()):
+        raise ValueError('stage receipt differs from current source and patch pins')
+    rows=[[p.relative_to(output).as_posix(),sha(p)] for p in files(output) if p!=output/'receipt.json']
+    if receipt.get('staged_tree_sha256')!=fingerprint(rows):
+        raise ValueError('staged tree fingerprint differs from receipt')
+    actual=dict(rows)
+    if actual.pop('LICENSE.md',None)!=sha(root/'LICENSE.md'):
+        raise ValueError('staged license differs from preserved license')
+    if any(not name.startswith('Code/') for name in actual):
+        raise ValueError('unexpected files outside staged Code tree')
+    original={name.removeprefix('Code/'):digest for name,digest in actual.items()}
+    targets=set()
+    for row in manifest['files']:
+        prefix='GeneralsMD/Code/'
+        if not row['upstream_path'].startswith(prefix):
+            raise ValueError('patch source outside Code tree')
+        name=row['upstream_path'].removeprefix(prefix)
+        if name in targets or original.get(name)!=row['staged_sha256']:
+            raise ValueError('duplicate or mismatched staged patch target')
+        targets.add(name);original[name]=row['sha256']
+    original_rows=[[name,original[name]] for name in sorted(original,key=Path)]
+    if fingerprint(original_rows)!=lock['tree_sha256']:
+        raise ValueError('stage does not cover the complete pinned original tree')
+    if receipt.get('source_files')!=len(original):
+        raise ValueError('stage source count differs from pinned tree')
+    return receipt
+
 def stage(root,source,output):
     root=root.resolve();source=source.resolve()
     output=Path(os.path.abspath(output))
