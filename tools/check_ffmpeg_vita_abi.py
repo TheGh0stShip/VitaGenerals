@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: GPL-3.0-or-later
-"""Check every object in the selected Vita FFmpeg static archives."""
+"""Check every object in selected Vita static archives."""
 import argparse
 import os
 from pathlib import Path
@@ -12,6 +12,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('archives', nargs='+', type=Path)
     parser.add_argument('--vita-sdk', type=Path)
+    parser.add_argument('--label', default='FFmpeg')
     args = parser.parse_args()
     sdk = (args.vita_sdk or Path(os.environ.get('VITASDK', '/usr/local/vitasdk'))).resolve()
     readelf = sdk / 'bin/arm-vita-eabi-readelf'
@@ -38,9 +39,10 @@ def main():
             totals['vfp'] += 1
     if not totals['members']:
         raise SystemExit('FAIL: no archive members inspected')
-    print('PASS: {} FFmpeg ARM members use hard-float; CPU attributes {}'.format(
-        totals['members'], ', '.join('{}={}'.format(k, arches[k]) for k in sorted(arches))))
-    print('ELF inspection only; no decoder execution or hardware validation')
+    print('PASS: {} {} ARM members use hard-float; CPU attributes {}'.format(
+        totals['members'], args.label,
+        ', '.join('{}={}'.format(k, arches[k]) for k in sorted(arches))))
+    print('ELF inspection only; no target execution or hardware validation')
 
 
 if __name__ == '__main__':

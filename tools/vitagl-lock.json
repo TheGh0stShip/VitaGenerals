@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "name": "vitaGL",
+  "revision": "6e7fe40292e8f1d10f9a94ff2cd2f4fb1ba452a5",
+  "url": "https://codeload.github.com/Rinnegatamante/vitaGL/tar.gz/6e7fe40292e8f1d10f9a94ff2cd2f4fb1ba452a5",
+  "sha256": "4a254941d416fa4091f1b6b569c4bf7e61402c8ca41898c1445c5c3087526cf6",
+  "license": "LGPL-3.0-only",
+  "patches": [
+    "port/dependency-patches/vitagl/compact-unlit.patch",
+    "port/dependency-patches/vitagl/indexed-immediate.patch",
+    "port/dependency-patches/vitagl/full-rgba-upload.patch",
+    "port/dependency-patches/vitagl/dds-chain.patch"
+  ],
+  "patched_files": {
+    "source/ffp.c": "974f619e8d4c56765463f8a18adacfda92eb736528246df57b162a9fbfb3df77",
+    "source/textures.c": "8cc204b78a95fb79b84cf6f65f617bca6aecc0a6c5ef32325016627ae206daa8"
+  }
+}

@@ -23,6 +23,16 @@ Release packages that statically link these libraries must accompany the FFmpeg
 license and corresponding pinned source and provide the material needed to
 relink the application, as required by the LGPL.
 
+The original W3D texture, surface and indexed `Render2D` route requires a native
+graphics provider. `tools/build_vitagl.py` builds a checksum-pinned LGPLv3
+vitaGL revision with ARMv7 hard-float flags and retains its complete source and
+license texts. The local patches preserve compact unlit vertices, indexed
+immediate submission, complete replacement uploads and transactional DDS chains.
+They extend the platform boundary beneath W3D; they do not replace W3D traversal,
+format selection, texture ownership or render state. Packaging has the same
+source, relinkable-object and license obligations as the other static LGPL
+dependency. A successful archive build is not renderer or hardware evidence.
+
 The Renegade Vita provider is a reviewed implementation reference for FFmpeg
 decode scheduling, Vita audio output and texture upload. Zero Hour retains its
 own `VideoPlayer`, `VideoStreamInterface`, `VideoBuffer`, `Display`, shell and
