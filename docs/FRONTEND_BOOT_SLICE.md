@@ -82,6 +82,12 @@ movie opens does not immediately dismiss it. Failures must release decoder,
 audio, texture and stream-list ownership while allowing the original startup
 state machine to continue.
 
+Audio packets now keep an independent FFmpeg reference until the decoder accepts
+them, including send-side backpressure. End-of-stream handling records acceptance
+of the decoder drain packet and does not flush the resampler until decoder EOF.
+An audio decode failure releases the retained packet and disables that stream
+without ending otherwise usable video playback.
+
 Those requirements came from retained physical failures as well as successful
 builds: early Renegade candidates showed sub-5-FPS movies, frame-drop starvation,
 large per-frame upload cost and audio starvation despite correct ARM links. Its

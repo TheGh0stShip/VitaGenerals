@@ -39,6 +39,7 @@ struct VitaBinkVideoDecoder::State
     SwsContext *scaler;
     AVCodecContext *audioDecoder;
     AVFrame *audioFrame;
+    AVPacket *audioPacket;
     SwrContext *resampler;
     int stream;
     int audioStream;
@@ -55,6 +56,9 @@ struct VitaBinkVideoDecoder::State
     bool hasFrame;
     bool hasPresented;
     bool packetPending;
+    bool audioPacketPending;
+    bool audioDrainSent;
+    std::atomic<bool> audioFailed;
     std::atomic<bool> audioFlushed;
     std::atomic<bool> demuxEnded;
     std::vector<std::int16_t> audioRing;
@@ -70,11 +74,12 @@ struct VitaBinkVideoDecoder::State
     pthread_cond_t audioCondition;
 
     State() : format(NULL), decoder(NULL), frame(NULL), packet(NULL), scaler(NULL),
-        audioDecoder(NULL), audioFrame(NULL), resampler(NULL), stream(-1),
+        audioDecoder(NULL), audioFrame(NULL), audioPacket(NULL), resampler(NULL), stream(-1),
         audioStream(-1), index(-1), count(0), clockOrigin(0),
         ptsOrigin(AV_NOPTS_VALUE), presentation(0), frameDuration(33333),
         lastPresentation(0), clockArmed(false), draining(false), finished(false),
         hasFrame(false), hasPresented(false), packetPending(false),
+        audioPacketPending(false), audioDrainSent(false), audioFailed(false),
         audioFlushed(false), demuxEnded(false),
         audioRead(0), audioWrite(0), audioCount(0), audioConsumerActive(false),
         audioDiscard(false), pendingVideoBytes(0)
@@ -91,6 +96,20 @@ struct VitaBinkVideoDecoder::State
 };
 
 namespace {
+
+template <typename StateType>
+void MarkAudioFailed(StateType *state)
+{
+    if (state->audioPacket != NULL) av_packet_unref(state->audioPacket);
+    state->audioPacketPending = false;
+    pthread_mutex_lock(&state->audioMutex);
+    state->audioDiscard = true;
+    state->audioRead = state->audioWrite = state->audioCount = 0;
+    pthread_cond_broadcast(&state->audioCondition);
+    pthread_mutex_unlock(&state->audioMutex);
+    state->audioFailed.store(true, std::memory_order_release);
+    state->audioFlushed.store(true, std::memory_order_release);
+}
 
 std::int64_t RescaleTimestamp(std::int64_t timestamp, AVRational timeBase)
 {
@@ -158,18 +177,30 @@ bool QueueAudio(StateType *state, const std::int16_t *samples, std::size_t count
     return true;
 }
 
+enum AudioReceiveResult
+{
+    AudioNeedsInput,
+    AudioDecoderEnd,
+    AudioReceiveFailed
+};
+
 template <typename StateType>
-void ReceiveAudio(StateType *state)
+AudioReceiveResult ReceiveAudio(StateType *state)
 {
     if (state->audioDecoder == NULL || state->audioFrame == NULL ||
-        state->resampler == NULL) return;
+        state->resampler == NULL) return AudioReceiveFailed;
     for (;;) {
         const int result = avcodec_receive_frame(state->audioDecoder, state->audioFrame);
-        if (result == AVERROR(EAGAIN) || result == AVERROR_EOF) return;
-        if (result < 0) return;
+        if (result == AVERROR(EAGAIN)) return AudioNeedsInput;
+        if (result == AVERROR_EOF) return AudioDecoderEnd;
+        if (result < 0) return AudioReceiveFailed;
         const int outputFrames = swr_get_out_samples(state->resampler,
                                                       state->audioFrame->nb_samples);
-        if (outputFrames <= 0) {
+        if (outputFrames < 0) {
+            av_frame_unref(state->audioFrame);
+            return AudioReceiveFailed;
+        }
+        if (outputFrames == 0) {
             av_frame_unref(state->audioFrame);
             continue;
         }
@@ -181,39 +212,84 @@ void ReceiveAudio(StateType *state)
             reinterpret_cast<const std::uint8_t *const *>(
                 state->audioFrame->extended_data),
             state->audioFrame->nb_samples);
-        if (frames > 0 && !QueueAudio(state, state->audioConversion.data(),
-                                     static_cast<std::size_t>(frames) * AudioChannels)) {
+        if (frames < 0) {
             av_frame_unref(state->audioFrame);
-            return;
+            return AudioReceiveFailed;
         }
+        if (frames > 0)
+            QueueAudio(state, state->audioConversion.data(),
+                       static_cast<std::size_t>(frames) * AudioChannels);
         av_frame_unref(state->audioFrame);
     }
 }
 
-template <typename StateType>
-bool SendAudioPacket(StateType *state, const AVPacket *packet)
+enum AudioSendResult
 {
-    if (state->audioDecoder == NULL) return true;
+    AudioPacketAccepted,
+    AudioPacketPending,
+    AudioSendFailed
+};
+
+template <typename StateType>
+AudioSendResult PumpAudioPacket(StateType *state)
+{
+    if (!state->audioPacketPending) return AudioPacketAccepted;
     for (unsigned attempt = 0; attempt != 2; ++attempt) {
-        const int result = avcodec_send_packet(state->audioDecoder, packet);
+        const int result = avcodec_send_packet(state->audioDecoder, state->audioPacket);
         if (result == AVERROR(EAGAIN)) {
-            ReceiveAudio(state);
+            if (ReceiveAudio(state) == AudioReceiveFailed) return AudioSendFailed;
             continue;
         }
-        if (result < 0) return false;
-        ReceiveAudio(state);
-        return true;
+        av_packet_unref(state->audioPacket);
+        state->audioPacketPending = false;
+        if (result < 0) return AudioSendFailed;
+        if (ReceiveAudio(state) == AudioReceiveFailed) return AudioSendFailed;
+        return AudioPacketAccepted;
     }
-    return false;
+    return AudioPacketPending;
 }
 
 template <typename StateType>
-void FlushAudio(StateType *state)
+AudioSendResult SendAudioPacket(StateType *state, const AVPacket *packet)
 {
-    if (state->audioFlushed.load(std::memory_order_acquire)) return;
+    if (state->audioDecoder == NULL) return AudioPacketAccepted;
+    AudioSendResult result = PumpAudioPacket(state);
+    if (result != AudioPacketAccepted) return result;
+    if (av_packet_ref(state->audioPacket, packet) < 0) return AudioSendFailed;
+    state->audioPacketPending = true;
+    return PumpAudioPacket(state);
+}
+
+template <typename StateType>
+bool FlushAudio(StateType *state)
+{
+    if (state->audioFailed.load(std::memory_order_acquire)) return true;
+    if (state->audioFlushed.load(std::memory_order_acquire)) return true;
     if (state->audioDecoder != NULL) {
-        avcodec_send_packet(state->audioDecoder, NULL);
-        ReceiveAudio(state);
+        const AudioSendResult pending = PumpAudioPacket(state);
+        if (pending == AudioPacketPending) return false;
+        if (pending == AudioSendFailed) {
+            MarkAudioFailed(state);
+            return true;
+        }
+        if (!state->audioDrainSent) {
+            const int result = avcodec_send_packet(state->audioDecoder, NULL);
+            if (result == AVERROR(EAGAIN)) {
+                ReceiveAudio(state);
+                return false;
+            }
+            if (result < 0 && result != AVERROR_EOF) {
+                MarkAudioFailed(state);
+                return true;
+            }
+            state->audioDrainSent = true;
+        }
+        const AudioReceiveResult received = ReceiveAudio(state);
+        if (received == AudioReceiveFailed) {
+            MarkAudioFailed(state);
+            return true;
+        }
+        if (received == AudioNeedsInput) return false;
     }
     if (state->resampler != NULL) {
         for (;;) {
@@ -229,6 +305,7 @@ void FlushAudio(StateType *state)
         }
     }
     state->audioFlushed.store(true, std::memory_order_release);
+    return true;
 }
 
 template <typename StateType>
@@ -243,6 +320,14 @@ bool PrefetchStartupAudio(StateType *state)
            state->pendingVideo.size() < PrefetchPacketLimit &&
            state->pendingVideoBytes < PrefetchTriggerBytes &&
            packetsRead < PrefetchReadLimit) {
+        if (state->audioPacketPending) {
+            const AudioSendResult pending = PumpAudioPacket(state);
+            if (pending == AudioPacketPending) continue;
+            if (pending == AudioSendFailed) {
+                MarkAudioFailed(state);
+                break;
+            }
+        }
         av_packet_unref(packet);
         if (av_read_frame(state->format, packet) < 0) {
             state->demuxEnded.store(true, std::memory_order_release);
@@ -251,8 +336,8 @@ bool PrefetchStartupAudio(StateType *state)
         }
         ++packetsRead;
         if (packet->stream_index == state->audioStream) {
-            if (!SendAudioPacket(state, packet)) {
-                success = false;
+            if (SendAudioPacket(state, packet) == AudioSendFailed) {
+                MarkAudioFailed(state);
                 break;
             }
         } else if (packet->stream_index == state->stream) {
@@ -346,6 +431,7 @@ bool VitaBinkVideoDecoder::open(const char *path, std::int64_t clockMicroseconds
             avcodec_parameters_to_context(m_state->audioDecoder, audio->codecpar) >= 0 &&
             avcodec_open2(m_state->audioDecoder, audioCodec, NULL) >= 0) {
             m_state->audioFrame = av_frame_alloc();
+            m_state->audioPacket = av_packet_alloc();
             AVChannelLayout outputLayout = {};
             av_channel_layout_default(&outputLayout, AudioChannels);
             AVChannelLayout inputLayout = {};
@@ -356,7 +442,7 @@ bool VitaBinkVideoDecoder::open(const char *path, std::int64_t clockMicroseconds
                     m_state->audioDecoder->sample_fmt,
                     std::max(1, m_state->audioDecoder->sample_rate), 0, NULL) >= 0 &&
                 m_state->resampler != NULL && swr_init(m_state->resampler) >= 0 &&
-                m_state->audioFrame != NULL) {
+                m_state->audioFrame != NULL && m_state->audioPacket != NULL) {
                 m_state->audioStream = audioStream;
                 m_state->audioRing.assign(AudioRingSamples, 0);
             }
@@ -365,6 +451,7 @@ bool VitaBinkVideoDecoder::open(const char *path, std::int64_t clockMicroseconds
         }
         if (m_state->audioStream < 0) {
             swr_free(&m_state->resampler);
+            av_packet_free(&m_state->audioPacket);
             av_frame_free(&m_state->audioFrame);
             avcodec_free_context(&m_state->audioDecoder);
         }
@@ -384,6 +471,7 @@ void VitaBinkVideoDecoder::close()
     sws_freeContext(m_state->scaler);
     m_state->scaler = NULL;
     swr_free(&m_state->resampler);
+    av_packet_free(&m_state->audioPacket);
     av_frame_free(&m_state->audioFrame);
     avcodec_free_context(&m_state->audioDecoder);
     av_packet_free(&m_state->packet);
@@ -432,6 +520,11 @@ bool VitaBinkVideoDecoder::decodeNextFrame()
         if (m_state->draining) {
             return FinishStream(m_state);
         }
+        if (m_state->audioPacketPending) {
+            const AudioSendResult audio = PumpAudioPacket(m_state);
+            if (audio == AudioPacketPending) continue;
+            if (audio == AudioSendFailed) MarkAudioFailed(m_state);
+        }
         if (m_state->packetPending) {
             result = avcodec_send_packet(m_state->decoder, m_state->packet);
             if (result == AVERROR(EAGAIN)) continue;
@@ -452,6 +545,7 @@ bool VitaBinkVideoDecoder::decodeNextFrame()
             continue;
         }
         if (m_state->demuxEnded.load(std::memory_order_acquire)) {
+            if (!FlushAudio(m_state)) continue;
             result = avcodec_send_packet(m_state->decoder, NULL);
             if (result == AVERROR(EAGAIN)) continue;
             if (result < 0 && result != AVERROR_EOF)
@@ -468,7 +562,8 @@ bool VitaBinkVideoDecoder::decodeNextFrame()
         } else if (m_state->packet->stream_index == m_state->stream) {
             m_state->packetPending = true;
         } else if (m_state->packet->stream_index == m_state->audioStream) {
-            SendAudioPacket(m_state, m_state->packet);
+            if (SendAudioPacket(m_state, m_state->packet) == AudioSendFailed)
+                MarkAudioFailed(m_state);
             av_packet_unref(m_state->packet);
         }
     }
@@ -547,7 +642,10 @@ bool VitaBinkVideoDecoder::seekFrame(std::int64_t target, std::int64_t clockMicr
     pthread_mutex_unlock(&m_state->audioMutex);
     ClearPendingVideo(m_state);
     av_packet_unref(m_state->packet);
+    if (m_state->audioPacket != NULL) av_packet_unref(m_state->audioPacket);
     m_state->packetPending = false;
+    m_state->audioPacketPending = false;
+    m_state->audioDrainSent = false;
     m_state->index = target - 1;
     m_state->clockOrigin = clockMicroseconds;
     m_state->clockArmed.store(wasArmed, std::memory_order_release);
@@ -598,7 +696,8 @@ std::size_t VitaBinkVideoDecoder::readAudioFrames(std::int16_t *destination,
 
 bool VitaBinkVideoDecoder::audioComplete() const
 {
-    return !hasAudio() || (m_state->demuxEnded.load(std::memory_order_acquire) &&
+    return !hasAudio() || m_state->audioFailed.load(std::memory_order_acquire) ||
+                          (m_state->demuxEnded.load(std::memory_order_acquire) &&
                            m_state->audioFlushed.load(std::memory_order_acquire) &&
                            queuedAudioFrames() == 0);
 }
