@@ -1,0 +1,7 @@
+{
+  "version": "1.18",
+  "url": "https://ftp.gnu.org/gnu/libiconv/libiconv-1.18.tar.gz",
+  "sha256": "3b08f5f4f9b4eb82f151a7040bfd6fe6c6fb922efe4b1659c66ea933276965e8",
+  "checksum_source": "https://lists.gnu.org/archive/html/info-gnu/2024-12/msg00004.html",
+  "library_license": "LGPL-2.1-or-later"
+}
