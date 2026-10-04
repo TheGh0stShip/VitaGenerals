@@ -1,0 +1,11 @@
+--- a/Code/Libraries/Source/WWVegas/WW3D2/dllist.h
++++ b/Code/Libraries/Source/WWVegas/WW3D2/dllist.h
+@@ -76,7 +76,7 @@
+ public:
+ 	virtual ~DLDestroyListClass()
+ 	{
+-		while (T* t=Head()) {		
++		while (T* t=this->Head()) {		
+ 			delete t;
+ 		}
+ 	}

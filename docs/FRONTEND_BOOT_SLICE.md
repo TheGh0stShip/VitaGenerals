@@ -23,6 +23,13 @@ Release packages that statically link these libraries must accompany the FFmpeg
 license and corresponding pinned source and provide the material needed to
 relink the application, as required by the LGPL.
 
+The complete original `DX8Wrapper` header is compiled by the
+`w3d_wrapper_color` regression target. Pinned header repairs preserve 32-bit
+WWLib scalar types, dependent-base lookup and case-sensitive includes. The
+portable color path retains packed ARGB truncation and the original bit clamp.
+Host sanitizer execution and ARM link checks cover this boundary; device state
+methods, texture factories and indexed drawing still require runtime integration.
+
 The original W3D texture, surface and indexed `Render2D` route requires a native
 graphics provider. `tools/build_vitagl.py` builds a checksum-pinned LGPLv3
 vitaGL revision with ARMv7 hard-float flags and retains its complete source and

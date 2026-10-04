@@ -1,0 +1,63 @@
+--- a/Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.h
++++ b/Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.h
+@@ -859,14 +859,14 @@
+ 	if (light) {
+ 		DX8_RECORD_LIGHT_CHANGE();
+ 		DX8CALL(SetLight(index,light));
+-		DX8CALL(LightEnable(index,TRUE));
++		DX8CALL(LightEnable(index,1));
+ 		CurrentDX8LightEnables[index]=true;
+ 		SNAPSHOT_SAY(("DX8 - SetLight %d\n",index));
+ 	}
+ 	else if (CurrentDX8LightEnables[index]) {
+ 		DX8_RECORD_LIGHT_CHANGE();
+ 		CurrentDX8LightEnables[index]=false;
+-		DX8CALL(LightEnable(index,FALSE));
++		DX8CALL(LightEnable(index,0));
+ 		SNAPSHOT_SAY(("DX8 - DisableLight %d\n",index));
+ 	}
+ }
+@@ -966,7 +966,42 @@
+ 	return col;
+ }
+ 
+-#if 0
++#if !defined(_MSC_VER) || !defined(_M_IX86)
++WWINLINE unsigned int DX8Wrapper::Convert_Color(const Vector3& color, float alpha)
++{
++    // Original x87 path truncates each scaled component toward zero.
++    return (static_cast<unsigned int>(alpha * 255.0f) << 24) |
++           (static_cast<unsigned int>(color.X * 255.0f) << 16) |
++           (static_cast<unsigned int>(color.Y * 255.0f) << 8) |
++           static_cast<unsigned int>(color.Z * 255.0f);
++}
++
++WWINLINE void DX8Wrapper::Clamp_Color(Vector4& color)
++{
++    // Reproduce the original CMOV bit clamp, including signed zero and NaNs,
++    // without aliasing float storage or requiring aligned integer loads.
++    float *components[] = { &color.X, &color.Y, &color.Z, &color.W };
++    for (int i = 0; i < 4; ++i) {
++        uint32_t bits;
++        memcpy(&bits, components[i], sizeof(bits));
++        if (bits & 0x80000000U) bits = 0U;
++        else if (bits >= 0x3f800000U) bits = 0x3f800000U;
++        memcpy(components[i], &bits, sizeof(bits));
++    }
++}
++
++WWINLINE unsigned int DX8Wrapper::Convert_Color(const Vector4& color)
++{
++    return Convert_Color(Vector3(color.X, color.Y, color.Z), color.W);
++}
++
++WWINLINE unsigned int DX8Wrapper::Convert_Color_Clamp(const Vector4& color)
++{
++    Vector4 clamped_color = color;
++    Clamp_Color(clamped_color);
++    return Convert_Color(clamped_color);
++}
++#elif 0
+ WWINLINE unsigned int DX8Wrapper::Convert_Color(const Vector3& color, const float alpha)
+ {
+ 	WWASSERT(color.X<=1.0f);

@@ -142,6 +142,32 @@ endif()
 
 add_library(generals_w3d_texture_surface STATIC
   port/src/VitaW3DTextureSurface.cpp)
+add_executable(w3d_wrapper_color tests/w3d-wrapper-color-probe.cpp)
+add_dependencies(w3d_wrapper_color verify_engine_stage)
+target_include_directories(w3d_wrapper_color PRIVATE port/include
+  ${VG_ORIGINAL}/Libraries/Source/WWVegas/WW3D2
+  ${VG_ORIGINAL}/Libraries/Source/WWVegas/WWMath
+  ${VG_ORIGINAL}/Libraries/Source/WWVegas/WWLib
+  ${VG_ORIGINAL}/Libraries/Source/WWVegas/WWDebug
+  ${VG_ORIGINAL}/Libraries/Source/WWVegas/WWSaveLoad
+  ${VG_ORIGINAL}/Libraries/Include ${VG_ORIGINAL}/GameEngine/Include)
+target_compile_definitions(w3d_wrapper_color PRIVATE
+  NDEBUG GENERALS_PLATFORM_VITA __cdecl= __forceinline=inline)
+if(CMAKE_CROSSCOMPILING)
+  target_compile_options(w3d_wrapper_color PRIVATE
+    -mcpu=cortex-a9 -mthumb -mfpu=neon -mfloat-abi=hard)
+  target_link_options(w3d_wrapper_color PRIVATE
+    -Wl,-Map,${CMAKE_CURRENT_BINARY_DIR}/w3d_wrapper_color.map)
+  add_custom_command(TARGET w3d_wrapper_color POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E env VITASDK=${VITASDK}
+      ${Python3_EXECUTABLE} ${VG_PROJECT_ROOT}/tools/check_vita_abi.py
+      $<TARGET_FILE:w3d_wrapper_color> VERBATIM)
+else()
+  target_compile_options(w3d_wrapper_color PRIVATE
+    -fsanitize=address,undefined -fno-omit-frame-pointer)
+  target_link_options(w3d_wrapper_color PRIVATE -fsanitize=address,undefined)
+  add_test(NAME w3d_wrapper_color COMMAND w3d_wrapper_color)
+endif()
 target_include_directories(generals_w3d_texture_surface PUBLIC port/include)
 target_compile_options(generals_w3d_texture_surface PRIVATE
   -Wall -Wextra -Werror)

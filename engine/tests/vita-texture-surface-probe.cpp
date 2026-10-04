@@ -164,6 +164,15 @@ static void ExerciseReentrantUpload() {
 }
 
 int main() {
+  IDirect3DTexture8 *owned = GeneralsVitaCreateTexture(
+      2U, 2U, D3DFMT_X8R8G8B8, 16U, NULL, NULL);
+  assert(owned != NULL);
+  IDirect3DBaseTexture8 *retained = owned;
+  assert(retained->AddRef() == 2U);
+  assert(owned->Release() == 1U);
+  // The original wrapper releases through the base type after the caller's
+  // typed reference is gone; dispatch must destroy the actual texture owner.
+  assert(retained->Release() == 0U);
   const D3DFORMAT formats[] = {D3DFMT_X8R8G8B8, D3DFMT_R8G8B8,
                                D3DFMT_R5G6B5, D3DFMT_X1R5G5B5};
   for (unsigned cycle = 0; cycle < 2U; ++cycle) {

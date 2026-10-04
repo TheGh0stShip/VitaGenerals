@@ -1,0 +1,11 @@
+--- a/Code/Libraries/Source/WWVegas/WWLib/cpudetect.h
++++ b/Code/Libraries/Source/WWVegas/WWLib/cpudetect.h
+@@ -48,7 +48,7 @@
+ 
+ #ifdef WIN32
+ typedef signed __int64 sint64;
+-#elif defined (_UNIX)
++#elif defined (_UNIX) || defined(GENERALS_PLATFORM_VITA)
+ typedef signed long long sint64;
+ #endif
+ 

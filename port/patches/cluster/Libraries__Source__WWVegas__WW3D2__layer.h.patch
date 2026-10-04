@@ -1,0 +1,11 @@
+--- a/Code/Libraries/Source/WWVegas/WW3D2/layer.h
++++ b/Code/Libraries/Source/WWVegas/WW3D2/layer.h
+@@ -43,7 +43,7 @@
+ #define LAYER_H
+ 
+ #include "always.h"
+-#include "listnode.h"
++#include "LISTNODE.H"
+ #include "vector3.h"
+ 
+ class SceneClass;
