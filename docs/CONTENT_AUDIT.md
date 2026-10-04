@@ -92,3 +92,12 @@ parameter insertion/rewriting and template validation unresolved. Synthetic
 contracts cover both action routes, every known version, parameter capacity,
 all truncation points and raw value preservation. No original script objects
 are instantiated, and decoding does not prove referenced resources load.
+
+`tools/ini_declarations.py` inventories lexical named declarations using physical
+LF lines, byte offsets, control-byte separators and semicolon comments. It
+preserves case, repeated declarations, reskin base names, extra tokens and
+unresolved directives. Embedded NULs, missing declaration operands and lines
+at the original buffer boundary remain explicit issues. Quoted text and nested
+block scope are deliberately unresolved; a declaration candidate does not
+establish a top-level parser invocation, selected provider or loaded resource.
+Synthetic contracts cover these boundaries without retail fixtures.
