@@ -53,9 +53,10 @@ physical Vita/PSTV validation.
 
 Opening a stream decodes the first video frame, then performs bounded demux
 prefetch until the audio reserve is ready while retaining intervening video
-packets in order. The first frame and audio worker remain gated until stream
-construction arms a shared presentation origin. FFmpeg send backpressure keeps
-the current packet referenced until the decoder accepts it. Packet-count and
+packets in order. The first frame remains available for `Display` to copy into
+its original video buffer while the audio worker stays gated. A successful
+buffer unlock then arms the shared presentation origin. FFmpeg send backpressure
+keeps the current packet referenced until the decoder accepts it. Packet-count and
 byte ceilings bound startup work; if those ceilings prevent a safe reserve,
 audio is disabled for that movie instead of starting late or losing samples.
 This establishes the scheduling contract in host decode and ARM link evidence,

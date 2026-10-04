@@ -77,7 +77,6 @@ VideoStreamInterface *BinkVideoPlayer::createStream(VitaBinkVideoDecoder *decode
         stream->m_audioOutput = NULL;
         decoder->disableAudioOutput();
     }
-    decoder->startPresentation(MovieClockMicroseconds());
     stream->m_next = m_firstStream;
     stream->m_player = this;
     m_firstStream = stream;
@@ -132,6 +131,9 @@ void BinkVideoStream::update() {}
 Bool BinkVideoStream::isFrameReady()
 {
     if (m_decoder == NULL) return FALSE;
+    // open() has already decoded the first frame. Let Display copy it into its
+    // original video buffer before the shared A/V epoch begins.
+    if (!m_decoder->presentationStarted()) return TRUE;
     const std::int64_t started = MovieClockMicroseconds();
     for (unsigned dropped = 0; dropped != 4; ++dropped) {
         const std::int64_t now = MovieClockMicroseconds();
@@ -154,7 +156,11 @@ void BinkVideoStream::frameRender(VideoBuffer *buffer)
     const bool copied = m_decoder->copyFrame(memory, buffer->pitch(), buffer->height(),
                                               buffer->xPos(), buffer->yPos(), format);
     buffer->unlock();
-    if (copied) m_decoder->markFramePresented(MovieClockMicroseconds());
+    if (copied) {
+        const std::int64_t now = MovieClockMicroseconds();
+        if (!m_decoder->presentationStarted()) m_decoder->startPresentation(now);
+        m_decoder->markFramePresented(now);
+    }
 }
 void BinkVideoStream::frameNext() { if (m_decoder != NULL) m_decoder->decodeNextFrame(); }
 Int BinkVideoStream::frameIndex()
