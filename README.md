@@ -87,5 +87,7 @@ See the [original-source baseline ledger](docs/BASELINE.md) for provenance,
 retained artifact identity and remaining baseline gaps.
 The [include path sweep](docs/INCLUDE_PATH_SWEEP.md) preserves header spelling and
 search-root ambiguities before platform header changes.
+The [system and snapshot sweep](docs/SYSTEM_OWNERSHIP_SWEEP.md) records candidate
+inheritance, lifecycle routes and authored save/CRC registrations.
 The [consolidated gap ledger](docs/PORT_GAPS.md) joins sweep evidence and closure
 dependencies while preserving incomplete coverage across the complete game.

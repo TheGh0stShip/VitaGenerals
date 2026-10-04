@@ -1,6 +1,6 @@
 # Consolidated port gaps
 
-Generated from `port/sweep-gaps.json` and 9 pinned sweep reports. All findings
+Generated from `port/sweep-gaps.json` and 10 pinned sweep reports. All findings
 are open evidence gaps; counts do not represent unique defects or game completion.
 Repeated engine-build gaps from individual sweeps share one parent finding.
 Dependencies are joint closure prerequisites, not an exclusive work schedule.
@@ -25,7 +25,7 @@ registry decision. The nine current findings are not a complete defect census.
 
 Reconcile original projects, runtime callers, generated sources and target selection; retain unresolved rows.
 
-Evidence: [original-projects.json.gz](../reports/generated/original-projects.json.gz) `/summary/units_without_original_project_reference`, [original-projects.json.gz](../reports/generated/original-projects.json.gz) `/summary/source_reference_resolutions`, [runtime-providers.json](../reports/generated/runtime-providers.json) `/summary/RTS_closure_kinds`.
+Evidence: [original-projects.json.gz](../reports/generated/original-projects.json.gz) `/summary/units_without_original_project_reference`, [original-projects.json.gz](../reports/generated/original-projects.json.gz) `/summary/source_reference_resolutions`, [runtime-providers.json](../reports/generated/runtime-providers.json) `/summary/RTS_closure_kinds`, [system-ownership.json.gz](../reports/generated/system-ownership.json.gz) `/summary/seed_class_candidates`.
 
 ### DEPENDENCIES
 
@@ -43,7 +43,7 @@ Evidence: [original-projects.json.gz](../reports/generated/original-projects.jso
 
 Reconcile recovered nodes with original macros, configuration-aware parsing and compiler evidence; review literal/empty/sole-return candidates without assuming stubs.
 
-Evidence: [source-structure.json.gz](../reports/generated/source-structure.json.gz) `/summary/files_with_parse_recoveries`, [source-structure.json.gz](../reports/generated/source-structure.json.gz) `/summary/parse_recoveries`, [source-structure.json.gz](../reports/generated/source-structure.json.gz) `/summary/returns_without_callable_owner`.
+Evidence: [source-structure.json.gz](../reports/generated/source-structure.json.gz) `/summary/files_with_parse_recoveries`, [source-structure.json.gz](../reports/generated/source-structure.json.gz) `/summary/parse_recoveries`, [source-structure.json.gz](../reports/generated/source-structure.json.gz) `/summary/returns_without_callable_owner`, [system-ownership.json.gz](../reports/generated/system-ownership.json.gz) `/summary/calls_with_own_parse_error`.
 
 ### REGISTRATION
 

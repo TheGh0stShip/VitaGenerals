@@ -9,7 +9,8 @@
     "source-structure.json.gz",
     "runtime-providers.json",
     "engine-stage-baseline.json",
-    "include-paths.json.gz"
+    "include-paths.json.gz",
+    "system-ownership.json.gz"
   ],
   "findings": [
     {
@@ -31,6 +32,10 @@
         {
           "report": "runtime-providers.json",
           "pointer": "/summary/RTS_closure_kinds"
+        },
+        {
+          "report": "system-ownership.json.gz",
+          "pointer": "/summary/seed_class_candidates"
         }
       ],
       "closure_evidence": "Reconcile original projects, runtime callers, generated sources and target selection; retain unresolved rows."
@@ -109,6 +114,10 @@
         {
           "report": "source-structure.json.gz",
           "pointer": "/summary/returns_without_callable_owner"
+        },
+        {
+          "report": "system-ownership.json.gz",
+          "pointer": "/summary/calls_with_own_parse_error"
         }
       ],
       "closure_evidence": "Reconcile recovered nodes with original macros, configuration-aware parsing and compiler evidence; review literal/empty/sole-return candidates without assuming stubs."

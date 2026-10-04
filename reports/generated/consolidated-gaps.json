@@ -78,6 +78,14 @@
           },
           "pointer": "/summary/RTS_closure_kinds",
           "report": "runtime-providers.json"
+        },
+        {
+          "observed_value": {
+            "Snapshot": 628,
+            "SubsystemInterface": 127
+          },
+          "pointer": "/summary/seed_class_candidates",
+          "report": "system-ownership.json.gz"
         }
       ],
       "id": "SOURCE-ROLES",
@@ -186,6 +194,11 @@
           "observed_value": 54,
           "pointer": "/summary/returns_without_callable_owner",
           "report": "source-structure.json.gz"
+        },
+        {
+          "observed_value": 28,
+          "pointer": "/summary/calls_with_own_parse_error",
+          "report": "system-ownership.json.gz"
         }
       ],
       "id": "PARSE-COVERAGE",
@@ -413,9 +426,13 @@
     {
       "report": "include-paths.json.gz",
       "sha256": "4087a211513dee084bf182d5945478475f6a3296e4ef5596159b50efd2c98722"
+    },
+    {
+      "report": "system-ownership.json.gz",
+      "sha256": "cc44a8e4cc88d79fb18212e40149608038a01bd6d47dadc5830017707c07f232"
     }
   ],
-  "registry_sha256": "8721b65c483ac87545680b2c547c9e4271c3a8df9b4680cf9a98bf8a14396db3",
+  "registry_sha256": "71536647f82d106e264dcf838c467712b7057561ad3d468651c462dddc3fa83f",
   "schema": 1,
   "source_tree_sha256": "1fce818714d13f96eec45b6d40bb4854dfddce22a1ede336527443ad004cb8e6",
   "summary": {

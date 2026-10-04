@@ -63,6 +63,8 @@ jobs:
           cmp reports/generated/runtime-providers.json build-arm-ci/runtime-providers.json
           python3 tools/audit_include_paths.py --source build-source-ci/GeneralsMD/Code --output build-arm-ci/include-paths.json.gz
           python3 tools/compare_report.py reports/generated/include-paths.json.gz build-arm-ci/include-paths.json.gz
+          build-parser/bin/python tools/audit_system_ownership.py --source build-source-ci/GeneralsMD/Code --output build-arm-ci/system-ownership.json.gz
+          python3 tools/compare_report.py reports/generated/system-ownership.json.gz build-arm-ci/system-ownership.json.gz
           python3 tools/consolidate_sweep_gaps.py --output build-arm-ci/consolidated-gaps.json --ledger build-arm-ci/PORT_GAPS.md
           cmp reports/generated/consolidated-gaps.json build-arm-ci/consolidated-gaps.json
           cmp docs/PORT_GAPS.md build-arm-ci/PORT_GAPS.md
