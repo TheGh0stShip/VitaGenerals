@@ -1,0 +1,18 @@
+--- a/GameEngine/Source/Common/System/AsciiString.cpp
++++ b/GameEngine/Source/Common/System/AsciiString.cpp
+@@ -127,9 +127,13 @@
+ 	{
+ 		// no buffer manhandling is needed (it's already large enough, and unique to us)
+ 		if (strToCopy)
+-			strcpy(m_data->peek(), strToCopy);
++			memmove(m_data->peek(), strToCopy, strlen(strToCopy) + 1);
+ 		if (strToCat)
+-			strcat(m_data->peek(), strToCat);
++		{
++			const size_t currentLength = strlen(m_data->peek());
++			const size_t appendLength = strlen(strToCat);
++			memmove(m_data->peek() + currentLength, strToCat, appendLength + 1);
++		}
+ 		return;
+ 	}
+ 

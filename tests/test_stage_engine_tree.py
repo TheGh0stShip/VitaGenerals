@@ -29,7 +29,7 @@ class EngineStaging(unittest.TestCase):
     def test_complete_stage_and_idempotence(self):
         original={p:sha(p) for p in self.source.rglob('*') if p.is_file()}
         receipt=stage(self.root,self.source,self.output)
-        self.assertEqual(receipt['source_files'],3);self.assertFalse(receipt['engine_build_established'])
+        self.assertEqual(receipt['source_files'],len(self.manifest['files'])+1);self.assertFalse(receipt['engine_build_established'])
         for row in self.manifest['files']:
             p=self.output/'Code'/row['upstream_path'].removeprefix('GeneralsMD/Code/')
             self.assertEqual(sha(p),row['staged_sha256'])

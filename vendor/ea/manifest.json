@@ -14,12 +14,22 @@
       "upstream_path": "GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/realcrc.h",
       "sha256": "a1f766a7ac4b4d724a6b594c9e1f6bed4600bedf593fe3271aff9e0e5da9cdf4",
       "staged_sha256": "2cc4f66793946eb02a949ed0ea50e65db532e3aea07c5e8c0f6082f573551322"
+    },
+    {
+      "path": "GameEngine/Source/Common/System/AsciiString.cpp",
+      "upstream_path": "GeneralsMD/Code/GameEngine/Source/Common/System/AsciiString.cpp",
+      "sha256": "57ecc49ed5ea90d9ea02ff604519bbeaf1dced54c655d2344c46f7eef324f798",
+      "staged_sha256": "7593669053b69433b54e93b1c6be724805e972cd691f4ea6458a08861ecd755f"
     }
   ],
   "patches": [
     {
       "path": "port/patches/realcrc-width.patch",
       "sha256": "4e4544e8435147120f62dcc113953f72636afe0f8e8ccd509e41d457176f32a7"
+    },
+    {
+      "path": "port/patches/ascii-inplace-overlap.patch",
+      "sha256": "f5145a60b01063a73944a6f1fee9afdeea3c8df6ae8b511b3b71e37928719df0"
     }
   ]
 }
