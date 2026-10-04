@@ -1,6 +1,6 @@
 # Consolidated port gaps
 
-Generated from `port/sweep-gaps.json` and 7 pinned sweep reports. All findings
+Generated from `port/sweep-gaps.json` and 8 pinned sweep reports. All findings
 are open evidence gaps; counts do not represent unique defects or game completion.
 Repeated engine-build gaps from individual sweeps share one parent finding.
 Dependencies are joint closure prerequisites, not an exclusive work schedule.
@@ -37,7 +37,7 @@ Evidence: [original-projects.json.gz](../reports/generated/original-projects.jso
 
 Deterministically stage the original runtime graph and link the complete engine with audited platform boundaries and matching artifact identities.
 
-Evidence: [original-projects.json.gz](../reports/generated/original-projects.json.gz) `/selected_original_sources`, [original-projects.json.gz](../reports/generated/original-projects.json.gz) `/summary/translation_units`.
+Evidence: [original-projects.json.gz](../reports/generated/original-projects.json.gz) `/selected_original_sources`, [original-projects.json.gz](../reports/generated/original-projects.json.gz) `/summary/translation_units`, [engine-stage-baseline.json](../reports/generated/engine-stage-baseline.json) `/source_files`, [engine-stage-baseline.json](../reports/generated/engine-stage-baseline.json) `/engine_build_established`.
 
 ### PARSE-COVERAGE
 

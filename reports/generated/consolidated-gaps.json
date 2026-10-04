@@ -133,6 +133,16 @@
           "observed_value": 1436,
           "pointer": "/summary/translation_units",
           "report": "original-projects.json.gz"
+        },
+        {
+          "observed_value": 3197,
+          "pointer": "/source_files",
+          "report": "engine-stage-baseline.json"
+        },
+        {
+          "observed_value": false,
+          "pointer": "/engine_build_established",
+          "report": "engine-stage-baseline.json"
         }
       ],
       "id": "ENGINE-BUILD",
@@ -380,9 +390,13 @@
     {
       "report": "runtime-providers.json",
       "sha256": "075792e15c140735cd91be4fc8255dcac92b0b84b36099b948447285736d8293"
+    },
+    {
+      "report": "engine-stage-baseline.json",
+      "sha256": "ce6a4a21595b38fc49064936cda5af5ac0dea3f344b1f57e3aecdca21efab161"
     }
   ],
-  "registry_sha256": "f34135ead0023cbc29d711cece514447e0155e398cc7f28c9bd43572ba268533",
+  "registry_sha256": "bedefec35352121234afcf4477ad94ff0ebf2c304bff1e397def13844a3067d4",
   "schema": 1,
   "source_tree_sha256": "1fce818714d13f96eec45b6d40bb4854dfddce22a1ede336527443ad004cb8e6",
   "summary": {

@@ -4,7 +4,8 @@
 sites across all 2,961 scanned C/C++ source/header files in the pinned Zero Hour
 Code tree. It contains 8,697 sites in 176 files, grouped into 792 distinct symbol
 spellings. Source hashes and relative file/line provenance are retained.
-Deterministic compression permits byte-for-byte reproduction.
+Gzip headers are deterministic; decoded report content is compared across
+hosts because zlib versions may produce different compressed bytes.
 
 | Category | Distinct spellings |
 | --- | ---: |
@@ -49,5 +50,5 @@ inventory is not the complete renderer sweep or evidence of a usable backend.
 ```sh
 python3 tools/audit_renderer_boundary.py --source build-source-ci/GeneralsMD/Code \
   --output build-arm-ci/renderer-boundary.json.gz
-cmp reports/generated/renderer-boundary.json.gz build-arm-ci/renderer-boundary.json.gz
+python3 tools/compare_report.py reports/generated/renderer-boundary.json.gz build-arm-ci/renderer-boundary.json.gz
 ```

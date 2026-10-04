@@ -45,6 +45,8 @@ jobs:
       - name: Reproduce original-project inventory
         run: |
           python3 tools/fetch_source_baseline.py --directory build-source-ci
+          python3 tools/stage_engine_tree.py --source build-source-ci/GeneralsMD/Code --output build-engine-ci/staged --summary build-engine-ci/engine-stage-baseline.json
+          cmp reports/generated/engine-stage-baseline.json build-engine-ci/engine-stage-baseline.json
           python3 tools/audit_original_projects.py --source build-source-ci/GeneralsMD/Code --compile-commands build-arm-ci/compile_commands.json --output build-arm-ci/original-projects.json
           python3 tools/verify_project_inventory.py build-arm-ci/original-projects.json
           python3 tools/audit_module_registrations.py --source build-source-ci/GeneralsMD/Code --output build-arm-ci/module-registrations.json
@@ -54,9 +56,9 @@ jobs:
           python3 tools/audit_ini_dispatch.py --source build-source-ci/GeneralsMD/Code --output build-arm-ci/ini-dispatch.json
           cmp reports/generated/ini-dispatch.json build-arm-ci/ini-dispatch.json
           python3 tools/audit_renderer_boundary.py --source build-source-ci/GeneralsMD/Code --output build-arm-ci/renderer-boundary.json.gz
-          cmp reports/generated/renderer-boundary.json.gz build-arm-ci/renderer-boundary.json.gz
+          python3 tools/compare_report.py reports/generated/renderer-boundary.json.gz build-arm-ci/renderer-boundary.json.gz
           build-parser/bin/python tools/audit_source_structure.py --source build-source-ci/GeneralsMD/Code --output build-arm-ci/source-structure.json.gz
-          cmp reports/generated/source-structure.json.gz build-arm-ci/source-structure.json.gz
+          python3 tools/compare_report.py reports/generated/source-structure.json.gz build-arm-ci/source-structure.json.gz
           python3 tools/audit_runtime_providers.py --source build-source-ci/GeneralsMD/Code --output build-arm-ci/runtime-providers.json
           cmp reports/generated/runtime-providers.json build-arm-ci/runtime-providers.json
           python3 tools/consolidate_sweep_gaps.py --output build-arm-ci/consolidated-gaps.json --ledger build-arm-ci/PORT_GAPS.md

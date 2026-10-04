@@ -7,7 +7,8 @@
     "ini-dispatch.json",
     "renderer-boundary.json.gz",
     "source-structure.json.gz",
-    "runtime-providers.json"
+    "runtime-providers.json",
+    "engine-stage-baseline.json"
   ],
   "findings": [
     {
@@ -70,6 +71,14 @@
         {
           "report": "original-projects.json.gz",
           "pointer": "/summary/translation_units"
+        },
+        {
+          "report": "engine-stage-baseline.json",
+          "pointer": "/source_files"
+        },
+        {
+          "report": "engine-stage-baseline.json",
+          "pointer": "/engine_build_established"
         }
       ],
       "closure_evidence": "Deterministically stage the original runtime graph and link the complete engine with audited platform boundaries and matching artifact identities."

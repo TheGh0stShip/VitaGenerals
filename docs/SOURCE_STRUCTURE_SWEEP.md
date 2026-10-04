@@ -49,7 +49,7 @@ python3.12 -m venv build-parser
 build-parser/bin/python -m pip install --only-binary=:all: --require-hashes -r tools/parser-requirements.txt
 build-parser/bin/python tools/audit_source_structure.py --source build-source-ci/GeneralsMD/Code \
   --output build-arm-ci/source-structure.json.gz
-cmp reports/generated/source-structure.json.gz build-arm-ci/source-structure.json.gz
+python3 tools/compare_report.py reports/generated/source-structure.json.gz build-arm-ci/source-structure.json.gz
 ```
 
 A successfully parsed node does not establish target ABI, linker retention,

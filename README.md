@@ -63,6 +63,8 @@ EA main commit: `0a05454d8574207440a5fb15241b98ad0b435590`.
 Keep the original source in the ignored `upstream/` directory until an audited
 source import is ready. The available source was released for Win32 and omits
 several required SDKs; a modern cross-platform build requires substantial work.
+The [complete-source stager](docs/ENGINE_STAGING.md) prepares the pinned Code tree
+and declared patches in ignored build directories while keeping upstream pristine.
 
 ## Development and acceptance
 
