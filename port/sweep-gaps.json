@@ -1,0 +1,248 @@
+{
+  "schema": 1,
+  "reports": [
+    "original-projects.json.gz",
+    "module-registrations.json",
+    "script-dispatch.json",
+    "ini-dispatch.json",
+    "renderer-boundary.json.gz",
+    "source-structure.json.gz"
+  ],
+  "findings": [
+    {
+      "id": "SOURCE-ROLES",
+      "severity": "blocking",
+      "kind": "evidence_gap",
+      "status": "open",
+      "title": "Original runtime source roles and configuration reachability remain unresolved",
+      "depends_on": [],
+      "evidence": [
+        {
+          "report": "original-projects.json.gz",
+          "pointer": "/summary/units_without_original_project_reference"
+        },
+        {
+          "report": "original-projects.json.gz",
+          "pointer": "/summary/source_reference_resolutions"
+        }
+      ],
+      "closure_evidence": "Reconcile original projects, runtime callers, generated sources and target selection; retain unresolved rows."
+    },
+    {
+      "id": "DEPENDENCIES",
+      "severity": "blocking",
+      "kind": "evidence_gap",
+      "status": "open",
+      "title": "Original workspace dependencies and middleware providers are unresolved",
+      "depends_on": [],
+      "evidence": [
+        {
+          "report": "original-projects.json.gz",
+          "pointer": "/summary/missing_workspace_projects"
+        }
+      ],
+      "closure_evidence": "Audit each missing project/provider, licensing and platform replacement contract; compile/link the selected original dependency graph."
+    },
+    {
+      "id": "ENGINE-BUILD",
+      "severity": "blocking",
+      "kind": "evidence_gap",
+      "status": "open",
+      "title": "Target selection covers a checksum probe rather than the original game engine",
+      "depends_on": [
+        "SOURCE-ROLES",
+        "DEPENDENCIES"
+      ],
+      "evidence": [
+        {
+          "report": "original-projects.json.gz",
+          "pointer": "/selected_original_sources"
+        },
+        {
+          "report": "original-projects.json.gz",
+          "pointer": "/summary/translation_units"
+        }
+      ],
+      "closure_evidence": "Deterministically stage the original runtime graph and link the complete engine with audited platform boundaries and matching artifact identities."
+    },
+    {
+      "id": "PARSE-COVERAGE",
+      "severity": "required",
+      "kind": "evidence_gap",
+      "status": "open",
+      "title": "Parser recoveries prevent a complete callable and guard denominator",
+      "depends_on": [
+        "SOURCE-ROLES"
+      ],
+      "evidence": [
+        {
+          "report": "source-structure.json.gz",
+          "pointer": "/summary/files_with_parse_recoveries"
+        },
+        {
+          "report": "source-structure.json.gz",
+          "pointer": "/summary/parse_recoveries"
+        },
+        {
+          "report": "source-structure.json.gz",
+          "pointer": "/summary/returns_without_callable_owner"
+        }
+      ],
+      "closure_evidence": "Reconcile recovered nodes with original macros, configuration-aware parsing and compiler evidence; review literal/empty/sole-return candidates without assuming stubs."
+    },
+    {
+      "id": "REGISTRATION",
+      "severity": "required",
+      "kind": "evidence_gap",
+      "status": "open",
+      "title": "Authored module sites do not establish target registration execution",
+      "depends_on": [
+        "ENGINE-BUILD",
+        "PARSE-COVERAGE"
+      ],
+      "evidence": [
+        {
+          "report": "module-registrations.json",
+          "pointer": "/summary/registration_sites"
+        },
+        {
+          "report": "module-registrations.json",
+          "pointer": "/summary/guarded_sites"
+        }
+      ],
+      "closure_evidence": "Join constructors, module data, interfaces and authored INI bindings to target selection and startup/object-construction traces."
+    },
+    {
+      "id": "SCRIPT-COMPATIBILITY",
+      "severity": "required",
+      "kind": "evidence_gap",
+      "status": "open",
+      "title": "Script enum, template and dispatch mismatches need compatibility review",
+      "depends_on": [
+        "PARSE-COVERAGE"
+      ],
+      "evidence": [
+        {
+          "report": "script-dispatch.json",
+          "pointer": "/groups/0/declared_without_case"
+        },
+        {
+          "report": "script-dispatch.json",
+          "pointer": "/groups/0/declared_without_template_assignment"
+        },
+        {
+          "report": "script-dispatch.json",
+          "pointer": "/groups/1/declared_without_case"
+        },
+        {
+          "report": "script-dispatch.json",
+          "pointer": "/groups/1/declared_without_template_assignment"
+        }
+      ],
+      "closure_evidence": "Classify sentinels/obsolete values, retail use, load remapping, parameter semantics and original dispatch behavior; verify all game modes."
+    },
+    {
+      "id": "INI-SEMANTICS",
+      "severity": "required",
+      "kind": "evidence_gap",
+      "status": "open",
+      "title": "Top-level INI bindings do not cover field layout and content semantics",
+      "depends_on": [
+        "REGISTRATION"
+      ],
+      "evidence": [
+        {
+          "report": "ini-dispatch.json",
+          "pointer": "/summary/block_tokens"
+        },
+        {
+          "report": "ini-dispatch.json",
+          "pointer": "/unknowns"
+        }
+      ],
+      "closure_evidence": "Inventory field/fallback parsers, actual host/ARM offsets, includes, inheritance, overrides and all authored references with runtime load evidence."
+    },
+    {
+      "id": "GRAPHICS-CONTRACT",
+      "severity": "required",
+      "kind": "evidence_gap",
+      "status": "open",
+      "title": "Graphics reference sites do not establish renderer equivalence",
+      "depends_on": [
+        "ENGINE-BUILD",
+        "PARSE-COVERAGE"
+      ],
+      "evidence": [
+        {
+          "report": "renderer-boundary.json.gz",
+          "pointer": "/summary/symbols_by_category"
+        },
+        {
+          "report": "renderer-boundary.json.gz",
+          "pointer": "/unknowns"
+        }
+      ],
+      "closure_evidence": "Preserve original renderer hierarchy and submission/state ownership; verify format/shader behavior, visual output and physical memory/timing."
+    },
+    {
+      "id": "PHYSICAL-ACCEPTANCE",
+      "severity": "measurement",
+      "kind": "evidence_gap",
+      "status": "open",
+      "title": "Complete-game Vita/PSTV acceptance remains unproven",
+      "depends_on": [
+        "ENGINE-BUILD",
+        "REGISTRATION",
+        "SCRIPT-COMPATIBILITY",
+        "INI-SEMANTICS",
+        "GRAPHICS-CONTRACT"
+      ],
+      "evidence": [
+        {
+          "report": "source-structure.json.gz",
+          "pointer": "/unknowns"
+        }
+      ],
+      "closure_evidence": "Measure fixed replays on both devices, including all modes, multiplayer determinism, input, saves/transitions, audio/video, lifecycle and soak; target60FPS remains unproven."
+    }
+  ],
+  "coverage_obligations": [
+    {
+      "scope": "runtime_sources_and_registrars",
+      "status": "partial"
+    },
+    {
+      "scope": "guards_returns_and_unsupported_paths",
+      "status": "partial"
+    },
+    {
+      "scope": "renderer_objects_materials_states_formats_and_submissions",
+      "status": "partial"
+    },
+    {
+      "scope": "assets_loaders_and_references_across_all_maps_and_modes",
+      "status": "partial"
+    },
+    {
+      "scope": "scripts_INI_modules_and_save_load",
+      "status": "partial"
+    },
+    {
+      "scope": "terrain_fog_navigation_AI_economy_construction_upgrades_projectiles_damage_aircraft_superweapons",
+      "status": "not_established"
+    },
+    {
+      "scope": "campaigns_challenges_skirmish_networking_frontend_audio_movies",
+      "status": "not_established"
+    },
+    {
+      "scope": "cursor_selection_groups_camera_commands_hotkeys_purchase_modal_locks",
+      "status": "not_established"
+    },
+    {
+      "scope": "physical_Vita_PSTV_performance_memory_visuals_and_lifecycle",
+      "status": "not_established"
+    }
+  ],
+  "counting_rule": "Findings are evidence gaps, not unique defects. Embedded observations stay within their parent finding."
+}

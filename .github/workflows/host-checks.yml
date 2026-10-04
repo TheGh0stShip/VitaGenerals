@@ -57,3 +57,6 @@ jobs:
           cmp reports/generated/renderer-boundary.json.gz build-arm-ci/renderer-boundary.json.gz
           build-parser/bin/python tools/audit_source_structure.py --source build-source-ci/GeneralsMD/Code --output build-arm-ci/source-structure.json.gz
           cmp reports/generated/source-structure.json.gz build-arm-ci/source-structure.json.gz
+          python3 tools/consolidate_sweep_gaps.py --output build-arm-ci/consolidated-gaps.json --ledger build-arm-ci/PORT_GAPS.md
+          cmp reports/generated/consolidated-gaps.json build-arm-ci/consolidated-gaps.json
+          cmp docs/PORT_GAPS.md build-arm-ci/PORT_GAPS.md

@@ -83,3 +83,5 @@ contain source, reproducible tooling and accurate engineering documentation.
 
 See the [original-source baseline ledger](docs/BASELINE.md) for provenance,
 retained artifact identity and remaining baseline gaps.
+The [consolidated gap ledger](docs/PORT_GAPS.md) joins sweep evidence and closure
+dependencies while preserving incomplete coverage across the complete game.
