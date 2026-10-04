@@ -75,6 +75,8 @@ struct IDirect3DSurface8 {
   UINT GetStorageSize() const { return storage_size_; }
 
  private:
+  friend IDirect3DSurface8 *GeneralsVitaCreateSurface(
+      UINT, UINT, D3DFORMAT, UINT);
   friend struct IDirect3DTexture8;
   friend IDirect3DTexture8 *GeneralsVitaCreateTexture(
       UINT, UINT, D3DFORMAT, UINT, GeneralsVitaTextureUpload, void *,
@@ -90,6 +92,7 @@ struct IDirect3DSurface8 {
   UINT height_;
   UINT pitch_;
   D3DFORMAT format_;
+  uint32_t pool_;
   ULONG reference_count_;
   IDirect3DTexture8 *owner_;
   DWORD lock_flags_;
@@ -141,6 +144,9 @@ IDirect3DTexture8 *GeneralsVitaCreateTexture(
     UINT width, UINT height, D3DFORMAT format, UINT pitch_alignment,
     GeneralsVitaTextureUpload upload, void *upload_context,
     GeneralsVitaTextureRelease release = NULL);
+
+IDirect3DSurface8 *GeneralsVitaCreateSurface(
+    UINT width, UINT height, D3DFORMAT format, UINT pitch_alignment);
 
 static_assert(sizeof(HRESULT) == 4, "DX8 HRESULT must remain 32-bit");
 static_assert(sizeof(DWORD) == 4, "DX8 DWORD must remain 32-bit");
@@ -290,12 +296,25 @@ static const D3DRENDERSTATETYPE D3DRS_FOGSTART = 36U;
 static const D3DRENDERSTATETYPE D3DRS_FOGEND = 37U;
 static const D3DRENDERSTATETYPE D3DRS_ZBIAS = 47U;
 static const D3DRENDERSTATETYPE D3DRS_AMBIENT = 139U;
+static const D3DRENDERSTATETYPE D3DRS_TEXTUREFACTOR = 60U;
+static const D3DTEXTURESTAGESTATETYPE D3DTSS_COLOROP = 1U;
+static const D3DTEXTURESTAGESTATETYPE D3DTSS_COLORARG1 = 2U;
+static const D3DTEXTURESTAGESTATETYPE D3DTSS_COLORARG2 = 3U;
+static const D3DTEXTURESTAGESTATETYPE D3DTSS_COLORARG0 = 26U;
+static const DWORD D3DTA_CURRENT = 1U;
+static const DWORD D3DTA_TEXTURE = 2U;
+static const DWORD D3DTA_TFACTOR = 3U;
+static const DWORD D3DTA_ALPHAREPLICATE = 0x20U;
+static const DWORD D3DTOP_MODULATE = 4U;
+static const DWORD D3DTOP_DOTPRODUCT3 = 24U;
+static const DWORD D3DTOP_MULTIPLYADD = 25U;
 struct POINT { int32_t x, y; };
 struct IDirect3DBaseTexture8;
 
 // Declarations consumed by original DX8Wrapper inline state setters. Backend
 // definitions must supply real rendering behavior; no success stubs live here.
 struct IDirect3DDevice8 {
+  HRESULT CreateImageSurface(UINT, UINT, D3DFORMAT, IDirect3DSurface8 **);
   HRESULT SetTransform(D3DTRANSFORMSTATETYPE, const D3DMATRIX *);
   HRESULT GetTransform(D3DTRANSFORMSTATETYPE, D3DMATRIX *);
   HRESULT SetRenderState(D3DRENDERSTATETYPE, DWORD);

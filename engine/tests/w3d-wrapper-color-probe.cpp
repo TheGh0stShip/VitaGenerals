@@ -1,5 +1,12 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "dx8wrapper.h"
+#include "dx8webbrowser.h"
+#include "dx8renderer.h"
+#include "render2d.h"
+#include "rddesc.h"
+#include "registry.h"
+static_assert(sizeof(WCHAR) == 2, "Original W3D UTF-16 code unit");
+static_assert(sizeof(LONG) == 4, "Browser option word must remain 32-bit");
 #undef NDEBUG
 #include <assert.h>
 #include <stdint.h>

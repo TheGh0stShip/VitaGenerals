@@ -30,6 +30,15 @@ portable color path retains packed ARGB truncation and the original bit clamp.
 Host sanitizer execution and ARM link checks cover this boundary; device state
 methods, texture factories and indexed drawing still require runtime integration.
 
+`generals_render2d` compiles the full original `render2d.cpp`, preserving its
+indexed 44-byte vertices, dynamic buffer offsets and grayscale state branches.
+Its ARM archive is checked for hard-float attributes; archive construction
+does not establish runtime linking or rendering. The surface provider supplies
+standalone pitched image storage through `CreateImageSurface`, with checked
+dimensions and stable DX8 type/pool metadata. Original wide-string headers use
+UTF-16 helpers; the complete wide-string, browser and registry providers remain
+open dependencies.
+
 The original W3D texture, surface and indexed `Render2D` route requires a native
 graphics provider. `tools/build_vitagl.py` builds a checksum-pinned LGPLv3
 vitaGL revision with ARMv7 hard-float flags and retains its complete source and

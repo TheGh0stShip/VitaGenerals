@@ -136,10 +136,28 @@
       "staged_sha256": "3d1f482ad75a3bea64133555b28cb6f7bd4906cf7f4092984f949bcb369af7b4"
     },
     {
+      "path": "Code/Libraries/Source/WWVegas/WW3D2/assetmgr.h",
+      "upstream_path": "GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/assetmgr.h",
+      "sha256": "af5619c95362a5d960517911a45b6e578992bae39680ad5b7ba2c89476815be8",
+      "staged_sha256": "bd33e32e5b36c530b2b63229d25b4f99c8a3c8fdf66c06ad49df00ec08e27f93"
+    },
+    {
       "path": "Code/Libraries/Source/WWVegas/WW3D2/dllist.h",
       "upstream_path": "GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dllist.h",
       "sha256": "4db884f7eedd32690806fe97333d54b871234ce667feb139d8bee9e8bee223b7",
       "staged_sha256": "01ebbd4b2db5672e4e6a8b91a7263374280534df998f906a21fc14d0e4cde5ec"
+    },
+    {
+      "path": "Code/Libraries/Source/WWVegas/WW3D2/dx8renderer.h",
+      "upstream_path": "GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8renderer.h",
+      "sha256": "5966bda6e15020362acb665cdbf2dbb90740cef59809a40b0dfb71cf8d3a607e",
+      "staged_sha256": "28462d3645c6e81170b58ace9cfd55470160eaa97c1a283324b6ec04aa4bff07"
+    },
+    {
+      "path": "Code/Libraries/Source/WWVegas/WW3D2/dx8webbrowser.h",
+      "upstream_path": "GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8webbrowser.h",
+      "sha256": "0d1c6a067a6c354b0844b696b0ed5bc4e9f4ae3b5b36983c09d31238f4fc069b",
+      "staged_sha256": "2aa2ec0ca36c3e6f7b3d0a0044ff8cfb2ec05d134358ffba736b013ff1f94ce1"
     },
     {
       "path": "Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.h",
@@ -148,10 +166,40 @@
       "staged_sha256": "8f47ff757ee968af21633b0f92d2ea2c2d8b0919e85f6d1610f97cfef657d059"
     },
     {
+      "path": "Code/Libraries/Source/WWVegas/WW3D2/hanimmgr.h",
+      "upstream_path": "GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/hanimmgr.h",
+      "sha256": "2783454190a33ad2c37e6352af1980016922f3773196c4d7297e0f30463a6ca1",
+      "staged_sha256": "04432cc475adb71960458256f5ecb3e2f5d74c0f3889566e5c53d53bd304639d"
+    },
+    {
       "path": "Code/Libraries/Source/WWVegas/WW3D2/layer.h",
       "upstream_path": "GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/layer.h",
       "sha256": "392d2901bb0b8ffbae7ca98f1a6b1205b806543a0196be9517b988763a2d929b",
       "staged_sha256": "f12ad8c2569543335534812e8d798b24c5afa779ffd95e0aafe619d4466c83f4"
+    },
+    {
+      "path": "Code/Libraries/Source/WWVegas/WW3D2/meshmatdesc.h",
+      "upstream_path": "GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/meshmatdesc.h",
+      "sha256": "4799216e432a53701ae0dad03f92aa059bb37f4f6fb725210923eb07f8178a9a",
+      "staged_sha256": "802ce14847cc33f40c90c361b3961513f0fdb6cbd5481b183bf192fec9685ba8"
+    },
+    {
+      "path": "Code/Libraries/Source/WWVegas/WW3D2/pointgr.h",
+      "upstream_path": "GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/pointgr.h",
+      "sha256": "7114a5522d239e9c89fad827c1602dc44226b5f15836725c2051d80237cd42ab",
+      "staged_sha256": "3281f834fe7b5f718b2571fb5ed787498767865f694485182bc38291c971d82e"
+    },
+    {
+      "path": "Code/Libraries/Source/WWVegas/WW3D2/rddesc.h",
+      "upstream_path": "GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/rddesc.h",
+      "sha256": "9a08aca4d0a9e1fa5e8620e667c6078469484b026878c211ae7ba258fec9e217",
+      "staged_sha256": "f0c71ff6f2bfc407c01a5147e8be2d6abd27b18e4bc871ec283d6d538741ba1b"
+    },
+    {
+      "path": "Code/Libraries/Source/WWVegas/WW3D2/render2d.h",
+      "upstream_path": "GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/render2d.h",
+      "sha256": "27c38640b21eddbb9d8356e4f23afcd5ee65978f6789e9f2769be6fa516bd959",
+      "staged_sha256": "c1a8f6f9979fd9d928422a9b375b95b785aa2d0f0f6420cbf4d71880f44b7013"
     },
     {
       "path": "Code/Libraries/Source/WWVegas/WW3D2/vertmaterial.h",
@@ -274,6 +322,12 @@
       "staged_sha256": "30f2105f1a67f2db08a6cdf7aaef4e90dd7063ba8fad1b8098142b85cb20e97e"
     },
     {
+      "path": "Code/Libraries/Source/WWVegas/WWLib/registry.h",
+      "upstream_path": "GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/registry.h",
+      "sha256": "12a76e6687d8166051e464b0814e62ebe2d7c21aafa4334f644badb07c02d4d1",
+      "staged_sha256": "8b390e78baa6e9a91067126e567bfaed472a291c0a70be8e3b4481c76b6328ea"
+    },
+    {
       "path": "Code/Libraries/Source/WWVegas/WWLib/simplevec.h",
       "upstream_path": "GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/simplevec.h",
       "sha256": "509f3f5d90121b1682abfcf139b5e10510543818ab3b751e534f39ef73939cc3",
@@ -302,6 +356,12 @@
       "upstream_path": "GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/thread.h",
       "sha256": "ba7fe3b9c0f2aad796a9ff3fd1f8bcf33cfa13eb6c73b75b913eb1d08820b072",
       "staged_sha256": "fea9a5b6aa1eb154e3c8f851094ceb3b0be57c8e768e80df7bbf2ebe60f99bcc"
+    },
+    {
+      "path": "Code/Libraries/Source/WWVegas/WWLib/widestring.h",
+      "upstream_path": "GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/widestring.h",
+      "sha256": "b3ba116d6be33bfc954ea374688428675d6aee640d9b9085921dd07ea4c3737e",
+      "staged_sha256": "f5a6f35939cefefb382cddf0765c3c512e0174a591e414d8080cfb5af27c0738"
     },
     {
       "path": "Code/Libraries/Source/WWVegas/WWLib/wwstring.cpp",
@@ -564,16 +624,48 @@
       "sha256": "c5ccb9882906716e9b8f02ad6fe51faa9e50a5f86aa5a58c6cc27a5afec30bfe"
     },
     {
+      "path": "port/patches/cluster/Libraries__Source__WWVegas__WW3D2__assetmgr.h.patch",
+      "sha256": "bf7ea43ac55c966855ac16a6332c15a759a5613500e5fd3ffda280e1bf8cb564"
+    },
+    {
       "path": "port/patches/cluster/Libraries__Source__WWVegas__WW3D2__dllist.h.patch",
       "sha256": "8a5856bb1e12488129899144bc00bf831c99eb805ea9134293f7ec9b2c6049b6"
+    },
+    {
+      "path": "port/patches/cluster/Libraries__Source__WWVegas__WW3D2__dx8renderer.h.patch",
+      "sha256": "bf9d02256e8e348924df2d7516366e2929a94b973581c40e9d09196ef68b0852"
+    },
+    {
+      "path": "port/patches/cluster/Libraries__Source__WWVegas__WW3D2__dx8webbrowser.h.patch",
+      "sha256": "64d44e13e75bd444f5dd7534e70e6e510e2e5321780f2ac091992ce98a6235ea"
     },
     {
       "path": "port/patches/cluster/Libraries__Source__WWVegas__WW3D2__dx8wrapper.h.patch",
       "sha256": "1369b76890198d919d3312db413dd6630ecbc0358864b155d4f11a709bafaa59"
     },
     {
+      "path": "port/patches/cluster/Libraries__Source__WWVegas__WW3D2__hanimmgr.h.patch",
+      "sha256": "3438338a56a87b0f29231518df1930ebd77fa349d1fcb75e799032d4a5c53625"
+    },
+    {
       "path": "port/patches/cluster/Libraries__Source__WWVegas__WW3D2__layer.h.patch",
       "sha256": "ec33824abcb350333730ba06a4a8716a1603a7a3b0f2b2d26d9c3084151db039"
+    },
+    {
+      "path": "port/patches/cluster/Libraries__Source__WWVegas__WW3D2__meshmatdesc.h.patch",
+      "sha256": "e82d85b61eab91004696474bfe3c368ac9e7203b2dc47af9ad9f94eb082d4359"
+    },
+    {
+      "path": "port/patches/cluster/Libraries__Source__WWVegas__WW3D2__pointgr.h.patch",
+      "sha256": "62c82f16845758061924f21f57f1937489607c7cad09d2521c105c72b6b1374e"
+    },
+    {
+      "path": "port/patches/cluster/Libraries__Source__WWVegas__WW3D2__rddesc.h.patch",
+      "sha256": "7741a852276d0d1606778205aea88678932a5bbe112e583f038b2b857201fd26"
+    },
+    {
+      "path": "port/patches/cluster/Libraries__Source__WWVegas__WW3D2__render2d.h.patch",
+      "sha256": "e1abe9331b68309ebc59e9c0a7530d62bc3b3abcdf729b9a430544f37f7a0407"
     },
     {
       "path": "port/patches/cluster/Libraries__Source__WWVegas__WW3D2__vertmaterial.h.patch",
@@ -668,6 +760,10 @@
       "sha256": "dd2a037924a7a756093ee20690688603dc6dfe52c3db8003a310cf566c999232"
     },
     {
+      "path": "port/patches/cluster/Libraries__Source__WWVegas__WWLib__registry.h.patch",
+      "sha256": "c22331d509459c3b084f3df37cf3c476f43850347b9b21c6837bf3e68a874911"
+    },
+    {
       "path": "port/patches/cluster/Libraries__Source__WWVegas__WWLib__simplevec.h.patch",
       "sha256": "057398fe2a21079e608d1cf753ee95dc8fc9be138e5559bb632ac0f2dec98632"
     },
@@ -686,6 +782,10 @@
     {
       "path": "port/patches/cluster/Libraries__Source__WWVegas__WWLib__thread.h.patch",
       "sha256": "2640f3134139545fc787d2fd01833139b48de293e04d6e0df9f629e03c780a3c"
+    },
+    {
+      "path": "port/patches/cluster/Libraries__Source__WWVegas__WWLib__widestring.h.patch",
+      "sha256": "381f5f8d009992454e45f8f2c22c4e512ceeabfaa9fa81b609094fc94e992493"
     },
     {
       "path": "port/patches/cluster/Libraries__Source__WWVegas__WWLib__wwstring.cpp.patch",

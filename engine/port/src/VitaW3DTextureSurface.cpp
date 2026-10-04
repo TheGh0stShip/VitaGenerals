@@ -42,6 +42,7 @@ IDirect3DSurface8::IDirect3DSurface8(UINT width, UINT height,
       height_(height),
       pitch_(0U),
       format_(format),
+      pool_(D3DPOOL_SYSTEMMEM),
       reference_count_(1U),
       owner_(NULL),
       lock_flags_(0U),
@@ -69,6 +70,33 @@ IDirect3DSurface8::IDirect3DSurface8(UINT width, UINT height,
 
 IDirect3DSurface8::~IDirect3DSurface8() { delete[] storage_; }
 
+IDirect3DSurface8 *GeneralsVitaCreateSurface(
+    UINT width, UINT height, D3DFORMAT format, UINT pitch_alignment) {
+  IDirect3DSurface8 *surface = new (std::nothrow)
+      IDirect3DSurface8(width, height, format, pitch_alignment);
+  if (surface != NULL && surface->GetData() == NULL) {
+    surface->Release();
+    return NULL;
+  }
+  return surface;
+}
+
+HRESULT IDirect3DDevice8::CreateImageSurface(
+    UINT width, UINT height, D3DFORMAT format, IDirect3DSurface8 **surface) {
+  if (surface == NULL) return D3DERR_INVALIDCALL;
+  *surface = NULL;
+  const UINT bytes_per_pixel = BytesPerPixel(format);
+  UINT pitch = 0U;
+  if (width == 0U || height == 0U || bytes_per_pixel == 0U ||
+      width > UINT32_MAX / bytes_per_pixel ||
+      !AlignPitch(width * bytes_per_pixel, 16U, &pitch) ||
+      pitch == 0U || pitch > (UINT)INT32_MAX || height > UINT32_MAX / pitch) {
+    return D3DERR_INVALIDCALL;
+  }
+  *surface = GeneralsVitaCreateSurface(width, height, format, 16U);
+  return *surface != NULL ? D3D_OK : D3DERR_OUTOFVIDEOMEMORY;
+}
+
 ULONG IDirect3DSurface8::AddRef() { return ++reference_count_; }
 
 ULONG IDirect3DSurface8::Release() {
@@ -82,6 +110,8 @@ HRESULT IDirect3DSurface8::GetDesc(D3DSURFACE_DESC *description) {
   if (description == NULL || storage_ == NULL) return D3DERR_INVALIDCALL;
   memset(description, 0, sizeof(*description));
   description->Format = format_;
+  description->Type = 1U;  // D3DRTYPE_SURFACE
+  description->Pool = pool_;
   description->Size = storage_size_;
   description->Width = width_;
   description->Height = height_;
@@ -218,5 +248,6 @@ IDirect3DTexture8 *GeneralsVitaCreateTexture(
     return NULL;
   }
   texture->surface_->owner_ = texture;
+  texture->surface_->pool_ = D3DPOOL_DEFAULT;
   return texture;
 }

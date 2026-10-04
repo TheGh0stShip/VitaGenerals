@@ -81,6 +81,7 @@ static void Exercise(D3DFORMAT format) {
   assert(surface->GetDesc(&description) == D3D_OK);
   assert(description.Width == 5U && description.Height == 3U);
   assert(description.Format == format);
+  assert(description.Type == 1U && description.Pool == D3DPOOL_DEFAULT);
   const UINT row_bytes = 5U * BytesPerPixel(format);
   assert(surface->GetPitch() >= row_bytes);
   assert((surface->GetPitch() & 15U) == 0U);
@@ -125,6 +126,7 @@ static void Exercise(D3DFORMAT format) {
   assert(record.releases == 1U);
   D3DSURFACE_DESC retained = {};
   assert(surface->GetDesc(&retained) == D3D_OK);
+  assert(retained.Type == description.Type && retained.Pool == description.Pool);
   assert(surface->LockRect(&locked, NULL, 0U) == D3D_OK);
   assert(surface->UnlockRect() == D3D_OK);
   assert(record.calls == 3U);
@@ -164,6 +166,31 @@ static void ExerciseReentrantUpload() {
 }
 
 int main() {
+  IDirect3DDevice8 device;
+  IDirect3DSurface8 *image = NULL;
+  assert(device.CreateImageSurface(3U, 2U, D3DFMT_R8G8B8, &image) == D3D_OK);
+  assert(image != NULL && image->GetPitch() == 16U);
+  D3DSURFACE_DESC image_description = {};
+  assert(image->GetDesc(&image_description) == D3D_OK);
+  assert(image_description.Type == 1U);
+  assert(image_description.Pool == D3DPOOL_SYSTEMMEM);
+  D3DLOCKED_RECT image_lock = {};
+  assert(image->LockRect(&image_lock, NULL, 0U) == D3D_OK);
+  memset(image_lock.pBits, 0x71, 9U);
+  assert(image->UnlockRect() == D3D_OK);
+  assert(image->AddRef() == 2U);
+  assert(image->Release() == 1U);
+  assert(image->GetData()[8] == 0x71);
+  assert(image->Release() == 0U);
+  image = NULL;
+  assert(device.CreateImageSurface(0U, 2U, D3DFMT_R8G8B8, &image) ==
+         D3DERR_INVALIDCALL && image == NULL);
+  assert(device.CreateImageSurface(2U, 2U, D3DFMT_UNKNOWN, &image) ==
+         D3DERR_INVALIDCALL && image == NULL);
+  assert(device.CreateImageSurface(UINT32_MAX, 2U, D3DFMT_R8G8B8, &image) ==
+         D3DERR_INVALIDCALL && image == NULL);
+  assert(device.CreateImageSurface(2U, 2U, D3DFMT_R8G8B8, NULL) ==
+         D3DERR_INVALIDCALL);
   IDirect3DTexture8 *owned = GeneralsVitaCreateTexture(
       2U, 2U, D3DFMT_X8R8G8B8, 16U, NULL, NULL);
   assert(owned != NULL);

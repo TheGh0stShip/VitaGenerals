@@ -1,0 +1,11 @@
+--- a/Code/Libraries/Source/WWVegas/WW3D2/pointgr.h
++++ b/Code/Libraries/Source/WWVegas/WW3D2/pointgr.h
+@@ -46,7 +46,7 @@
+ #include "vector4.h"
+ #include "vector3.h"
+ #include "vector2.h"
+-#include "vector.h"
++#include "Vector.H"
+ 
+ class VertexMaterialClass;
+ class RenderInfoClass;

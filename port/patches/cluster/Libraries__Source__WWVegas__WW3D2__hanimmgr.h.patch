@@ -1,0 +1,11 @@
+--- a/Code/Libraries/Source/WWVegas/WW3D2/hanimmgr.h
++++ b/Code/Libraries/Source/WWVegas/WW3D2/hanimmgr.h
+@@ -46,7 +46,7 @@
+ #include "always.h"
+ #include "hash.h"
+ #include "wwstring.h"
+-#include "vector.h"
++#include "Vector.H"
+ 
+ class HAnimClass;
+ class ChunkLoadClass;

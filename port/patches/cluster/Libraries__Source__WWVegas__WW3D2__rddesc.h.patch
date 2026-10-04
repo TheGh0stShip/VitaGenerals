@@ -1,0 +1,24 @@
+--- a/Code/Libraries/Source/WWVegas/WW3D2/rddesc.h
++++ b/Code/Libraries/Source/WWVegas/WW3D2/rddesc.h
+@@ -42,7 +42,7 @@
+ #ifndef RDDESC_H
+ #define RDDESC_H
+ 
+-#include "vector.h"
++#include "Vector.H"
+ #include "wwstring.h"
+ #include <d3d8types.h>
+ #include <d3d8caps.h>
+@@ -67,9 +67,9 @@
+ 
+ public:
+ 
+-	RenderDeviceDescClass(void) : DeviceName(NULL), DeviceVendor(NULL), DevicePlatform(NULL), 
+-											DriverName(NULL), DriverVendor(NULL), DriverVersion(NULL),
+-											HardwareName(NULL), HardwareVendor(NULL), HardwareChipset(NULL)
++	RenderDeviceDescClass(void) : DeviceName(), DeviceVendor(), DevicePlatform(), 
++											DriverName(), DriverVendor(), DriverVersion(),
++											HardwareName(), HardwareVendor(), HardwareChipset()
+ 	{
+ 	}
+ 

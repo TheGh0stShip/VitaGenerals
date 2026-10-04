@@ -153,7 +153,21 @@ target_include_directories(w3d_wrapper_color PRIVATE port/include
   ${VG_ORIGINAL}/Libraries/Include ${VG_ORIGINAL}/GameEngine/Include)
 target_compile_definitions(w3d_wrapper_color PRIVATE
   NDEBUG GENERALS_PLATFORM_VITA __cdecl= __forceinline=inline)
+add_library(generals_render2d STATIC
+  ${VG_ORIGINAL}/Libraries/Source/WWVegas/WW3D2/render2d.cpp)
+add_dependencies(generals_render2d verify_engine_stage)
+get_target_property(VG_RENDER2D_INCLUDES w3d_wrapper_color INCLUDE_DIRECTORIES)
+target_include_directories(generals_render2d PRIVATE ${VG_RENDER2D_INCLUDES})
+target_compile_definitions(generals_render2d PRIVATE
+  NDEBUG GENERALS_PLATFORM_VITA __cdecl= __forceinline=inline)
+target_compile_options(generals_render2d PRIVATE -fcheck-new)
 if(CMAKE_CROSSCOMPILING)
+  target_compile_options(generals_render2d PRIVATE
+    -mcpu=cortex-a9 -mthumb -mfpu=neon -mfloat-abi=hard)
+  add_custom_command(TARGET generals_render2d POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E env VITASDK=${VITASDK}
+      ${Python3_EXECUTABLE} ${VG_PROJECT_ROOT}/tools/check_vita_abi.py
+      $<TARGET_FILE:generals_render2d> VERBATIM)
   target_compile_options(w3d_wrapper_color PRIVATE
     -mcpu=cortex-a9 -mthumb -mfpu=neon -mfloat-abi=hard)
   target_link_options(w3d_wrapper_color PRIVATE
@@ -163,6 +177,8 @@ if(CMAKE_CROSSCOMPILING)
       ${Python3_EXECUTABLE} ${VG_PROJECT_ROOT}/tools/check_vita_abi.py
       $<TARGET_FILE:w3d_wrapper_color> VERBATIM)
 else()
+  target_compile_options(generals_render2d PRIVATE
+    -fsanitize=address,undefined -fno-omit-frame-pointer)
   target_compile_options(w3d_wrapper_color PRIVATE
     -fsanitize=address,undefined -fno-omit-frame-pointer)
   target_link_options(w3d_wrapper_color PRIVATE -fsanitize=address,undefined)

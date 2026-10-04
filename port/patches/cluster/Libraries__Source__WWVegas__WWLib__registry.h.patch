@@ -1,0 +1,18 @@
+--- a/Code/Libraries/Source/WWVegas/WWLib/registry.h
++++ b/Code/Libraries/Source/WWVegas/WWLib/registry.h
+@@ -44,9 +44,14 @@
+ #include "always.h"
+ #endif
+ 
+-#include "vector.h"
++#include "Vector.H"
+ #include "wwstring.h"
+ #include "widestring.h"
++
++#if defined(GENERALS_PLATFORM_VITA)
++struct GeneralsRegistryKey;
++typedef GeneralsRegistryKey *HKEY;
++#endif
+ 
+ class INIClass;
+ 

@@ -1,0 +1,126 @@
+--- a/Code/Libraries/Source/WWVegas/WWLib/widestring.h
++++ b/Code/Libraries/Source/WWVegas/WWLib/widestring.h
+@@ -45,7 +45,8 @@
+ #include <stdarg.h>
+ #include "always.h"
+ #include "wwdebug.h"
+-#include "win.h"
++#include "WWStringPlatform.h"
++#include "utf16-string-operations.h"
+ #include "wwstring.h"
+ #include "trim.h"
+ #include <wchar.h>
+@@ -239,7 +240,7 @@
+ WideStringClass::WideStringClass (const WCHAR *string, bool hint_temporary)
+ 	:	m_Buffer (m_EmptyString)
+ {
+-	int len=string ? wcslen(string) : 0;
++	int len=string ? legacy_text::length(string) : 0;
+ 	if (hint_temporary || len>0) {
+ 		Get_String (len+1, hint_temporary);
+ 	}
+@@ -291,7 +292,7 @@
+ WideStringClass::Compare (const WCHAR *string) const
+ {
+ 	if (string) {
+-		return wcscmp (m_Buffer, string);
++		return legacy_text::compare (m_Buffer, string);
+ 	}
+ 
+ 	return -1;
+@@ -304,7 +305,7 @@
+ WideStringClass::Compare_No_Case (const WCHAR *string) const
+ {
+ 	if (string) {
+-		return _wcsicmp (m_Buffer, string);
++		return legacy_text::compare_no_case (m_Buffer, string);
+ 	}
+ 
+ 	return -1;
+@@ -370,7 +371,7 @@
+ WideStringClass::operator < (const WCHAR *string) const
+ {
+ 	if (string) {
+-		return (wcscmp (m_Buffer, string) < 0);
++		return (legacy_text::compare (m_Buffer, string) < 0);
+ 	}
+ 
+ 	return false;
+@@ -383,7 +384,7 @@
+ WideStringClass::operator <= (const WCHAR *string) const
+ {
+ 	if (string) {
+-		return (wcscmp (m_Buffer, string) <= 0);
++		return (legacy_text::compare (m_Buffer, string) <= 0);
+ 	}
+ 
+ 	return false;
+@@ -396,7 +397,7 @@
+ WideStringClass::operator > (const WCHAR *string) const
+ {
+ 	if (string) {
+-		return (wcscmp (m_Buffer, string) > 0);
++		return (legacy_text::compare (m_Buffer, string) > 0);
+ 	}
+ 
+ 	return true;
+@@ -409,7 +410,7 @@
+ WideStringClass::operator >= (const WCHAR *string) const
+ {
+ 	if (string) {
+-		return (wcscmp (m_Buffer, string) >= 0);
++		return (legacy_text::compare (m_Buffer, string) >= 0);
+ 	}
+ 
+ 	return true;
+@@ -434,7 +435,7 @@
+ 						&m_Buffer[start_index + char_count],
+ 						(len - (start_index + char_count) + 1) * sizeof (WCHAR));
+ 
+-		Store_Length( wcslen(m_Buffer) );
++		Store_Length( legacy_text::length(m_Buffer) );
+ 	}
+ 
+ 	return ;
+@@ -445,8 +446,12 @@
+ ///////////////////////////////////////////////////////////////////
+ inline void WideStringClass::Trim(void)
+ {
+-	wcstrim(m_Buffer);
+-	int len = wcslen(m_Buffer);
++	WCHAR *first = m_Buffer;
++	while (*first && *first <= 32) ++first;
++	if (first != m_Buffer) legacy_text::copy(m_Buffer, first);
++	size_t end = legacy_text::length(m_Buffer);
++	while (end && m_Buffer[end - 1] <= 32) m_Buffer[--end] = 0;
++	int len = legacy_text::length(m_Buffer);
+ 	Store_Length(len);
+ }
+ 
+@@ -458,7 +463,7 @@
+ WideStringClass::operator= (const WCHAR *string)
+ {
+ 	if (string) {
+-		int len = wcslen (string);
++		int len = legacy_text::length (string);
+ 		Uninitialised_Grow (len + 1);
+ 		Store_Length (len);
+ 
+@@ -501,7 +506,7 @@
+ {
+ 	if (string) {
+ 		int cur_len = Get_Length ();
+-		int src_len = wcslen (string);
++		int src_len = legacy_text::length (string);
+ 		int new_len = cur_len + src_len;
+ 
+ 		//
+@@ -664,7 +669,7 @@
+ 		// we better manually get the string length.
+ 		//
+ 		if (length == 0) {
+-			length = wcslen (m_Buffer);
++			length = legacy_text::length (m_Buffer);
+ 			((WideStringClass *)this)->Store_Length (length);
+ 		}
+ 	}
