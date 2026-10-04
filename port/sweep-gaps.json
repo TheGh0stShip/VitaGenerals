@@ -6,7 +6,8 @@
     "script-dispatch.json",
     "ini-dispatch.json",
     "renderer-boundary.json.gz",
-    "source-structure.json.gz"
+    "source-structure.json.gz",
+    "runtime-providers.json"
   ],
   "findings": [
     {
@@ -24,6 +25,10 @@
         {
           "report": "original-projects.json.gz",
           "pointer": "/summary/source_reference_resolutions"
+        },
+        {
+          "report": "runtime-providers.json",
+          "pointer": "/summary/RTS_closure_kinds"
         }
       ],
       "closure_evidence": "Reconcile original projects, runtime callers, generated sources and target selection; retain unresolved rows."
@@ -39,6 +44,10 @@
         {
           "report": "original-projects.json.gz",
           "pointer": "/summary/missing_workspace_projects"
+        },
+        {
+          "report": "runtime-providers.json",
+          "pointer": "/unknowns"
         }
       ],
       "closure_evidence": "Audit each missing project/provider, licensing and platform replacement contract; compile/link the selected original dependency graph."

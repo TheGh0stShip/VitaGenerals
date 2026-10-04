@@ -69,6 +69,15 @@
           },
           "pointer": "/summary/source_reference_resolutions",
           "report": "original-projects.json.gz"
+        },
+        {
+          "observed_value": {
+            "executable": 4,
+            "missing": 5,
+            "static_library": 15
+          },
+          "pointer": "/summary/RTS_closure_kinds",
+          "report": "runtime-providers.json"
         }
       ],
       "id": "SOURCE-ROLES",
@@ -85,6 +94,19 @@
           "observed_value": 6,
           "pointer": "/summary/missing_workspace_projects",
           "report": "original-projects.json.gz"
+        },
+        {
+          "observed_value": [
+            "Workspace order is not runtime linkage",
+            "Exact configuration pairing and final linker retention",
+            "Pragma/default libraries and transitive static archive references",
+            "Missing middleware providers and licenses",
+            "Executable launch/build-hook/content roles",
+            "Runtime roles of source-only units and tools",
+            "Complete target engine and physical Vita/PSTV behavior"
+          ],
+          "pointer": "/unknowns",
+          "report": "runtime-providers.json"
         }
       ],
       "id": "DEPENDENCIES",
@@ -354,9 +376,13 @@
     {
       "report": "source-structure.json.gz",
       "sha256": "9213e008e0352d3960b824a122e8d93cfd94ba6fdf36e9c089537bc1a546a750"
+    },
+    {
+      "report": "runtime-providers.json",
+      "sha256": "075792e15c140735cd91be4fc8255dcac92b0b84b36099b948447285736d8293"
     }
   ],
-  "registry_sha256": "b5d9b4d3755b46d94a592efb9198a2ce25cf3d0c7f1c077c4bdb2b580fc6ae45",
+  "registry_sha256": "f34135ead0023cbc29d711cece514447e0155e398cc7f28c9bd43572ba268533",
   "schema": 1,
   "source_tree_sha256": "1fce818714d13f96eec45b6d40bb4854dfddce22a1ede336527443ad004cb8e6",
   "summary": {

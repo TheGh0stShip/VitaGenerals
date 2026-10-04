@@ -1,6 +1,6 @@
 # Consolidated port gaps
 
-Generated from `port/sweep-gaps.json` and 6 pinned sweep reports. All findings
+Generated from `port/sweep-gaps.json` and 7 pinned sweep reports. All findings
 are open evidence gaps; counts do not represent unique defects or game completion.
 Repeated engine-build gaps from individual sweeps share one parent finding.
 Dependencies are joint closure prerequisites, not an exclusive work schedule.
@@ -25,13 +25,13 @@ registry decision. The nine current findings are not a complete defect census.
 
 Reconcile original projects, runtime callers, generated sources and target selection; retain unresolved rows.
 
-Evidence: [original-projects.json.gz](../reports/generated/original-projects.json.gz) `/summary/units_without_original_project_reference`, [original-projects.json.gz](../reports/generated/original-projects.json.gz) `/summary/source_reference_resolutions`.
+Evidence: [original-projects.json.gz](../reports/generated/original-projects.json.gz) `/summary/units_without_original_project_reference`, [original-projects.json.gz](../reports/generated/original-projects.json.gz) `/summary/source_reference_resolutions`, [runtime-providers.json](../reports/generated/runtime-providers.json) `/summary/RTS_closure_kinds`.
 
 ### DEPENDENCIES
 
 Audit each missing project/provider, licensing and platform replacement contract; compile/link the selected original dependency graph.
 
-Evidence: [original-projects.json.gz](../reports/generated/original-projects.json.gz) `/summary/missing_workspace_projects`.
+Evidence: [original-projects.json.gz](../reports/generated/original-projects.json.gz) `/summary/missing_workspace_projects`, [runtime-providers.json](../reports/generated/runtime-providers.json) `/unknowns`.
 
 ### ENGINE-BUILD
 
