@@ -14,6 +14,8 @@ def main():
     parser.add_argument('--mode',choices=['host','vita'],required=True)
     parser.add_argument('--build-dir',type=Path,required=True)
     parser.add_argument('--vita-sdk',type=Path)
+    parser.add_argument('--legacy-encoding',default='CP1252',
+                        help='Explicit installation ANSI encoding for UnicodeString conversion')
     parser.add_argument('--source',type=Path,help='Pristine pinned GeneralsMD/Code directory')
     parser.add_argument('--iconv-archive',type=Path,help='Optional hash-checked release archive')
     args=parser.parse_args();root=Path(__file__).resolve().parents[1]
@@ -50,7 +52,8 @@ def main():
     configure=['cmake','-S','engine','-B',str(output/'cmake'),
                '-DCMAKE_BUILD_TYPE=Release','-DGENERALS_STAGED_CODE='+str(output/'staged/Code'),
                '-DGENERALS_MEMORY_POOL_CONFIG_PATH=Data/INI/MemoryPools.ini',
-               '-DGENERALS_ICONV_PREFIX='+str(output/'iconv')]
+               '-DGENERALS_ICONV_PREFIX='+str(output/'iconv'),
+               '-DGENERALS_LEGACY_ENCODING='+args.legacy_encoding]
     if args.mode=='vita':configure+=['-DCMAKE_TOOLCHAIN_FILE='+str(sdk/'share/vita.toolchain.cmake')]
     run('configure',configure)
     run('build',['cmake','--build',str(output/'cmake'),'--parallel','2'])
@@ -60,13 +63,13 @@ def main():
                          'version':subprocess.check_output([compiler,'--version'],text=True,env=environment),
                          'target':subprocess.check_output([compiler,'-dumpmachine'],text=True,env=environment).strip()}
     if args.mode=='vita':
-        for name in ('allocator_alignment','ascii_allocator','ascii_reference','wwmath_link_entry'):
+        for name in ('allocator_alignment','ascii_allocator','ascii_reference','unicode_reference','wwmath_link_entry'):
             executable=str(output/'cmake'/name)
             run(name+'-symbols',[str(sdk/'bin/arm-vita-eabi-nm'),'--defined-only',executable])
             run(name+'-attributes',[str(sdk/'bin/arm-vita-eabi-readelf'),'-h','-A',executable])
     if args.mode=='host':run('tests',['ctest','--test-dir',str(output/'cmake'),'--output-on-failure'])
     artifacts=[p for p in (output/'cmake').iterdir() if p.is_file() and
-               (p.suffix in ('.a','.map') or p.name in ('allocator_alignment','ascii_allocator','ascii_reference','wwmath_link_entry',
+               (p.suffix in ('.a','.map') or p.name in ('allocator_alignment','ascii_allocator','ascii_reference','unicode_reference','wwmath_link_entry',
                                                        'rawfile_probe','factory_probe','chunk-file_probe'))]
     receipt['artifacts']=[{'path':p.relative_to(output).as_posix(),
                           'sha256':hashlib.sha256(p.read_bytes()).hexdigest()} for p in sorted(artifacts)]

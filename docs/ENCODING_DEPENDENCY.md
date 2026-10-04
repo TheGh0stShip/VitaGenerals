@@ -28,6 +28,9 @@ Consumers must include the generated `library/include/iconv.h` and link
 `library/lib/.libs/libiconv.a`. Its header routes calls to `libiconv_*`, avoiding
 the SDK's incomplete registry. Verify the selected symbols in the final link
 map. Do not infer an installation code page from the development host locale.
+The engine cluster passes this choice as `GENERALS_LEGACY_ENCODING`. CP1252 and
+CP932 tests verify that UTF-16 precision stops before reading a following source
+byte, including a complete two-byte CP932 character in a buffer without a NUL.
 
 The libraries and headers retain LGPL-2.1-or-later notices. Distribution must
 include the applicable notices and license, corresponding library source and

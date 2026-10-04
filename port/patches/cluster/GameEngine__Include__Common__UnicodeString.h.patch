@@ -5,7 +5,105 @@
  
  #pragma once
 +#include <cwchar>
-+extern "C" int _wcsicmp(const wchar_t*, const wchar_t*);
++#include "utf16-string-operations.h"
  
  #ifndef UNICODESTRING_H
  #define UNICODESTRING_H
+@@ -258,11 +260,11 @@
+ 	*/
+ 	int compare(const WideChar* s) const;
+ 	/**
+-		Conceptually identical to _wcsicmp().
++		Conceptually identical to legacy_text::compare_no_case().
+ 	*/
+ 	int compareNoCase(const UnicodeString& stringSrc) const;
+ 	/**
+-		Conceptually identical to _wcsicmp().
++		Conceptually identical to legacy_text::compare_no_case().
+ 	*/
+ 	int compareNoCase(const WideChar* s) const;
+ 
+@@ -316,7 +318,7 @@
+ inline int UnicodeString::getLength() const
+ {
+ 	validate();
+-	return m_data ? wcslen(peek()) : 0;
++	return m_data ? legacy_text::length(peek()) : 0;
+ }
+ 
+ // -----------------------------------------------------
+@@ -390,64 +392,64 @@
+ inline int UnicodeString::compare(const UnicodeString& stringSrc) const
+ {
+ 	validate();
+-	return wcscmp(this->str(), stringSrc.str());
++	return legacy_text::compare(this->str(), stringSrc.str());
+ }
+ 
+ // -----------------------------------------------------
+ inline int UnicodeString::compare(const WideChar* s) const
+ {
+ 	validate();
+-	return wcscmp(this->str(), s);
++	return legacy_text::compare(this->str(), s);
+ }
+ 
+ // -----------------------------------------------------
+ inline int UnicodeString::compareNoCase(const UnicodeString& stringSrc) const
+ {
+ 	validate();
+-	return _wcsicmp(this->str(), stringSrc.str());
++	return legacy_text::compare_no_case(this->str(), stringSrc.str());
+ }
+ 
+ // -----------------------------------------------------
+ inline int UnicodeString::compareNoCase(const WideChar* s) const
+ {
+ 	validate();
+-	return _wcsicmp(this->str(), s);
++	return legacy_text::compare_no_case(this->str(), s);
+ }
+ 
+ // -----------------------------------------------------
+ inline Bool operator==(const UnicodeString& s1, const UnicodeString& s2)
+ {
+-	return wcscmp(s1.str(), s2.str()) == 0;
++	return legacy_text::compare(s1.str(), s2.str()) == 0;
+ }
+ 
+ // -----------------------------------------------------
+ inline Bool operator!=(const UnicodeString& s1, const UnicodeString& s2)
+ {
+-	return wcscmp(s1.str(), s2.str()) != 0;
++	return legacy_text::compare(s1.str(), s2.str()) != 0;
+ }
+ 
+ // -----------------------------------------------------
+ inline Bool operator<(const UnicodeString& s1, const UnicodeString& s2)
+ {
+-	return wcscmp(s1.str(), s2.str()) < 0;
++	return legacy_text::compare(s1.str(), s2.str()) < 0;
+ }
+ 
+ // -----------------------------------------------------
+ inline Bool operator<=(const UnicodeString& s1, const UnicodeString& s2)
+ {
+-	return wcscmp(s1.str(), s2.str()) <= 0;
++	return legacy_text::compare(s1.str(), s2.str()) <= 0;
+ }
+ 
+ // -----------------------------------------------------
+ inline Bool operator>(const UnicodeString& s1, const UnicodeString& s2)
+ {
+-	return wcscmp(s1.str(), s2.str()) > 0;
++	return legacy_text::compare(s1.str(), s2.str()) > 0;
+ }
+ 
+ // -----------------------------------------------------
+ inline Bool operator>=(const UnicodeString& s1, const UnicodeString& s2)
+ {
+-	return wcscmp(s1.str(), s2.str()) >= 0;
++	return legacy_text::compare(s1.str(), s2.str()) >= 0;
+ }
+ 
+ #endif // UNICODESTRING_H

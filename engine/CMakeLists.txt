@@ -30,6 +30,15 @@ set(GENERALS_MEMORY_POOL_CONFIG_PATH "" CACHE STRING "Explicit bootstrap configu
 if(GENERALS_MEMORY_POOL_CONFIG_PATH STREQUAL "")
   message(FATAL_ERROR "An explicit memory pool configuration path is required")
 endif()
+set(GENERALS_LEGACY_ENCODING "CP1252" CACHE STRING
+  "Installation ANSI encoding used by original narrow/wide string conversion")
+if(GENERALS_LEGACY_ENCODING STREQUAL "")
+  message(FATAL_ERROR "An explicit installation ANSI encoding is required")
+endif()
+if(NOT EXISTS "${GENERALS_ICONV_PREFIX}/library/include/iconv.h" OR
+   NOT EXISTS "${GENERALS_ICONV_PREFIX}/library/lib/.libs/libiconv.a")
+  message(FATAL_ERROR "The native string cluster requires the verified GNU libiconv build")
+endif()
 if(CMAKE_CROSSCOMPILING)
   execute_process(COMMAND ${CMAKE_CXX_COMPILER} -dumpmachine
     OUTPUT_VARIABLE VG_COMPILER_TARGET OUTPUT_STRIP_TRAILING_WHITESPACE
@@ -51,11 +60,21 @@ add_library(generals_allocator_cluster STATIC
   port/src/MemoryBacking.cpp
   ${VG_ORIGINAL}/GameEngine/Source/Common/System/MemoryInit.cpp
   ${VG_ORIGINAL}/GameEngine/Source/Common/System/AsciiString.cpp
+  ${VG_ORIGINAL}/GameEngine/Source/Common/System/UnicodeString.cpp
+  port/src/utf16-format.cpp
   port/src/bootstrap-pool-path.cpp
   ${VG_ORIGINAL}/GameEngine/Source/Common/System/CriticalSection.cpp)
 target_compile_definitions(generals_allocator_cluster PUBLIC
   NDEBUG __cdecl= __forceinline=inline
+  GENERALS_WIDE_CRT_ENCODING="${GENERALS_LEGACY_ENCODING}"
   GENERALS_MEMORY_POOL_CONFIG_PATH="${GENERALS_MEMORY_POOL_CONFIG_PATH}")
+if(GENERALS_LEGACY_ENCODING STREQUAL "CP932")
+  target_compile_definitions(generals_allocator_cluster PUBLIC
+    GENERALS_LEGACY_ENCODING_CP932=1)
+elseif(GENERALS_LEGACY_ENCODING STREQUAL "CP1252")
+  target_compile_definitions(generals_allocator_cluster PUBLIC
+    GENERALS_LEGACY_ENCODING_CP1252=1)
+endif()
 if(NOT CMAKE_CROSSCOMPILING)
   target_compile_options(generals_allocator_cluster PUBLIC
     -include mutex -fsanitize=address,undefined -fno-omit-frame-pointer)
@@ -64,12 +83,15 @@ if(NOT CMAKE_CROSSCOMPILING)
 endif()
 target_include_directories(generals_allocator_cluster PUBLIC
   port/include
+  ${GENERALS_ICONV_PREFIX}/library/include
   ${VG_ORIGINAL}/GameEngine/Include/Precompiled
   ${VG_ORIGINAL}/GameEngine/Include ${VG_ORIGINAL}/Libraries/Include
   ${VG_ORIGINAL}/Libraries/Source/WWVegas/WWMath
   ${VG_ORIGINAL}/Libraries/Source/WWVegas/WWLib
   ${VG_ORIGINAL}/Libraries/Source/WWVegas/WWDebug
   ${VG_ORIGINAL}/Libraries/Source/WWVegas/WWSaveLoad)
+target_link_libraries(generals_allocator_cluster PUBLIC
+  ${GENERALS_ICONV_PREFIX}/library/lib/.libs/libiconv.a)
 if(CMAKE_CROSSCOMPILING)
   target_sources(generals_allocator_cluster PRIVATE port/src/native-thread-yield.cpp)
   target_compile_definitions(generals_allocator_cluster PUBLIC __DYNAMIC_REENT__ GENERALS_PLATFORM_VITA)
@@ -100,11 +122,22 @@ foreach(VG_PROBE allocator_alignment ascii_allocator ascii_reference)
         $<TARGET_FILE:${VG_PROBE}> VERBATIM)
   endif()
 endforeach()
+add_executable(unicode_reference unicode-entry.cpp)
+target_link_libraries(unicode_reference PRIVATE generals_allocator_cluster)
+if(CMAKE_CROSSCOMPILING)
+  target_link_options(unicode_reference PRIVATE
+    -Wl,-Map,${CMAKE_CURRENT_BINARY_DIR}/unicode_reference.map)
+  add_custom_command(TARGET unicode_reference POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E env VITASDK=${VITASDK}
+      ${Python3_EXECUTABLE} ${VG_PROJECT_ROOT}/tools/check_vita_abi.py
+      $<TARGET_FILE:unicode_reference> VERBATIM)
+endif()
 if(NOT CMAKE_CROSSCOMPILING)
   enable_testing()
   add_test(NAME allocator_alignment COMMAND allocator_alignment)
   add_test(NAME ascii_allocator COMMAND ascii_allocator)
   add_test(NAME ascii_reference COMMAND ascii_reference)
+  add_test(NAME unicode_reference COMMAND unicode_reference)
 endif()
 
 include(wwmath-cluster.cmake)

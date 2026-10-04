@@ -24,6 +24,9 @@ jobs:
       - name: Original engine cluster sanitizer probes
         if: matrix.sanitizer == 'asan-ubsan'
         run: build-parser/bin/python tools/run_engine_clusters.py --mode host --build-dir build-engine-clusters-host
+      - name: Original engine CP932 DBCS sanitizer probes
+        if: matrix.sanitizer == 'asan-ubsan'
+        run: build-parser/bin/python tools/run_engine_clusters.py --mode host --build-dir build-engine-clusters-cp932 --legacy-encoding CP932
       - name: Whitespace check
         run: git diff-tree --root --check HEAD -- . ':!LICENSE.md'
   arm-baseline:

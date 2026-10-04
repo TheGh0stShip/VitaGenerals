@@ -6,21 +6,24 @@
  /*
  **	Command & Conquer Generals Zero Hour(tm)
  **	Copyright 2025 Electronic Arts Inc.
-@@ -131,10 +133,10 @@
+@@ -131,13 +133,13 @@
  typedef char							Char;							// 1 byte of text
  typedef bool							Bool;							// 
  // note, the types below should use "long long", but MSVC doesn't support it yet
 -typedef __int64						Int64;							// 8 bytes 
 -typedef unsigned __int64	UnsignedInt64;	  	// 8 bytes 
--
--#include "Lib/Trig.h"
 +typedef long long						Int64;							// 8 bytes 
 +typedef unsigned long long	UnsignedInt64;	  	// 8 bytes 
-+
+ 
+-#include "Lib/Trig.h"
 +#include "Lib/trig.h"
  
  //-----------------------------------------------------------------------------
- typedef wchar_t WideChar;  ///< multi-byte character representations
+-typedef wchar_t WideChar;  ///< multi-byte character representations
++typedef char16_t WideChar;  ///< multi-byte character representations
+ 
+ //-----------------------------------------------------------------------------
+ template <typename NUM>
 @@ -179,55 +181,28 @@
  // note, this function depends on the cpu rounding mode, which we set to CHOP every frame, 
  // but apparently tends to be left in unpredictable modes by various system bits of
@@ -35,8 +38,28 @@
 -	}
 -
 -	return i;
--}
--
++inline long fast_float2long_round(float f) {
++ float rounded = std::nearbyint(f);
++ if (!std::isfinite(rounded) || rounded < -2147483648.0f || rounded >= 2147483648.0f) return (-2147483647L-1L);
++ return static_cast<long>(rounded);
++}
++inline unsigned diagnostic_float_bits(float f) { unsigned b; std::memcpy(&b,&f,4);return b; }
++inline float diagnostic_bits_float(unsigned b) { float f;std::memcpy(&f,&b,4);return f; }
++inline float fast_float_trunc(float f) {
++ unsigned bits=diagnostic_float_bits(f),exponent=(bits>>23)&255,shift=((exponent-127)&255)&31;
++ unsigned mask=exponent<127?0u:0xff800000u;
++ if(shift && mask)mask=(mask>>shift)|(0xffffffffu<<(32-shift));
++ return diagnostic_bits_float(bits&mask);
++}
++inline float fast_float_floor(float f) {
++ if(diagnostic_float_bits(f)&0x80000000u)f-=diagnostic_bits_float(0x3f7fffffu);
++ return fast_float_trunc(f);
++}
++inline float fast_float_ceil(float f) {
++ if(!(diagnostic_float_bits(f)&0x80000000u))f+=diagnostic_bits_float(0x3f7fffffu);
++ return fast_float_trunc(f);
+ }
+ 
 -// super fast float trunc routine, works always (independent of any FPU modes)
 -// code courtesy of Martin Hoffesommer (grin)
 -__forceinline float fast_float_trunc(float f)
@@ -74,28 +97,6 @@
 -}
 -
 -//-------------------------------------------------------------------------------------------------
-+inline long fast_float2long_round(float f) {
-+ float rounded = std::nearbyint(f);
-+ if (!std::isfinite(rounded) || rounded < -2147483648.0f || rounded >= 2147483648.0f) return (-2147483647L-1L);
-+ return static_cast<long>(rounded);
-+}
-+inline unsigned diagnostic_float_bits(float f) { unsigned b; std::memcpy(&b,&f,4);return b; }
-+inline float diagnostic_bits_float(unsigned b) { float f;std::memcpy(&f,&b,4);return f; }
-+inline float fast_float_trunc(float f) {
-+ unsigned bits=diagnostic_float_bits(f),exponent=(bits>>23)&255,shift=((exponent-127)&255)&31;
-+ unsigned mask=exponent<127?0u:0xff800000u;
-+ if(shift && mask)mask=(mask>>shift)|(0xffffffffu<<(32-shift));
-+ return diagnostic_bits_float(bits&mask);
-+}
-+inline float fast_float_floor(float f) {
-+ if(diagnostic_float_bits(f)&0x80000000u)f-=diagnostic_bits_float(0x3f7fffffu);
-+ return fast_float_trunc(f);
-+}
-+inline float fast_float_ceil(float f) {
-+ if(!(diagnostic_float_bits(f)&0x80000000u))f+=diagnostic_bits_float(0x3f7fffffu);
-+ return fast_float_trunc(f);
-+}
-+
  #define REAL_TO_INT(x)						((Int)(fast_float2long_round(fast_float_trunc(x))))
  #define REAL_TO_UNSIGNEDINT(x)		((UnsignedInt)(fast_float2long_round(fast_float_trunc(x))))
  #define REAL_TO_SHORT(x)					((Short)(fast_float2long_round(fast_float_trunc(x))))
