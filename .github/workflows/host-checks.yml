@@ -41,3 +41,5 @@ jobs:
           python3 tools/verify_project_inventory.py build-arm-ci/original-projects.json
           python3 tools/audit_module_registrations.py --source build-source-ci/GeneralsMD/Code --output build-arm-ci/module-registrations.json
           cmp reports/generated/module-registrations.json build-arm-ci/module-registrations.json
+          python3 tools/audit_script_dispatch.py --source build-source-ci/GeneralsMD/Code --output build-arm-ci/script-dispatch.json
+          cmp reports/generated/script-dispatch.json build-arm-ci/script-dispatch.json
