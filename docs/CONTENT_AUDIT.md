@@ -53,3 +53,20 @@ terminators, invalid counts, payload overlap with the directory, end-of-file
 ranges, 32-bit wraparound and four input alignments. Both boundary probes compile
 and link for ARM with ELF attribute gates and matching artifact identities.
 These checks do not prove original engine loading or physical device behavior.
+
+`tools/map_chunks.py` provides bounded host diagnostics for raw CkMp maps,
+EAR/RefPack and ZL/zlib wrappers. It reads fixed-width little-endian map fields
+and big-endian RefPack size fields independently of host integer layout.
+Duplicate table identifiers retain every label candidate. Top-level framing
+skips bodies; it does not assume every body is another chunk list or establish
+object, script, terrain or mode coverage.
+
+The diagnostic caps decoded maps at 16 MiB and table/top-level chunk counts at
+65,536. It requires exact compressed termination and decoded size. These are
+explicit diagnostic policies, not claims about the original loader's rejection
+behavior. RefPack overlap copies preserve the original forward-copy semantics.
+Synthetic contracts cover all command forms, high distance/length bits, optional
+and wide size headers, terminal literals, wrapper validation, duplicate labels
+and truncated or oversized structures. Retail-derived results stay private.
+The module is an inventory aid; original engine integration and physical
+Vita/PSTV validation remain separate requirements.
