@@ -50,7 +50,7 @@ def main():
         if result['exit']!=0: return 1
     summary['test_denominator']=len(json.loads(subprocess.check_output(['ctest','--test-dir',str(build),'--show-only=json-v1'],text=True))['tests'])
     summary['artifacts']=[{'name':name,'sha256':hashlib.sha256((build/name).read_bytes()).hexdigest()}
-                          for name in ['original_crc_probe','big_header_test','compile_commands.json','staged/receipt.json']]
+                          for name in ['original_crc_probe','big_header_test','original_math_validity_probe','compile_commands.json','staged/receipt.json']]
     (build/'host-probe-summary.json').write_text(json.dumps(summary,indent=2)+'\n')
     return 0
 if __name__=='__main__': raise SystemExit(main())

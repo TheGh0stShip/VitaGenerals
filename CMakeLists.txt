@@ -27,7 +27,9 @@ if(NOT VG_STAGE_RESULT EQUAL 0)
 endif()
 set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS
   vendor/ea/manifest.json vendor/ea/wwlib/realcrc.cpp vendor/ea/wwlib/realcrc.h
-  port/patches/realcrc-width.patch tools/stage_original.py)
+  port/patches/realcrc-width.patch tools/stage_original.py
+  vendor/ea/wwmath/wwmath.h vendor/ea/wwlib/always.h
+  port/patches/wwmath-validity-width.patch)
 
 add_library(vg_archive STATIC src/big_header.c)
 target_include_directories(vg_archive PUBLIC src)
@@ -41,15 +43,27 @@ target_compile_options(original_crc_probe PRIVATE -Wall -Wextra -Werror)
 add_executable(big_header_test tests/big_header_test.c)
 target_link_libraries(big_header_test PRIVATE vg_archive)
 target_compile_options(big_header_test PRIVATE -Wall -Wextra -Werror)
+add_executable(original_math_validity_probe tests/original_math_validity_test.cpp)
+target_include_directories(original_math_validity_probe SYSTEM PRIVATE
+  ${CMAKE_BINARY_DIR}/staged/wwmath ${CMAKE_BINARY_DIR}/staged/wwlib)
+# Use the actual standard allocation declarations in this focused header probe.
+target_compile_definitions(original_math_validity_probe PRIVATE _OPERATOR_NEW_DEFINED_ __cdecl=)
+target_compile_options(original_math_validity_probe PRIVATE -Wall -Wextra -Werror -Wno-unknown-pragmas)
 
 if(CMAKE_CROSSCOMPILING)
   add_library(vg_vita_abi OBJECT src/vita_abi.c)
-  foreach(VG_TARGET vg_archive vg_original_crc original_crc_probe big_header_test vg_vita_abi)
+  foreach(VG_TARGET vg_archive vg_original_crc original_crc_probe big_header_test vg_vita_abi original_math_validity_probe)
     target_compile_options(${VG_TARGET} PRIVATE -mcpu=cortex-a9 -mthumb -mfpu=neon -mfloat-abi=hard)
   endforeach()
   target_compile_options(vg_vita_abi PRIVATE -Wall -Wextra -Werror)
   target_sources(original_crc_probe PRIVATE $<TARGET_OBJECTS:vg_vita_abi>)
   target_sources(big_header_test PRIVATE $<TARGET_OBJECTS:vg_vita_abi>)
+  target_sources(original_math_validity_probe PRIVATE $<TARGET_OBJECTS:vg_vita_abi>)
+  target_link_libraries(original_math_validity_probe PRIVATE SceLibKernel_stub)
+  target_link_options(original_math_validity_probe PRIVATE -Wl,-Map,${CMAKE_BINARY_DIR}/original_math_validity_probe.map)
+  add_custom_command(TARGET original_math_validity_probe POST_BUILD
+    COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tools/check_vita_abi.py
+      $<TARGET_FILE:original_math_validity_probe> VERBATIM)
   target_link_libraries(big_header_test PRIVATE SceLibKernel_stub)
   target_link_options(big_header_test PRIVATE -Wl,-Map,${CMAKE_BINARY_DIR}/big_header_test.map)
   target_link_libraries(original_crc_probe PRIVATE SceLibKernel_stub)
@@ -71,4 +85,5 @@ else()
   enable_testing()
   add_test(NAME big_header_boundary COMMAND big_header_test)
   add_test(NAME original_crc_boundary COMMAND original_crc_probe)
+  add_test(NAME original_math_validity COMMAND original_math_validity_probe)
 endif()

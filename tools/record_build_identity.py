@@ -20,7 +20,7 @@ def main():
         p.error('identity output must remain under ignored build-*/')
     sdk=Path(os.environ['VITASDK']);prefix=sdk/'bin/arm-vita-eabi-'
     def tool(name,*args): return subprocess.check_output([str(prefix)+name,*map(str,args)],text=True)
-    probes=['original_crc_probe','big_header_test']
+    probes=['original_crc_probe','big_header_test','original_math_validity_probe']
     artifact_names=['compile_commands.json']
     maptext=''
     for probe in probes:

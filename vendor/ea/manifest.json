@@ -20,6 +20,18 @@
       "upstream_path": "GeneralsMD/Code/GameEngine/Source/Common/System/AsciiString.cpp",
       "sha256": "57ecc49ed5ea90d9ea02ff604519bbeaf1dced54c655d2344c46f7eef324f798",
       "staged_sha256": "7593669053b69433b54e93b1c6be724805e972cd691f4ea6458a08861ecd755f"
+    },
+    {
+      "path": "wwmath/wwmath.h",
+      "upstream_path": "GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/wwmath.h",
+      "sha256": "255334fe157908152e4528eecee4d87b445854983b989bafedaf4c395a6e6466",
+      "staged_sha256": "331753a82e15a9ae70b39ac4e8200293f676513133ba1dad64f253651fabd0ec"
+    },
+    {
+      "path": "wwlib/always.h",
+      "upstream_path": "GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/always.h",
+      "sha256": "ce457fe9482267df6460c5c94010df7fecff25ef1d46f2fe1d456857c9092157",
+      "staged_sha256": "ce457fe9482267df6460c5c94010df7fecff25ef1d46f2fe1d456857c9092157"
     }
   ],
   "patches": [
@@ -30,6 +42,10 @@
     {
       "path": "port/patches/ascii-inplace-overlap.patch",
       "sha256": "f5145a60b01063a73944a6f1fee9afdeea3c8df6ae8b511b3b71e37928719df0"
+    },
+    {
+      "path": "port/patches/wwmath-validity-width.patch",
+      "sha256": "d35214a941fc0901e515aa9fdf15add435beb7a6a7ff7c349c5d58d36277a4b2"
     }
   ]
 }
