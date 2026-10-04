@@ -36,6 +36,23 @@ an optional dictionary. Object versions 1 and 2 reset height to zero; subsequent
 height validation and template lookup affect runtime ownership. The preview
 reader in MapUtil is a separate route and cannot establish runtime completeness.
 
+Map names need consumer-specific interpretation. WorldHeightMap marks waypoints
+from an integer `waypointID`, lights from a real `lightHeightAboveTerrain`, and
+scorches from an integer `scorchType`. WellKnownKeys stringizes those key names;
+NameKeyGenerator uses case-sensitive equality. Dict setters replace an existing
+key, so role inspection must use the final entry rather than any earlier match.
+TerrainLogic consumes waypoints; W3DTerrainVisual creates lights and scorch marks.
+Those paths do not require the name to be an Object declaration.
+
+MapObject road endpoint flags are 0x02/0x04, and bridge endpoint flags are
+0x10/0x20. W3DRoadBuffer and W3DBridgeBuffer require an adjacent second endpoint
+and use TerrainRoadCollection lookups. INI registers separate Road and Bridge
+blocks. GameEngine initializes that collection from Default/Roads.ini and
+Roads.ini. An endpoint flag alone does not prove a valid segment or resource.
+Road/bridge model and texture fields, defaults, mount order and overrides still
+need reference resolution. GameLogic also has legacy object-name remapping;
+raw names cannot establish which template a completed load uses.
+
 Unicode serialization requires explicit review: the original Windows WideChar
 is two bytes, while default target wchar_t may differ. Diagnostic UTF-16 reads
 do not fix UnicodeString ownership, library ABI or engine serialization.
