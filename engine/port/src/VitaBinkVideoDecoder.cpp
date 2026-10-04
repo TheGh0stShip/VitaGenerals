@@ -47,10 +47,13 @@ struct VitaBinkVideoDecoder::State
     std::int64_t clockOrigin;
     std::int64_t ptsOrigin;
     std::int64_t presentation;
+    std::int64_t frameDuration;
+    std::int64_t lastPresentation;
     std::atomic<bool> clockArmed;
     bool draining;
     bool finished;
     bool hasFrame;
+    bool hasPresented;
     bool packetPending;
     std::atomic<bool> audioFlushed;
     std::atomic<bool> demuxEnded;
@@ -69,8 +72,9 @@ struct VitaBinkVideoDecoder::State
     State() : format(NULL), decoder(NULL), frame(NULL), packet(NULL), scaler(NULL),
         audioDecoder(NULL), audioFrame(NULL), resampler(NULL), stream(-1),
         audioStream(-1), index(-1), count(0), clockOrigin(0),
-        ptsOrigin(AV_NOPTS_VALUE), presentation(0), clockArmed(false),
-        draining(false), finished(false), hasFrame(false), packetPending(false),
+        ptsOrigin(AV_NOPTS_VALUE), presentation(0), frameDuration(33333),
+        lastPresentation(0), clockArmed(false), draining(false), finished(false),
+        hasFrame(false), hasPresented(false), packetPending(false),
         audioFlushed(false), demuxEnded(false),
         audioRead(0), audioWrite(0), audioCount(0), audioConsumerActive(false),
         audioDiscard(false), pendingVideoBytes(0)
@@ -323,6 +327,10 @@ bool VitaBinkVideoDecoder::open(const char *path, std::int64_t clockMicroseconds
     m_state->clockOrigin = clockMicroseconds;
     m_state->clockArmed.store(false, std::memory_order_release);
     m_state->count = video->nb_frames;
+    const AVRational rate = video->avg_frame_rate.num > 0 ? video->avg_frame_rate :
+                                                              AVRational{30, 1};
+    m_state->frameDuration = std::max<std::int64_t>(1, av_rescale_q(
+        1, av_inv_q(rate), AVRational{1, 1000000}));
     if (m_state->count <= 0 && video->duration > 0 && video->avg_frame_rate.num > 0) {
         m_state->count = av_rescale_q_rnd(video->duration, video->time_base,
             av_inv_q(video->avg_frame_rate), static_cast<AVRounding>(
@@ -472,6 +480,28 @@ bool VitaBinkVideoDecoder::isFrameReady(std::int64_t clockMicroseconds) const
            clockMicroseconds >= m_state->clockOrigin + m_state->presentation;
 }
 
+bool VitaBinkVideoDecoder::shouldDropFrame(std::int64_t clockMicroseconds) const
+{
+    if (!isFrameReady(clockMicroseconds) || !m_state->hasPresented ||
+        m_state->index >= m_state->count - 1) return false;
+    const std::int64_t elapsed = clockMicroseconds - m_state->clockOrigin;
+    const std::int64_t late = elapsed - m_state->presentation;
+    if (late < 0) return false;
+    if (clockMicroseconds - m_state->lastPresentation >= m_state->frameDuration * 2)
+        return false;
+    const std::int64_t threshold = std::max<std::int64_t>(m_state->frameDuration, 50000);
+    const bool audioPressure = hasAudio() && !audioComplete() &&
+                               queuedAudioFrames() < 1024U;
+    return late > threshold || audioPressure;
+}
+
+void VitaBinkVideoDecoder::markFramePresented(std::int64_t clockMicroseconds)
+{
+    if (!isOpen()) return;
+    m_state->lastPresentation = clockMicroseconds;
+    m_state->hasPresented = true;
+}
+
 bool VitaBinkVideoDecoder::copyFrame(void *destination, std::size_t pitch,
                                     unsigned targetHeight, unsigned x, unsigned y,
                                     PixelFormat format)
@@ -524,6 +554,7 @@ bool VitaBinkVideoDecoder::seekFrame(std::int64_t target, std::int64_t clockMicr
     m_state->ptsOrigin = AV_NOPTS_VALUE;
     m_state->draining = false;
     m_state->finished = false;
+    m_state->hasPresented = false;
     if (m_state->resampler != NULL) {
         swr_close(m_state->resampler);
         if (swr_init(m_state->resampler) < 0) return false;
@@ -603,3 +634,7 @@ int VitaBinkVideoDecoder::width() const { return isOpen() ? m_state->decoder->wi
 int VitaBinkVideoDecoder::height() const { return isOpen() ? m_state->decoder->height : 0; }
 std::int64_t VitaBinkVideoDecoder::frameIndex() const { return m_state == NULL ? -1 : m_state->index; }
 std::int64_t VitaBinkVideoDecoder::frameCount() const { return m_state == NULL ? 0 : m_state->count; }
+std::int64_t VitaBinkVideoDecoder::frameDurationMicroseconds() const
+{
+    return m_state == NULL ? 33333 : m_state->frameDuration;
+}

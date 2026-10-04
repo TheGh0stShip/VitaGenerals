@@ -59,6 +59,16 @@ audio is disabled for that movie instead of starting late or losing samples.
 This establishes the scheduling contract in host decode and ARM link evidence,
 but only device measurements can establish audible synchronization.
 
+The stream adapter also performs bounded catch-up inside Zero Hour's existing
+one-frame `Display::update` contract. It may discard at most four overdue frames
+while looking for the frame appropriate to the current presentation clock and
+yields after a 2 ms catch-up budget. It always preserves the first frame and
+forces another visible frame after two authored frame intervals, preventing a
+slow decoder from dropping forever. A low audio reserve can request catch-up,
+but never permits dropping a frame before its presentation timestamp. The
+thresholds require physical timing evidence before they can be accepted as
+final Vita settings.
+
 The Renegade Vita frontend history establishes several reusable requirements,
 not runtime proof for this title. Decoder packets must survive FFmpeg
 backpressure; presentation time starts only when decoded output can actually be

@@ -131,7 +131,17 @@ BinkVideoStream::~BinkVideoStream()
 void BinkVideoStream::update() {}
 Bool BinkVideoStream::isFrameReady()
 {
-    return m_decoder != NULL && m_decoder->isFrameReady(MovieClockMicroseconds());
+    if (m_decoder == NULL) return FALSE;
+    const std::int64_t started = MovieClockMicroseconds();
+    for (unsigned dropped = 0; dropped != 4; ++dropped) {
+        const std::int64_t now = MovieClockMicroseconds();
+        if (!m_decoder->isFrameReady(now)) return FALSE;
+        if (!m_decoder->shouldDropFrame(now)) return TRUE;
+        if (dropped != 0 && now - started >= 2000) return TRUE;
+        if (!m_decoder->decodeNextFrame())
+            return m_decoder->isFrameReady(MovieClockMicroseconds());
+    }
+    return m_decoder->isFrameReady(MovieClockMicroseconds());
 }
 void BinkVideoStream::frameDecompress() {}
 void BinkVideoStream::frameRender(VideoBuffer *buffer)
@@ -141,9 +151,10 @@ void BinkVideoStream::frameRender(VideoBuffer *buffer)
     if (!BufferFormat(buffer->format(), &format)) return;
     void *memory = buffer->lock();
     if (memory == NULL) return;
-    m_decoder->copyFrame(memory, buffer->pitch(), buffer->height(),
-                         buffer->xPos(), buffer->yPos(), format);
+    const bool copied = m_decoder->copyFrame(memory, buffer->pitch(), buffer->height(),
+                                              buffer->xPos(), buffer->yPos(), format);
     buffer->unlock();
+    if (copied) m_decoder->markFramePresented(MovieClockMicroseconds());
 }
 void BinkVideoStream::frameNext() { if (m_decoder != NULL) m_decoder->decodeNextFrame(); }
 Int BinkVideoStream::frameIndex()

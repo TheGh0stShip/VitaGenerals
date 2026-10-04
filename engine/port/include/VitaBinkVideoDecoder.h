@@ -28,6 +28,8 @@ public:
     bool presentationStarted() const;
     bool decodeNextFrame();
     bool isFrameReady(std::int64_t clockMicroseconds) const;
+    bool shouldDropFrame(std::int64_t clockMicroseconds) const;
+    void markFramePresented(std::int64_t clockMicroseconds);
     bool copyFrame(void *destination, std::size_t pitch, unsigned height,
                    unsigned x, unsigned y, PixelFormat format);
     bool seekFrame(std::int64_t frameIndex, std::int64_t clockMicroseconds);
@@ -45,6 +47,7 @@ public:
     int height() const;
     std::int64_t frameIndex() const;
     std::int64_t frameCount() const;
+    std::int64_t frameDurationMicroseconds() const;
 
 private:
     struct State;
