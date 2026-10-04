@@ -151,7 +151,8 @@ if(CMAKE_CROSSCOMPILING)
 endif()
 add_executable(vita_texture_surface tests/vita-texture-surface-probe.cpp)
 target_link_libraries(vita_texture_surface PRIVATE generals_w3d_texture_surface)
-target_compile_options(vita_texture_surface PRIVATE -Wall -Wextra -Werror)
+target_compile_options(vita_texture_surface PRIVATE -Wall -Wextra -Werror
+  -UNDEBUG)
 if(CMAKE_CROSSCOMPILING)
   target_compile_options(vita_texture_surface PRIVATE
     -mcpu=cortex-a9 -mthumb -mfpu=neon -mfloat-abi=hard)
